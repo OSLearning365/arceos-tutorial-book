@@ -1,0 +1,353 @@
+<!DOCTYPE HTML>
+<html lang="cn" class="light" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>应用组件与硬件抽象组件 - ArceOS Tutorial Book</title>
+
+
+        <!-- Custom HTML head -->
+        
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+    </head>
+    <body class="sidebar-visible no-js">
+    <div id="body-container">
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('light')
+            html.classList.add(theme);
+            var body = document.querySelector('body');
+            body.classList.remove('no-js')
+            body.classList.add('js');
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var body = document.querySelector('body');
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            body.classList.remove('sidebar-visible');
+            body.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="Prefix.html">前言</a></li><li class="chapter-item expanded "><a href="ch00-00.html"><strong aria-hidden="true">1.</strong> 第零章 史前时代 - 从开机到内核启动</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch00-01.html"><strong aria-hidden="true">1.1.</strong> 实验环境</a></li><li class="chapter-item expanded "><a href="ch00-02.html"><strong aria-hidden="true">1.2.</strong> 计算机启动过程和对内核的要求</a></li><li class="chapter-item expanded "><a href="ch00-03.html"><strong aria-hidden="true">1.3.</strong> 内核第一行代码</a></li><li class="chapter-item expanded "><a href="ch00-04.html"><strong aria-hidden="true">1.4.</strong> 编译与运行环境</a></li><li class="chapter-item expanded "><div><strong aria-hidden="true">1.5.</strong> Unikernel</div></li><li class="chapter-item expanded "><a href="ch00-06.html"><strong aria-hidden="true">1.6.</strong> 本章总结</a></li></ol></li><li class="chapter-item expanded "><a href="ch01-00.html"><strong aria-hidden="true">2.</strong> 第一章 Hello, ArceOS！- 内核启动和组件诞生</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch01-01.html"><strong aria-hidden="true">2.1.</strong> 内核启动</a></li><li class="chapter-item expanded "><a href="ch01-02.html"><strong aria-hidden="true">2.2.</strong> SBI 功能调用</a></li><li class="chapter-item expanded "><a href="ch01-03.html" class="active"><strong aria-hidden="true">2.3.</strong> 应用组件与硬件抽象组件</a></li><li class="chapter-item expanded "><a href="ch01-04.html"><strong aria-hidden="true">2.4.</strong> 本章总结</a></li></ol></li><li class="chapter-item expanded "><div><strong aria-hidden="true">3.</strong> 第二章 内存管理1 - 初始的地址空间和早期内存分配 todo</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">4.</strong> 第三章 输入输出 - 标准输出和启动参数 todo</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">5.</strong> 第四章 内存管理2 - 地址空间重建和正式内存分配 todo</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">6.</strong> 第五章 多任务1 - 从串行到协作式并发 todo</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">7.</strong> 第六章 异常和中断 - 响应意外情况和外部事件 todo</div></li><li><ol class="section"><li class="chapter-item expanded "><div><strong aria-hidden="true">7.1.</strong> 异常处理</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">7.2.</strong> 时钟中断</div></li></ol></li><li class="chapter-item expanded "><div><strong aria-hidden="true">8.</strong> 第七章 多任务2 -从协作式到抢占式 todo</div></li><li><ol class="section"><li class="chapter-item expanded "><div><strong aria-hidden="true">8.1.</strong> 抢占机制 - 任务切换的内外条件</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">8.2.</strong> round-robin 调度算法</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">8.3.</strong> 同步原语 - 等待与唤醒</div></li></ol></li><li class="chapter-item expanded "><a href="ch08-00.html"><strong aria-hidden="true">9.</strong> 附录A</a></li><li class="chapter-item expanded "><a href="ch09-00.html"><strong aria-hidden="true">10.</strong> 附录B</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <!-- Track and set sidebar scroll position -->
+        <script>
+            var sidebarScrollbox = document.querySelector('#sidebar .sidebar-scrollbox');
+            sidebarScrollbox.addEventListener('click', function(e) {
+                if (e.target.tagName === 'A') {
+                    sessionStorage.setItem('sidebar-scroll', sidebarScrollbox.scrollTop);
+                }
+            }, { passive: true });
+            var sidebarScrollTop = sessionStorage.getItem('sidebar-scroll');
+            sessionStorage.removeItem('sidebar-scroll');
+            if (sidebarScrollTop) {
+                // preserve sidebar scroll position when navigating via links within sidebar
+                sidebarScrollbox.scrollTop = sidebarScrollTop;
+            } else {
+                // scroll sidebar to current active section when navigating via "next/previous chapter" buttons
+                var activeSection = document.querySelector('#sidebar .active');
+                if (activeSection) {
+                    activeSection.scrollIntoView({ block: 'center' });
+                }
+            }
+        </script>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">ArceOS Tutorial Book</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        <a href="https://github.com/rcore-os/arceos-tutorial-book" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h2 id="第三节-应用组件与硬件抽象组件"><a class="header" href="#第三节-应用组件与硬件抽象组件">第三节 应用组件与硬件抽象组件</a></h2>
+<p>从本节开始，我们将开启组件化构造操作系统内核的旅程。</p>
+<p>与传统构造内核的方法不同，组件化构造内核包括两个部分：一是建立一个组件仓库，其中的组件都具有高度可复用性；二是建立一种管理、选择和组合组件的方法与机制。在二者的基础上，我们就可以根据需要，基于组件组合的方式快速定制生产目标内核。</p>
+<div style="text-align:center">
+   <img src="./img/组件化构造内核.svg" alt="组件化构造内核"  style="zoom:70%"/>
+</div>
+<p>本节的实验，我们就对应上面所述的两个部分，分两个步骤进行。</p>
+<p><strong>第一步：对当前版本的单一内核进行分解，形成最初的组件仓库。</strong></p>
+<div style="text-align:center">
+   <img src="./img/最早的组件.svg" alt="最早的组件"   style="zoom:100%"/>
+</div>
+<p>当前内核虽然是 Unikernel 形态，按照功能仍然可以分成系统和应用两层。</p>
+<ul>
+<li><strong>系统层</strong>：迄今为止，我们进行的大部分工作都可以归纳到系统层，大多是针对硬件平台的操作，包括启动模块 boot，控制台模块 console，内存模块 mem 等。这些模块的共同特点：对外提供一个抽象的硬件操作接口，内部则封装了针对 RiscV 体系结构和具体硬件的操作。我们希望把上述接口明确固定下来，形成一个稳定的<strong>硬件抽象层 Hardware Abstract Layer</strong>（简称 HAL）。以 HAL 分界，可以实现上下层组件的解耦。方便我们将来对其它体系结构及平台的支持工作。</li>
+<li><strong>应用层</strong>：目前应用层的工作仅仅是调用 console，向屏幕输出 Hello 信息。注意：我们要把 rust_entry 框架和清零 BSS 分离出去，因为那些属于系统层的功能。</li>
+</ul>
+<p>基于这样的层次划分，我们就建立起最初的两个组件 axhal 和 axorigin。其中 axorigin 继承了原始内核工程的名字，但它的身份已经降级成为一个应用组件，将来必须与 axhal 等系统组件配合来构成完整的 Unikernel 内核。</p>
+<ul>
+<li>
+<p><strong>axhal 组件</strong></p>
+<ul>
+<li>
+<p>封装系统层的所有模块，从外形看，它是一个 lib 形式的 crate。但是从启动角度，由于它的 boot 模块包含了内核的 _start 入口，其实是首先运行的，然后才会去启动应用组件。</p>
+</li>
+<li>
+<p>在工作目录 arceos 中，通过 <code>cargo new axhal --lib</code> 建立 axhal 工程。将上一版本内核的模块文件 lang_items.rs、boot.rs、mem.rs、console.rs 挪到 axhal 的 src 目录下。看一下 axhal 的根模块 lib.rs：</p>
+<pre><pre class="playground"><code class="language-rust edition2021">#![no_std]
+#![feature(asm_const)]
+
+mod lang_items;
+mod boot;
+mod mem;
+pub mod console;
+
+unsafe extern &quot;C&quot; fn rust_entry(hartid: usize, dtb: usize) {
+    extern &quot;C&quot; {
+        fn main(hartid: usize, dtb: usize);
+    }
+    mem::clear_bss();
+    main(hartid, dtb);
+}</code></pre></pre>
+</li>
+<li>
+<p>修改一下 axhal 的 Cargo.toml，引入对 sbi-rt 的依赖：</p>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>[dependencies]
+sbi-rt = { version = &quot;0.0.2&quot;, features = [&quot;legacy&quot;] }
+<span class="boring">}</span></code></pre></pre>
+</li>
+<li>
+<p>组件 axhal 继承了上一版本内核几乎所有的模块，以及 rust_entry 框架，只是把直接调用 console 进行打印的那行代码，替换成一个外部函数 main，这个 main 函数就是应用组件的入口。这里可能会产生一个疑问，为什么需要通过 extern ABI 这种外部函数的形式去调用？而不能以引入依赖 crate 的方式去调用？后面会说明这一原因。</p>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>axorigin 组件</strong></p>
+<ul>
+<li>
+<p>前面提到了，这个组件只是继承了原来内核工程的名字，目前已经退化成一个应用组件。与组件 axhal 相应的，从外部看，axorigin 具有 main.rs 根模块，形式上就是一个 binary crate；但是它自身是无法运行的，需要等待 axhal 组件启动它。</p>
+</li>
+<li>
+<p>来看一下 axorigin 当前的 main.rs 实现：</p>
+<ul>
+<li>
+<pre><pre class="playground"><code class="language-rust edition2021">#![no_std]
+#![no_main]
+
+#[no_mangle]
+pub fn main(_hartid: usize, _dtb: usize) {
+    axhal::console::write_bytes(b&quot;\nHello, ArceOS!\n&quot;);
+}</code></pre></pre>
+</li>
+<li>
+<p>主体就是一个 main 函数，正对应 axhal 组件在最后阶段要调用的函数，main 是所有应用类型组件的入口。</p>
+</li>
+</ul>
+<blockquote>
+<p><font size=2>这个 main，与我们基于 Linux/Windows 平台进行应用编程时写的 main，其实并无关系，上面 <code>#[no_main]</code> 已经说明了这一点。这里起这个名字，只是为了适应编程习惯。</font></p>
+</blockquote>
+</li>
+<li>
+<p>目前，应用组件 axorigin 在 main 函数中要实现的逻辑非常简单，但是它为我们建立了基本的 Unikernel 应用框架；将来在开发 Unikernel 应用时，只需要创建一个应用组件，并在 main 函数中填充我们要实现的业务逻辑即可。应用逻辑开发与系统功能的实现从此分离。</p>
+</li>
+</ul>
+</li>
+</ul>
+<p><strong>第二步：对现有的两个组件进行组合，形成可以运行的内核。</strong></p>
+<p>既然两个组件都是 Rust crate 的形式，最简单的组合方式，自然就是利用 Cargo 工具提供的 denpendencies 依赖机制进行连接组合。</p>
+<p>来看 axorigin 的 Cargo.toml：</p>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>[dependencies]
+axhal = { path = &quot;../axhal&quot; }
+<span class="boring">}</span></code></pre></pre>
+<p>Rust 工具链中的 Cargo，就可以自动为我们进行组件的组合，并构造出内核。</p>
+<p>另外，linker.lds 实际也是与体系结构相关的，把它挪到 axhal 的目录下，注意改一下 Makefile：</p>
+<pre><code class="language-makefile">LD_SCRIPT := $(CURDIR)/axhal/linker.lds
+</code></pre>
+<p>用 <code>git show --stat</code> 比较当前基于组件化的版本与上一版本在代码方面的变化：</p>
+<pre><code class="language-bash"> axorigin/Cargo.toml                   |  2 +-
+ axorigin/src/main.rs                  | 12 +++---------
+ {axorigin =&gt; axhal}/src/boot.rs       |  0
+ {axorigin =&gt; axhal}/src/console.rs    |  0
+ {axorigin =&gt; axhal}/src/lang_items.rs |  0
+ {axorigin =&gt; axhal}/src/mem.rs        |  0
+ linker.lds =&gt; axhal/linker.lds        |  0
+ axhal/Cargo.toml                      |  7 +++++++
+ axhal/src/lib.rs                      | 17 +++++++++++++++++
+ 8 files changed, 28 insertions(+), 10 deletions(-)
+</code></pre>
+<p>运行 <code>make run</code> 测试我们第一个组件化方式构造的内核，屏幕输出正常。</p>
+<p>最后，解释一下之前的问题：为什么在启动过程中，组件 axhal 必须通过 extern ABI 的方式调用组件 axorigin 的 main 函数。</p>
+<div style="text-align:center">
+   <img src="./img/组件调用关系.svg" alt="组件调用关系" style="zoom:80%" />
+</div>
+<p>从图中可以看到，两个组件之间存在相互调用的关系，启动过程中 axhal 调用 axorigin 的 main 函数；运行过程中 axorigin 作为应用需要调用系统组件 axhal 的各种功能。既然 axorigin 已经通过 Cargo.toml 对 axhal 建立了依赖，那么另一个方向的依赖就不成立了，否则就会导致<strong>循环依赖</strong>。因此只好在启动过程中，采用 extern ABI 的方式调用 main 函数。</p>
+<p>在我们将来构造内核的实验中，循环依赖将会是一个比较麻烦的问题。在第三章里，将会引入一个特殊的组件 crate_interface 用于专门处理循环依赖，本质上它仍然是基于 extern ABI，但是基于该组件提供了一种 Rusty 风格的调用方式，代码的可读性更好，同时可以有效减少编程出错的概率。</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="ch01-02.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="ch01-04.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="ch01-02.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="ch01-04.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+        <script src="ace.js"></script>
+        <script src="editor.js"></script>
+        <script src="mode-rust.js"></script>
+        <script src="theme-dawn.js"></script>
+        <script src="theme-tomorrow_night.js"></script>
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+        <script src="mermaid.min.js"></script>
+        <script src="mermaid-init.js"></script>
+
+
+    </div>
+    </body>
+</html>

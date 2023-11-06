@@ -1,0 +1,301 @@
+<!DOCTYPE HTML>
+<html lang="cn" class="light" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>SBI 功能调用 - ArceOS Tutorial Book</title>
+
+
+        <!-- Custom HTML head -->
+        
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+    </head>
+    <body class="sidebar-visible no-js">
+    <div id="body-container">
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('light')
+            html.classList.add(theme);
+            var body = document.querySelector('body');
+            body.classList.remove('no-js')
+            body.classList.add('js');
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var body = document.querySelector('body');
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            body.classList.remove('sidebar-visible');
+            body.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="Prefix.html">前言</a></li><li class="chapter-item expanded "><a href="ch00-00.html"><strong aria-hidden="true">1.</strong> 第零章 史前时代 - 从开机到内核启动</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch00-01.html"><strong aria-hidden="true">1.1.</strong> 实验环境</a></li><li class="chapter-item expanded "><a href="ch00-02.html"><strong aria-hidden="true">1.2.</strong> 计算机启动过程和对内核的要求</a></li><li class="chapter-item expanded "><a href="ch00-03.html"><strong aria-hidden="true">1.3.</strong> 内核第一行代码</a></li><li class="chapter-item expanded "><a href="ch00-04.html"><strong aria-hidden="true">1.4.</strong> 编译与运行环境</a></li><li class="chapter-item expanded "><div><strong aria-hidden="true">1.5.</strong> Unikernel</div></li><li class="chapter-item expanded "><a href="ch00-06.html"><strong aria-hidden="true">1.6.</strong> 本章总结</a></li></ol></li><li class="chapter-item expanded "><a href="ch01-00.html"><strong aria-hidden="true">2.</strong> 第一章 Hello, ArceOS！- 内核启动和组件诞生</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch01-01.html"><strong aria-hidden="true">2.1.</strong> 内核启动</a></li><li class="chapter-item expanded "><a href="ch01-02.html" class="active"><strong aria-hidden="true">2.2.</strong> SBI 功能调用</a></li><li class="chapter-item expanded "><a href="ch01-03.html"><strong aria-hidden="true">2.3.</strong> 应用组件与硬件抽象组件</a></li><li class="chapter-item expanded "><a href="ch01-04.html"><strong aria-hidden="true">2.4.</strong> 本章总结</a></li></ol></li><li class="chapter-item expanded "><div><strong aria-hidden="true">3.</strong> 第二章 内存管理1 - 初始的地址空间和早期内存分配 todo</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">4.</strong> 第三章 输入输出 - 标准输出和启动参数 todo</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">5.</strong> 第四章 内存管理2 - 地址空间重建和正式内存分配 todo</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">6.</strong> 第五章 多任务1 - 从串行到协作式并发 todo</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">7.</strong> 第六章 异常和中断 - 响应意外情况和外部事件 todo</div></li><li><ol class="section"><li class="chapter-item expanded "><div><strong aria-hidden="true">7.1.</strong> 异常处理</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">7.2.</strong> 时钟中断</div></li></ol></li><li class="chapter-item expanded "><div><strong aria-hidden="true">8.</strong> 第七章 多任务2 -从协作式到抢占式 todo</div></li><li><ol class="section"><li class="chapter-item expanded "><div><strong aria-hidden="true">8.1.</strong> 抢占机制 - 任务切换的内外条件</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">8.2.</strong> round-robin 调度算法</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">8.3.</strong> 同步原语 - 等待与唤醒</div></li></ol></li><li class="chapter-item expanded "><a href="ch08-00.html"><strong aria-hidden="true">9.</strong> 附录A</a></li><li class="chapter-item expanded "><a href="ch09-00.html"><strong aria-hidden="true">10.</strong> 附录B</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <!-- Track and set sidebar scroll position -->
+        <script>
+            var sidebarScrollbox = document.querySelector('#sidebar .sidebar-scrollbox');
+            sidebarScrollbox.addEventListener('click', function(e) {
+                if (e.target.tagName === 'A') {
+                    sessionStorage.setItem('sidebar-scroll', sidebarScrollbox.scrollTop);
+                }
+            }, { passive: true });
+            var sidebarScrollTop = sessionStorage.getItem('sidebar-scroll');
+            sessionStorage.removeItem('sidebar-scroll');
+            if (sidebarScrollTop) {
+                // preserve sidebar scroll position when navigating via links within sidebar
+                sidebarScrollbox.scrollTop = sidebarScrollTop;
+            } else {
+                // scroll sidebar to current active section when navigating via "next/previous chapter" buttons
+                var activeSection = document.querySelector('#sidebar .active');
+                if (activeSection) {
+                    activeSection.scrollIntoView({ block: 'center' });
+                }
+            }
+        </script>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">ArceOS Tutorial Book</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        <a href="https://github.com/rcore-os/arceos-tutorial-book" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h2 id="第二节-sbi-功能调用"><a class="header" href="#第二节-sbi-功能调用">第二节 SBI 功能调用</a></h2>
+<p>到目前为止，我们还看不到内核的输出信息，只能通过查看 qemu 跟踪日志，确认工作成果。现在是实现打印输出的时候了！</p>
+<p>有两个办法可以让内核支持 console，一是通过管理 Uart 串口设备进行输出，二是直接调用 OpenSBI 提供的功能。前一个方式实际是实现驱动，但目前我们连最基础的内存管理都未能完成，缺乏实现驱动的条件；所以决定采用第二个办法。</p>
+<p>前面一章提到，OpenSBI 提供了一系列功能调用，可以通过调用号去请求 SBI 为我们的内核完成所需工作。查阅 OpenSBI 文档，发现功能调用 <strong>console_putchar</strong> 具有打印输出一个字符的能力，正可以作为输出功能的基础。然后从 crate.io 中，我们找到了 sbi-rt 这个现成的库，它封装了对 sbi 功能调用的各种方法。现在就使用它来实现 console 模块，对应的 console.rs（放置于 src 目录下）如下：</p>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>/// Writes a byte to the console.
+pub fn putchar(c: u8) {
+    #[allow(deprecated)]
+    sbi_rt::legacy::console_putchar(c as usize);
+}
+
+/// Write a slice of bytes to the console.
+pub fn write_bytes(bytes: &amp;[u8]) {
+    for c in bytes {
+        putchar(*c);
+    }
+}
+<span class="boring">}</span></code></pre></pre>
+<p>在 Cargo.toml 中，引入对 sbi-rt 的依赖</p>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>[dependencies]
+sbi-rt = { version = &quot;0.0.2&quot;, features = [&quot;legacy&quot;] }
+<span class="boring">}</span></code></pre></pre>
+<p>然后把 <code>mod console;</code>引入 main.rs，就可以向屏幕输出字符串了。</p>
+<blockquote>
+<p><font size=2>现在还不能支持以 println! 宏之类的方式输入可变参数，这个特性需要动态内存分配功能的支持。</font></p>
+</blockquote>
+<p>在 main.rs 中，替换掉那个 <code>wfi </code>指令，正式向屏幕输出一句话：</p>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>mod console;
+
+unsafe extern &quot;C&quot; fn rust_entry(_hartid: usize, _dtb: usize) {
+   console::write_bytes(b&quot;\nHello, ArceOS!\n&quot;);
+}
+<span class="boring">}</span></code></pre></pre>
+<p>通过 <code>make run</code> 运行，终于在屏幕上看到了输出！</p>
+<p>虽然工作取得了进展，但我们现在启动的内核还存在一些隐患，其中最主要的一点是上节开头提到的<strong>第 3 项</strong>，初始化 BSS 区域。</p>
+<p>BSS 是构成内核 Image 的一个特殊的数据区，编译器会把程序中初始值为零的全局变量等放到这个区域，也就是说，该区域必须在使用之前清零。眼下我们的内核程序还不涉及这种类型的符号，但是在将来很快就会出现。</p>
+<p>编译器不保证进行 BSS 清零工作，作为内核，也没有其它程序替我们完成，那就只有自己清零。增加模块 mem，对应的 mem.rs（放置于 src 目录下）如下：</p>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>/// Fills the `.bss` section with zeros.
+pub(crate) fn clear_bss() {
+    unsafe {
+        core::slice::from_raw_parts_mut(_sbss as usize as *mut u8, _ebss as usize - _sbss as usize)
+            .fill(0);
+    }
+}
+
+extern &quot;C&quot; {
+    fn _sbss();
+    fn _ebss();
+}
+<span class="boring">}</span></code></pre></pre>
+<p>在 main.rs 中，引入 mem 模块，并确保在进入 rust_entry 时，首先执行清零。</p>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>unsafe extern &quot;C&quot; fn rust_entry(_hartid: usize, _dtb: usize) {
+    mem::clear_bss();
+    console::write_bytes(b&quot;\nHello, ArceOS!\n&quot;);
+}
+<span class="boring">}</span></code></pre></pre>
+<p>再次 <code>make run</code>，屏幕输出结果没有变化，但是在程序内部我们已经消除了这个隐患。</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="ch01-01.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="ch01-03.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="ch01-01.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="ch01-03.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+        <script src="ace.js"></script>
+        <script src="editor.js"></script>
+        <script src="mode-rust.js"></script>
+        <script src="theme-dawn.js"></script>
+        <script src="theme-tomorrow_night.js"></script>
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+        <script src="mermaid.min.js"></script>
+        <script src="mermaid-init.js"></script>
+
+
+    </div>
+    </body>
+</html>

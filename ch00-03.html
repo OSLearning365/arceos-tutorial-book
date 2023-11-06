@@ -1,0 +1,328 @@
+<!DOCTYPE HTML>
+<html lang="cn" class="light" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>内核第一行代码 - ArceOS Tutorial Book</title>
+
+
+        <!-- Custom HTML head -->
+        
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+    </head>
+    <body class="sidebar-visible no-js">
+    <div id="body-container">
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('light')
+            html.classList.add(theme);
+            var body = document.querySelector('body');
+            body.classList.remove('no-js')
+            body.classList.add('js');
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var body = document.querySelector('body');
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            body.classList.remove('sidebar-visible');
+            body.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="Prefix.html">前言</a></li><li class="chapter-item expanded "><a href="ch00-00.html"><strong aria-hidden="true">1.</strong> 第零章 史前时代 - 从开机到内核启动</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch00-01.html"><strong aria-hidden="true">1.1.</strong> 实验环境</a></li><li class="chapter-item expanded "><a href="ch00-02.html"><strong aria-hidden="true">1.2.</strong> 计算机启动过程和对内核的要求</a></li><li class="chapter-item expanded "><a href="ch00-03.html" class="active"><strong aria-hidden="true">1.3.</strong> 内核第一行代码</a></li><li class="chapter-item expanded "><a href="ch00-04.html"><strong aria-hidden="true">1.4.</strong> 编译与运行环境</a></li><li class="chapter-item expanded "><div><strong aria-hidden="true">1.5.</strong> Unikernel</div></li><li class="chapter-item expanded "><a href="ch00-06.html"><strong aria-hidden="true">1.6.</strong> 本章总结</a></li></ol></li><li class="chapter-item expanded "><a href="ch01-00.html"><strong aria-hidden="true">2.</strong> 第一章 Hello, ArceOS！- 内核启动和组件诞生</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch01-01.html"><strong aria-hidden="true">2.1.</strong> 内核启动</a></li><li class="chapter-item expanded "><a href="ch01-02.html"><strong aria-hidden="true">2.2.</strong> SBI 功能调用</a></li><li class="chapter-item expanded "><a href="ch01-03.html"><strong aria-hidden="true">2.3.</strong> 应用组件与硬件抽象组件</a></li><li class="chapter-item expanded "><a href="ch01-04.html"><strong aria-hidden="true">2.4.</strong> 本章总结</a></li></ol></li><li class="chapter-item expanded "><div><strong aria-hidden="true">3.</strong> 第二章 内存管理1 - 初始的地址空间和早期内存分配 todo</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">4.</strong> 第三章 输入输出 - 标准输出和启动参数 todo</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">5.</strong> 第四章 内存管理2 - 地址空间重建和正式内存分配 todo</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">6.</strong> 第五章 多任务1 - 从串行到协作式并发 todo</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">7.</strong> 第六章 异常和中断 - 响应意外情况和外部事件 todo</div></li><li><ol class="section"><li class="chapter-item expanded "><div><strong aria-hidden="true">7.1.</strong> 异常处理</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">7.2.</strong> 时钟中断</div></li></ol></li><li class="chapter-item expanded "><div><strong aria-hidden="true">8.</strong> 第七章 多任务2 -从协作式到抢占式 todo</div></li><li><ol class="section"><li class="chapter-item expanded "><div><strong aria-hidden="true">8.1.</strong> 抢占机制 - 任务切换的内外条件</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">8.2.</strong> round-robin 调度算法</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">8.3.</strong> 同步原语 - 等待与唤醒</div></li></ol></li><li class="chapter-item expanded "><a href="ch08-00.html"><strong aria-hidden="true">9.</strong> 附录A</a></li><li class="chapter-item expanded "><a href="ch09-00.html"><strong aria-hidden="true">10.</strong> 附录B</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <!-- Track and set sidebar scroll position -->
+        <script>
+            var sidebarScrollbox = document.querySelector('#sidebar .sidebar-scrollbox');
+            sidebarScrollbox.addEventListener('click', function(e) {
+                if (e.target.tagName === 'A') {
+                    sessionStorage.setItem('sidebar-scroll', sidebarScrollbox.scrollTop);
+                }
+            }, { passive: true });
+            var sidebarScrollTop = sessionStorage.getItem('sidebar-scroll');
+            sessionStorage.removeItem('sidebar-scroll');
+            if (sidebarScrollTop) {
+                // preserve sidebar scroll position when navigating via links within sidebar
+                sidebarScrollbox.scrollTop = sidebarScrollTop;
+            } else {
+                // scroll sidebar to current active section when navigating via "next/previous chapter" buttons
+                var activeSection = document.querySelector('#sidebar .active');
+                if (activeSection) {
+                    activeSection.scrollIntoView({ block: 'center' });
+                }
+            }
+        </script>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">ArceOS Tutorial Book</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        <a href="https://github.com/rcore-os/arceos-tutorial-book" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h2 id="第三节-内核第一行代码"><a class="header" href="#第三节-内核第一行代码">第三节 内核第一行代码</a></h2>
+<p>现在我们开始动手用 Rust 编写内核的第一个版本 v0.1。虽然它只包含一行代码，但是当我们观测到这行代码被执行时，就意味着计算机经过漫长的启动，终于把系统控制权交到内核的手里了，后面将会是 ArceOS 的 ShowTime!</p>
+<p>首先建立工作目录 <em>arceos</em>，以后我们将在该目录下逐步建立组件工程，同时维护一些对编译、运行进行支持的配置和脚本。</p>
+<p>在工作目录 <em>arceos</em> 中，通过 <code>cargo new axorigin</code> 建立第一个工程 axorigin，默认会产生一个基于 Rust std 库的 <em>&quot;Hello, World!&quot;</em> 程序，它预期会在某种操作系统上进行编译和运行。这个的程序入口 main 函数并非真正的程序入口，真正的入口其实是命名为 <em>_start</em> 的函数，Rust 编译器会根据底层操作系统的情况生成 <em>_start</em> 函数的框架，在完成一些必要的运行前准备工作后，再调用 main 函数。此外，打印输出的功能也需要通过 std 标准库去申请底层操作系统的系统调用服务。</p>
+<p>这种默认生成的程序显然不符合我们的需要，因为我们要开发的程序本身就是操作系统而不是应用，并没有其它的操作系统支撑。换句话说，我们开发的是基于硬件的裸机程序（baremental）。在这种情况下，std 库是不存在的，也无法指望 Rust 编译器为我们生成 <em>_start</em> 函数，我们需要自己定义 <em>_start</em> 函数，并通过管理硬件资源实现应用的需求。</p>
+<p>修改 main.rs，删除原有实现，建立最初的内核的程序入口框架。</p>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span>#![no_std]
+#![no_main]
+
+<span class="boring">fn main() {
+</span>#[no_mangle]
+#[link_section = &quot;.text.boot&quot;]
+unsafe extern &quot;C&quot; fn _start() -&gt; ! {
+    core::arch::asm!(
+        &quot;wfi&quot;,
+        options(noreturn)
+    )
+}
+<span class="boring">}</span></code></pre></pre>
+<p>通过 no_std 和 no_main 告诉 Rust 编译器，程序自定义 <em>_start</em> 入口，不需要 main 函数和标准库支持。</p>
+<p>同时，对 <em>_start</em> 标记两个属性：</p>
+<ul>
+<li>
+<p>[link_section = &quot;.text.boot&quot;]：如上节所说，要求编译器把 <em>_start</em> 函数代码放置在 Image 文件的开头，内核运行从此处开始。</p>
+</li>
+<li>
+<p>[no_mangle]：要求编译器保持 <em>_start</em> 函数名称不变，这个入口符号是必须存在的。否则，编译器默认会对符号名称进行混淆。</p>
+</li>
+</ul>
+<p><em>_start</em> 中当前只有唯一的一行代码 <code>wfi</code>，后面在 qemu 启动时，我们将监控这行代码是否被执行到。</p>
+<p>现在尝试在工作目录 arceos 下编译 axorigin 这个工程，需要输入额外的参数：</p>
+<pre><code class="language-bash">cargo build --manifest-path axorigin/Cargo.toml \
+	--target riscv64gc-unknown-none-elf --target-dir ./target --release
+</code></pre>
+<p><strong>注意</strong>：必须显式指定 <strong>riscv64gc-unknown-none-elf</strong> 这个 target，告诉 Rust 编译器我们的编译目标是 RiscV 架构的裸机程序。</p>
+<p>此时将会收到类似下面的错误：</p>
+<pre><code class="language-bash">error[E0463]: can't find crate for `core`
+  |
+  = note: the `riscv64gc-unknown-none-elf` target may not be installed
+  = help: consider downloading the target with `rustup target add riscv64gc-unknown-none-elf`
+  ... ...
+</code></pre>
+<p>我们可以参照提示中的命令去下载和安装 target。</p>
+<p>但这里提供另一个解决的办法，在工作目录下直接放配置文件 <strong>rust-toolchain.toml</strong>，来定制符合我们要求的 rust 工具链，</p>
+<pre><code class="language-bash">[toolchain]
+profile = &quot;minimal&quot;
+channel = &quot;nightly&quot;
+components = [&quot;rust-src&quot;, &quot;llvm-tools-preview&quot;, &quot;rustfmt&quot;, &quot;clippy&quot;]
+targets = [&quot;riscv64gc-unknown-none-elf&quot;]
+</code></pre>
+<p>把 <strong>riscv64gc-unknown-none-elf</strong> 加入工具链的默认 target 列表；同时 <strong>channel = &quot;nightly&quot;</strong>，因为后面会用到 Rust 的一些实验特性。</p>
+<p>再次编译，还是报错，这次的提示：</p>
+<pre><code class="language-bash">error: `#[panic_handler]` function required, but not found
+</code></pre>
+<p>根据 Rust 的设计，程序遇到不可恢复异常时将会中止运行，展开调用栈，把异常信息输出到屏幕。这个机制与底层操作系统有关，定义在 std 标准库中。如前所述，我们没有现成的实现，所以只能自己给出定义。</p>
+<p>在 src 目录下增加模块文件 lang_items.rs，然后在 main.rs 中加入一行 <code>mod lang_items;</code>引入该模块。</p>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>use core::panic::PanicInfo;
+
+#[panic_handler]
+fn panic(_info: &amp;PanicInfo) -&gt; ! {
+    loop {}
+}
+<span class="boring">}</span></code></pre></pre>
+<p>现在采取最简单的方式：如果遇到不可恢复的异常，程序将会无限循环下去。后面章节实验中，我们将逐步完善这个处理机制。</p>
+<p>再次编译，终于通过了！但是当前输出的是ELF格式，还不能在 qemu 中直接运行，先转为原始二进制格式：</p>
+<pre><code class="language-bash">rust-objcopy --binary-architecture=riscv64 --strip-all -O binary \
+	target/riscv64gc-unknown-none-elf/release/axorigin \
+	target/riscv64gc-unknown-none-elf/release/axorigin.bin
+</code></pre>
+<p>得到的 axorigin.bin 就是我们最初版本的内核 Image 文件，先用<code>xxd </code>命令查看一下内容：</p>
+<pre><code class="language-bash">xxd -e target/riscv64gc-unknown-none-elf/release/axorigin.bin
+00000000: 10500073     0000                    s.P...
+</code></pre>
+<p>这个内核 Image 只有 6 个字节，对照 RiscV 指令手册，最前面的四个字节正是 <code>wfi</code> 的指令编码。这个结果有点意外，我们在前面做的一系列考虑和具体工作，在 Rust 看来，只有那一行代码是有意义的；就连 Rust 自己要求实现的 panic_handler 最终也被它忽略了:-)。不过这个内核文件对我们下面的实验已经足够了。</p>
+<p>终于到了运行时刻！用 qemu 运行一下：</p>
+<pre><code class="language-bash">qemu-system-riscv64 -m 128M -machine virt -bios default -nographic \
+	-kernel target/riscv64gc-unknown-none-elf/release/axorigin.bin \
+	-D qemu.log -d in_asm
+</code></pre>
+<p>成功！屏幕输出 OpenSBI 的启动信息。但是对我们的内核来说，目前还什么事都没有干，自然不会有输出。</p>
+<p>现在 qemu 处于等待状态，通过输入 <code>ctrl+a x</code> 退回到 shell。具体操作：先按 ctrl + a，再按 x 键。</p>
+<p>查看当前目录，发现多出一个 qemu.log。</p>
+<p>执行 qemu 时的最后一行参数让模拟器记录了它执行过的代码序列，我们只需要关注日志文件的最后：</p>
+<pre><code class="language-x86asm">----------------
+IN:
+Priv: 1; Virt: 0
+0x80200000:  10500073          wfi
+0x80200004:  0000              illegal
+</code></pre>
+<p>qemu 在执行过程的最后阶段，到达了预设的内核入口地址 0x8020_0000，并且执行的正是我们安排的 <code>wfi</code> 指令。这证明：我们之前的努力获得了成功，从此计算机(模拟器)的控制权就落入我们内核的手中，后面将通过一步步的工作逐渐增强完善内核的功能。</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="ch00-02.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="ch00-04.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="ch00-02.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="ch00-04.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+        <script src="ace.js"></script>
+        <script src="editor.js"></script>
+        <script src="mode-rust.js"></script>
+        <script src="theme-dawn.js"></script>
+        <script src="theme-tomorrow_night.js"></script>
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+        <script src="mermaid.min.js"></script>
+        <script src="mermaid-init.js"></script>
+
+
+    </div>
+    </body>
+</html>
