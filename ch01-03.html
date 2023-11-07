@@ -200,7 +200,7 @@
 </li>
 <li>
 <p>在工作目录 arceos 中，通过 <code>cargo new axhal --lib</code> 建立 axhal 工程。将上一版本内核的模块文件 lang_items.rs、boot.rs、mem.rs、console.rs 挪到 axhal 的 src 目录下。看一下 axhal 的根模块 lib.rs：</p>
-<pre><pre class="playground"><code class="language-rust edition2021">#![no_std]
+<pre><code class="language-rust ignore">#![no_std]
 #![feature(asm_const)]
 
 mod lang_items;
@@ -214,15 +214,13 @@ unsafe extern &quot;C&quot; fn rust_entry(hartid: usize, dtb: usize) {
     }
     mem::clear_bss();
     main(hartid, dtb);
-}</code></pre></pre>
+}</code></pre>
 </li>
 <li>
 <p>修改一下 axhal 的 Cargo.toml，引入对 sbi-rt 的依赖：</p>
-<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>[dependencies]
+<pre><code class="language-toml">[dependencies]
 sbi-rt = { version = &quot;0.0.2&quot;, features = [&quot;legacy&quot;] }
-<span class="boring">}</span></code></pre></pre>
+</code></pre>
 </li>
 <li>
 <p>组件 axhal 继承了上一版本内核几乎所有的模块，以及 rust_entry 框架，只是把直接调用 console 进行打印的那行代码，替换成一个外部函数 main，这个 main 函数就是应用组件的入口。这里可能会产生一个疑问，为什么需要通过 extern ABI 这种外部函数的形式去调用？而不能以引入依赖 crate 的方式去调用？后面会说明这一原因。</p>
@@ -239,13 +237,13 @@ sbi-rt = { version = &quot;0.0.2&quot;, features = [&quot;legacy&quot;] }
 <p>来看一下 axorigin 当前的 main.rs 实现：</p>
 <ul>
 <li>
-<pre><pre class="playground"><code class="language-rust edition2021">#![no_std]
+<pre><code class="language-rust ignore">#![no_std]
 #![no_main]
 
 #[no_mangle]
 pub fn main(_hartid: usize, _dtb: usize) {
     axhal::console::write_bytes(b&quot;\nHello, ArceOS!\n&quot;);
-}</code></pre></pre>
+}</code></pre>
 </li>
 <li>
 <p>主体就是一个 main 函数，正对应 axhal 组件在最后阶段要调用的函数，main 是所有应用类型组件的入口。</p>
@@ -264,11 +262,9 @@ pub fn main(_hartid: usize, _dtb: usize) {
 <p><strong>第二步：对现有的两个组件进行组合，形成可以运行的内核。</strong></p>
 <p>既然两个组件都是 Rust crate 的形式，最简单的组合方式，自然就是利用 Cargo 工具提供的 denpendencies 依赖机制进行连接组合。</p>
 <p>来看 axorigin 的 Cargo.toml：</p>
-<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>[dependencies]
+<pre><code class="language-toml">[dependencies]
 axhal = { path = &quot;../axhal&quot; }
-<span class="boring">}</span></code></pre></pre>
+</code></pre>
 <p>Rust 工具链中的 Cargo，就可以自动为我们进行组件的组合，并构造出内核。</p>
 <p>另外，linker.lds 实际也是与体系结构相关的，把它挪到 axhal 的目录下，注意改一下 Makefile：</p>
 <pre><code class="language-makefile">LD_SCRIPT := $(CURDIR)/axhal/linker.lds

@@ -292,20 +292,17 @@ rustup component add llvm-tools-preview
 <p>在工作目录 <em>arceos</em> 中，通过 <code>cargo new axorigin</code> 建立第一个工程 axorigin，默认会产生一个基于 Rust std 库的 <em>&quot;Hello, World!&quot;</em> 程序，它预期会在某种操作系统上进行编译和运行。这个的程序入口 main 函数并非真正的程序入口，真正的入口其实是命名为 <em>_start</em> 的函数，Rust 编译器会根据底层操作系统的情况生成 <em>_start</em> 函数的框架，在完成一些必要的运行前准备工作后，再调用 main 函数。此外，打印输出的功能也需要通过 std 标准库去申请底层操作系统的系统调用服务。</p>
 <p>这种默认生成的程序显然不符合我们的需要，因为我们要开发的程序本身就是操作系统而不是应用，并没有其它的操作系统支撑。换句话说，我们开发的是基于硬件的裸机程序（baremental）。在这种情况下，std 库是不存在的，也无法指望 Rust 编译器为我们生成 <em>_start</em> 函数，我们需要自己定义 <em>_start</em> 函数，并通过管理硬件资源实现应用的需求。</p>
 <p>修改 main.rs，删除原有实现，建立最初的内核的程序入口框架。</p>
-<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
-</span>#![no_std]
+<pre><code class="language-rust ignore">#![no_std]
 #![no_main]
 
-<span class="boring">fn main() {
-</span>#[no_mangle]
+#[no_mangle]
 #[link_section = &quot;.text.boot&quot;]
 unsafe extern &quot;C&quot; fn _start() -&gt; ! {
     core::arch::asm!(
         &quot;wfi&quot;,
         options(noreturn)
     )
-}
-<span class="boring">}</span></code></pre></pre>
+}</code></pre>
 <p>通过 no_std 和 no_main 告诉 Rust 编译器，程序自定义 <em>_start</em> 入口，不需要 main 函数和标准库支持。</p>
 <p>同时，对 <em>_start</em> 标记两个属性：</p>
 <ul>
@@ -343,15 +340,12 @@ targets = [&quot;riscv64gc-unknown-none-elf&quot;]
 </code></pre>
 <p>根据 Rust 的设计，程序遇到不可恢复异常时将会中止运行，展开调用栈，把异常信息输出到屏幕。这个机制与底层操作系统有关，定义在 std 标准库中。如前所述，我们没有现成的实现，所以只能自己给出定义。</p>
 <p>在 src 目录下增加模块文件 lang_items.rs，然后在 main.rs 中加入一行 <code>mod lang_items;</code>引入该模块。</p>
-<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>use core::panic::PanicInfo;
+<pre><code class="language-rust ignore">use core::panic::PanicInfo;
 
 #[panic_handler]
 fn panic(_info: &amp;PanicInfo) -&gt; ! {
     loop {}
-}
-<span class="boring">}</span></code></pre></pre>
+}</code></pre>
 <p>现在采取最简单的方式：如果遇到不可恢复的异常，程序将会无限循环下去。后面章节实验中，我们将逐步完善这个处理机制。</p>
 <p>再次编译，终于通过了！但是当前输出的是ELF格式，还不能在 qemu 中直接运行，先转为原始二进制格式：</p>
 <pre><code class="language-bash">rust-objcopy --binary-architecture=riscv64 --strip-all -O binary \
@@ -444,9 +438,7 @@ make clean
 <p>每一项初始化工作都具有特定的作用，并且与后续的工作相关。</p>
 <p>这一节作为起步阶段，首先完成<strong>第 5 步</strong>，通过建立栈，尽快脱离晦涩的汇编语言，进入 Rust 的编程世界，今后就可以通过 Rust 高级语言实现内核功能。启动过程中的其它工作项，我们将在扩展对应的内核功能时，再回头进行补充。例如下节我们会补上<strong>第 3 步</strong>。</p>
 <p>首先，把引导启动作为独立的功能模块 boot，对应的 boot.rs（放置于 src 目录下）如下：</p>
-<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>const TASK_STACK_SIZE: usize = 0x40000; // 256 K
+<pre><code class="language-rust ignore">const TASK_STACK_SIZE: usize = 0x40000; // 256 K
 
 #[link_section = &quot;.bss.stack&quot;]
 static mut BOOT_STACK: [u8; TASK_STACK_SIZE] = [0; TASK_STACK_SIZE];
@@ -468,8 +460,7 @@ unsafe extern &quot;C&quot; fn _start() -&gt; ! {
         entry = sym super::rust_entry,
         options(noreturn),
     )
-}
-<span class="boring">}</span></code></pre></pre>
+}</code></pre>
 <p>依然是从 <em>_start</em> 入口开始，这次我们直接初始化栈指针寄存器 sp，让它指向栈空间的最高地址，因为栈的方向是从高地址向低地址发展。栈空间 BOOT_STACK 是一个数组，section 标记 &quot;.bss.stack&quot; 表示它在最终的 Image 文件中有固定的位置，该位置由 LDS 文件通过这个标记指定。查看 linker.lds，可以看到我们为启动栈安排的位置就在 BSS 区域的开头。</p>
 <pre><code class="language-bash">.bss : ALIGN(4K) {
     boot_stack = .;
@@ -483,13 +474,11 @@ unsafe extern &quot;C&quot; fn _start() -&gt; ! {
 <p>一旦建立栈，我们就具备了进行函数调用的能力。类似于其它高级语言，Rust 函数调用同样是基于栈。下面就可以调用 Rust 函数了。</p>
 <p>首先取得 rust_entry 的入口地址，然后调用。按照 RiscV 规范，a0 到 a7 寄存器分别作为函数调用的前 8 个参数，当下只有 a0 和 a1 是有效的。这两个寄存器由上一级引导程序 SBI 设置，a0 保存了 HartID，也就是当前 cpu 核的硬件 ID；a1 则指向了一块内存区，其中保存的是描述底层平台硬件信息的设备树，即 dtb。内核在启动到调用这个函数的过程中，避开了对 a0 和 a1 的使用。如果过程中，因为不得以的原因必须使用它们，必须在启动开始时对它们进行保存，通常方式是暂存到 s0 和 s1，然后在调用 rust_entry 前恢复回来。这个就是本节开始时，提到的<strong>第 1 项</strong>任务，将来会看到这种处理的必要性。</p>
 <p>函数 rust_entry 定义在 main.rs 中：</p>
-<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
-</span>#![no_std]
+<pre><code class="language-rust ignore">#![no_std]
 #![no_main]
 #![feature(asm_const)]
 
-<span class="boring">fn main() {
-</span>mod lang_items;
+mod lang_items;
 mod boot;
 
 unsafe extern &quot;C&quot; fn rust_entry(_hartid: usize, _dtb: usize) {
@@ -497,8 +486,7 @@ unsafe extern &quot;C&quot; fn rust_entry(_hartid: usize, _dtb: usize) {
         &quot;wfi&quot;,
         options(noreturn)
     )
-}
-<span class="boring">}</span></code></pre></pre>
+}</code></pre>
 <p>由于 rust_entry 目前还干不了任何事，所以先保留 <code>wfi</code> 指令，按照与上一章相同的方式，确认内核执行到了这个函数的内部。</p>
 <p>另外注意，rust_entry 带有的两个参数 <em>_hartid</em> 和 <em>_dtb</em>，就是通过前面说的 a0 和 a1 寄存器传入的，将来会用到它们。</p>
 <p>用 <code>make run</code> 编译并执行后，打开 qemu.log 并跳到文件末尾，可以看到从 0x80200000 到 0x8020001c 这段范围执行的指令序列与我们编写的汇编代码等效，证明内核成功完成了最早的启动和初始化过程，并且进入到rust函数中。</p>
@@ -510,9 +498,7 @@ unsafe extern &quot;C&quot; fn rust_entry(_hartid: usize, _dtb: usize) {
 <p>到目前为止，我们还看不到内核的输出信息，只能通过查看 qemu 跟踪日志，确认工作成果。现在是实现打印输出的时候了！</p>
 <p>有两个办法可以让内核支持 console，一是通过管理 Uart 串口设备进行输出，二是直接调用 OpenSBI 提供的功能。前一个方式实际是实现驱动，但目前我们连最基础的内存管理都未能完成，缺乏实现驱动的条件；所以决定采用第二个办法。</p>
 <p>前面一章提到，OpenSBI 提供了一系列功能调用，可以通过调用号去请求 SBI 为我们的内核完成所需工作。查阅 OpenSBI 文档，发现功能调用 <strong>console_putchar</strong> 具有打印输出一个字符的能力，正可以作为输出功能的基础。然后从 crate.io 中，我们找到了 sbi-rt 这个现成的库，它封装了对 sbi 功能调用的各种方法。现在就使用它来实现 console 模块，对应的 console.rs（放置于 src 目录下）如下：</p>
-<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>/// Writes a byte to the console.
+<pre><code class="language-rust ignore">/// Writes a byte to the console.
 pub fn putchar(c: u8) {
     #[allow(deprecated)]
     sbi_rt::legacy::console_putchar(c as usize);
@@ -523,34 +509,26 @@ pub fn write_bytes(bytes: &amp;[u8]) {
     for c in bytes {
         putchar(*c);
     }
-}
-<span class="boring">}</span></code></pre></pre>
+}</code></pre>
 <p>在 Cargo.toml 中，引入对 sbi-rt 的依赖</p>
-<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>[dependencies]
+<pre><code class="language-toml">[dependencies]
 sbi-rt = { version = &quot;0.0.2&quot;, features = [&quot;legacy&quot;] }
-<span class="boring">}</span></code></pre></pre>
+</code></pre>
 <p>然后把 <code>mod console;</code>引入 main.rs，就可以向屏幕输出字符串了。</p>
 <blockquote>
 <p><font size=2>现在还不能支持以 println! 宏之类的方式输入可变参数，这个特性需要动态内存分配功能的支持。</font></p>
 </blockquote>
 <p>在 main.rs 中，替换掉那个 <code>wfi </code>指令，正式向屏幕输出一句话：</p>
-<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>mod console;
+<pre><code class="language-rust ignore">mod console;
 
 unsafe extern &quot;C&quot; fn rust_entry(_hartid: usize, _dtb: usize) {
    console::write_bytes(b&quot;\nHello, ArceOS!\n&quot;);
-}
-<span class="boring">}</span></code></pre></pre>
+}</code></pre>
 <p>通过 <code>make run</code> 运行，终于在屏幕上看到了输出！</p>
 <p>虽然工作取得了进展，但我们现在启动的内核还存在一些隐患，其中最主要的一点是上节开头提到的<strong>第 3 项</strong>，初始化 BSS 区域。</p>
 <p>BSS 是构成内核 Image 的一个特殊的数据区，编译器会把程序中初始值为零的全局变量等放到这个区域，也就是说，该区域必须在使用之前清零。眼下我们的内核程序还不涉及这种类型的符号，但是在将来很快就会出现。</p>
 <p>编译器不保证进行 BSS 清零工作，作为内核，也没有其它程序替我们完成，那就只有自己清零。增加模块 mem，对应的 mem.rs（放置于 src 目录下）如下：</p>
-<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>/// Fills the `.bss` section with zeros.
+<pre><code class="language-rust ignore">/// Fills the `.bss` section with zeros.
 pub(crate) fn clear_bss() {
     unsafe {
         core::slice::from_raw_parts_mut(_sbss as usize as *mut u8, _ebss as usize - _sbss as usize)
@@ -561,16 +539,12 @@ pub(crate) fn clear_bss() {
 extern &quot;C&quot; {
     fn _sbss();
     fn _ebss();
-}
-<span class="boring">}</span></code></pre></pre>
+}</code></pre>
 <p>在 main.rs 中，引入 mem 模块，并确保在进入 rust_entry 时，首先执行清零。</p>
-<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>unsafe extern &quot;C&quot; fn rust_entry(_hartid: usize, _dtb: usize) {
+<pre><code class="language-rust ignore">unsafe extern &quot;C&quot; fn rust_entry(_hartid: usize, _dtb: usize) {
     mem::clear_bss();
     console::write_bytes(b&quot;\nHello, ArceOS!\n&quot;);
-}
-<span class="boring">}</span></code></pre></pre>
+}</code></pre>
 <p>再次 <code>make run</code>，屏幕输出结果没有变化，但是在程序内部我们已经消除了这个隐患。</p>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="第三节-应用组件与硬件抽象组件"><a class="header" href="#第三节-应用组件与硬件抽象组件">第三节 应用组件与硬件抽象组件</a></h2>
 <p>从本节开始，我们将开启组件化构造操作系统内核的旅程。</p>
@@ -598,7 +572,7 @@ extern &quot;C&quot; {
 </li>
 <li>
 <p>在工作目录 arceos 中，通过 <code>cargo new axhal --lib</code> 建立 axhal 工程。将上一版本内核的模块文件 lang_items.rs、boot.rs、mem.rs、console.rs 挪到 axhal 的 src 目录下。看一下 axhal 的根模块 lib.rs：</p>
-<pre><pre class="playground"><code class="language-rust edition2021">#![no_std]
+<pre><code class="language-rust ignore">#![no_std]
 #![feature(asm_const)]
 
 mod lang_items;
@@ -612,15 +586,13 @@ unsafe extern &quot;C&quot; fn rust_entry(hartid: usize, dtb: usize) {
     }
     mem::clear_bss();
     main(hartid, dtb);
-}</code></pre></pre>
+}</code></pre>
 </li>
 <li>
 <p>修改一下 axhal 的 Cargo.toml，引入对 sbi-rt 的依赖：</p>
-<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>[dependencies]
+<pre><code class="language-toml">[dependencies]
 sbi-rt = { version = &quot;0.0.2&quot;, features = [&quot;legacy&quot;] }
-<span class="boring">}</span></code></pre></pre>
+</code></pre>
 </li>
 <li>
 <p>组件 axhal 继承了上一版本内核几乎所有的模块，以及 rust_entry 框架，只是把直接调用 console 进行打印的那行代码，替换成一个外部函数 main，这个 main 函数就是应用组件的入口。这里可能会产生一个疑问，为什么需要通过 extern ABI 这种外部函数的形式去调用？而不能以引入依赖 crate 的方式去调用？后面会说明这一原因。</p>
@@ -637,13 +609,13 @@ sbi-rt = { version = &quot;0.0.2&quot;, features = [&quot;legacy&quot;] }
 <p>来看一下 axorigin 当前的 main.rs 实现：</p>
 <ul>
 <li>
-<pre><pre class="playground"><code class="language-rust edition2021">#![no_std]
+<pre><code class="language-rust ignore">#![no_std]
 #![no_main]
 
 #[no_mangle]
 pub fn main(_hartid: usize, _dtb: usize) {
     axhal::console::write_bytes(b&quot;\nHello, ArceOS!\n&quot;);
-}</code></pre></pre>
+}</code></pre>
 </li>
 <li>
 <p>主体就是一个 main 函数，正对应 axhal 组件在最后阶段要调用的函数，main 是所有应用类型组件的入口。</p>
@@ -662,11 +634,9 @@ pub fn main(_hartid: usize, _dtb: usize) {
 <p><strong>第二步：对现有的两个组件进行组合，形成可以运行的内核。</strong></p>
 <p>既然两个组件都是 Rust crate 的形式，最简单的组合方式，自然就是利用 Cargo 工具提供的 denpendencies 依赖机制进行连接组合。</p>
 <p>来看 axorigin 的 Cargo.toml：</p>
-<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>[dependencies]
+<pre><code class="language-toml">[dependencies]
 axhal = { path = &quot;../axhal&quot; }
-<span class="boring">}</span></code></pre></pre>
+</code></pre>
 <p>Rust 工具链中的 Cargo，就可以自动为我们进行组件的组合，并构造出内核。</p>
 <p>另外，linker.lds 实际也是与体系结构相关的，把它挪到 axhal 的目录下，注意改一下 Makefile：</p>
 <pre><code class="language-makefile">LD_SCRIPT := $(CURDIR)/axhal/linker.lds
