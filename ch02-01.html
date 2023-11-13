@@ -1,0 +1,322 @@
+<!DOCTYPE HTML>
+<html lang="cn" class="light" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>地址空间 - ArceOS Tutorial Book</title>
+
+
+        <!-- Custom HTML head -->
+        
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+    </head>
+    <body class="sidebar-visible no-js">
+    <div id="body-container">
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('light')
+            html.classList.add(theme);
+            var body = document.querySelector('body');
+            body.classList.remove('no-js')
+            body.classList.add('js');
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var body = document.querySelector('body');
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            body.classList.remove('sidebar-visible');
+            body.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="Prefix.html">前言</a></li><li class="chapter-item expanded "><a href="ch00-00.html"><strong aria-hidden="true">1.</strong> 第零章 史前时代 - 从开机到内核启动</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch00-01.html"><strong aria-hidden="true">1.1.</strong> 实验环境</a></li><li class="chapter-item expanded "><a href="ch00-02.html"><strong aria-hidden="true">1.2.</strong> 计算机启动过程和对内核的要求</a></li><li class="chapter-item expanded "><a href="ch00-03.html"><strong aria-hidden="true">1.3.</strong> 内核第一行代码</a></li><li class="chapter-item expanded "><a href="ch00-04.html"><strong aria-hidden="true">1.4.</strong> 编译与运行环境</a></li><li class="chapter-item expanded "><div><strong aria-hidden="true">1.5.</strong> Unikernel</div></li><li class="chapter-item expanded "><a href="ch00-06.html"><strong aria-hidden="true">1.6.</strong> 本章总结</a></li></ol></li><li class="chapter-item expanded "><a href="ch01-00.html"><strong aria-hidden="true">2.</strong> 第一章 Hello, ArceOS！- 内核启动和组件诞生</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch01-01.html"><strong aria-hidden="true">2.1.</strong> 内核启动</a></li><li class="chapter-item expanded "><a href="ch01-02.html"><strong aria-hidden="true">2.2.</strong> SBI 功能调用</a></li><li class="chapter-item expanded "><a href="ch01-03.html"><strong aria-hidden="true">2.3.</strong> 应用组件与硬件抽象组件</a></li><li class="chapter-item expanded "><a href="ch01-04.html"><strong aria-hidden="true">2.4.</strong> 全局配置与同步支持</a></li><li class="chapter-item expanded "><a href="ch01-05.html"><strong aria-hidden="true">2.5.</strong> 本章总结</a></li></ol></li><li class="chapter-item expanded "><a href="ch02-00.html"><strong aria-hidden="true">3.</strong> 第二章 内存管理1 - 初始的地址空间和早期内存分配</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch02-01.html" class="active"><strong aria-hidden="true">3.1.</strong> 地址空间</a></li><li class="chapter-item expanded "><a href="ch02-02.html"><strong aria-hidden="true">3.2.</strong> 分页机制 - 页表和页表项</a></li><li class="chapter-item expanded "><a href="ch02-03.html"><strong aria-hidden="true">3.3.</strong> 启用分页 - 进入虚拟地址空间</a></li><li class="chapter-item expanded "><a href="ch02-04.html"><strong aria-hidden="true">3.4.</strong> 早期内存分配器</a></li><li class="chapter-item expanded "><a href="ch02-05.html"><strong aria-hidden="true">3.5.</strong> 主干组件 axruntime</a></li><li class="chapter-item expanded "><a href="ch02-06.html"><strong aria-hidden="true">3.6.</strong> 本章总结</a></li></ol></li><li class="chapter-item expanded "><div><strong aria-hidden="true">4.</strong> 第三章 输入输出 - 标准输出和启动参数 todo</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">5.</strong> 第四章 内存管理2 - 地址空间重建和正式内存分配 todo</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">6.</strong> 第五章 多任务1 - 从串行到协作式并发 todo</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">7.</strong> 第六章 异常和中断 - 响应意外情况和外部事件 todo</div></li><li><ol class="section"><li class="chapter-item expanded "><div><strong aria-hidden="true">7.1.</strong> 异常处理</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">7.2.</strong> 时钟中断</div></li></ol></li><li class="chapter-item expanded "><div><strong aria-hidden="true">8.</strong> 第七章 多任务2 -从协作式到抢占式 todo</div></li><li><ol class="section"><li class="chapter-item expanded "><div><strong aria-hidden="true">8.1.</strong> 抢占机制 - 任务切换的内外条件</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">8.2.</strong> round-robin 调度算法</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">8.3.</strong> 同步原语 - 等待与唤醒</div></li></ol></li><li class="chapter-item expanded "><a href="ch08-00.html"><strong aria-hidden="true">9.</strong> 附录A</a></li><li class="chapter-item expanded "><a href="ch09-00.html"><strong aria-hidden="true">10.</strong> 附录B</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <!-- Track and set sidebar scroll position -->
+        <script>
+            var sidebarScrollbox = document.querySelector('#sidebar .sidebar-scrollbox');
+            sidebarScrollbox.addEventListener('click', function(e) {
+                if (e.target.tagName === 'A') {
+                    sessionStorage.setItem('sidebar-scroll', sidebarScrollbox.scrollTop);
+                }
+            }, { passive: true });
+            var sidebarScrollTop = sessionStorage.getItem('sidebar-scroll');
+            sessionStorage.removeItem('sidebar-scroll');
+            if (sidebarScrollTop) {
+                // preserve sidebar scroll position when navigating via links within sidebar
+                sidebarScrollbox.scrollTop = sidebarScrollTop;
+            } else {
+                // scroll sidebar to current active section when navigating via "next/previous chapter" buttons
+                var activeSection = document.querySelector('#sidebar .active');
+                if (activeSection) {
+                    activeSection.scrollIntoView({ block: 'center' });
+                }
+            }
+        </script>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">ArceOS Tutorial Book</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        <a href="https://github.com/rcore-os/arceos-tutorial-book" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h2 id="第一节-地址空间"><a class="header" href="#第一节-地址空间">第一节 地址空间</a></h2>
+<p>地址空间是内核与应用进程的生存活动空间。内核或应用要运行，就首先需要被加载到指定地址的一段内存中，以指令流的形式存在；CPU 的指令寄存器 <strong>PC</strong> 将从入口指令的地址开始执行，过程中需要不断的跳转，读写特定地址的内存数据，访问指定地址的IO端口等等。地址是内核与应用管理自身和环境资源的主要标识。我们需要在内核或应用（进程）投入运行之前，为它们可能涉及的各种资源的初始地址和占用范围进行统一的安排，这种安排就是地址空间。</p>
+<p>我们目前开发的内核是 <strong>Unikernel</strong> 形态，关于地址空间：</p>
+<ul>
+<li>从特权级的角度，不存在用户态进程空间（Unikernel 甚至连进程概念都没有），内核与应用共用内核态的<strong>单一</strong>地址空间。当内核启动时，它所面对的就是一个由硬件平台决定的<strong>物理</strong>地址空间。</li>
+<li>基于<strong>分页</strong>机制，我们可以在上述物理地址空间的基础上，再新增一个<strong>虚拟</strong>地址空间，以获得更好的地址管理的灵活性。</li>
+</ul>
+<div style="text-align:center">
+   <img src=".\img\物理与虚拟地址空间.svg" alt="物理与虚拟地址空间" style="zoom:100%"/>
+</div>
+<p>CPU 有一个附属部件 MMU（Memory Management Unit），它的作用主要就是控制分页机制的启用。MMU 默认是未启用分页的，所以内核启动时，直接看到的就是物理地址空间，并通过资源的物理地址来访问它们，我们目前就正处在这个状态；然后内核按照需要规划虚拟地址空间的布局，并定义为页表，在适当时候通过设置 MMU 去启用分页，此时虚拟地址空间开始出现并发挥作用，遮蔽了物理地址空间；此后，内核只能看到并访问虚拟地址空间，所以必须使用资源的虚拟地址，分页机制负责对虚拟地址进行映射，一部分会被实际映射到物理空间的某些地址上，而另一部分可能暂时或者永远处于<strong>未</strong>映射的状态。</p>
+<p>可以看出，物理地址空间是硬件平台生产构造时就已经确定的，而虚拟地址空间则是内核可以根据实际需要，进行灵活定义和实时改变的。按照近年来流行的说法，分页机制也可以称为“软件定义”地址空间。</p>
+<p>以下就针对我们的实验平台 qemu-riscv64-virt，进行分析和实验。</p>
+<h3 id="物理地址空间"><a class="header" href="#物理地址空间">物理地址空间</a></h3>
+<p>物理地址空间由硬件平台在生产时决定，通常以 FDT（flattened device tree）的形式提供。对于 qemu-riscv64-virt 平台，我们可以通过如下方式导出它的 fdt 文件。</p>
+<p>首先运行<code>make run</code>，在屏幕输出中可以看到 qemu 的执行命令行：</p>
+<div style="text-align:center">
+   <img src=".\img\qemu执行命令行.png" alt="qemu执行命令行" style="zoom:100%"/>
+</div>
+<p>注意上图中显示的是 qemu-system-riscv64 执行时的命令行，修改这行命令，在参数 *&quot;-machine virt&quot; *后面追加 <em>&quot;,dumpdtb=virt.dtb&quot;</em>。如此，我们就改变了这行命令的执行效果，不再是启动模拟器，而是导出名为 <strong>virt.dtb</strong> 的 fdt 文件，然后就退出了。此时，我们得到的还只是二进制格式的 fdt 文件，进一步用 dtc 工具，把它转换成可读的文本形式。</p>
+<pre><code class="language-shell"># 在参数&quot;-machine virt&quot;之后, 增加 &quot;,dumpdtb=virt.dtb&quot;，用于导出fdt文件的二进制格式dtb
+qemu-system-riscv64 -m 128M -smp 1 -machine virt,dumpdtb=virt.dtb \
+	-bios default -kernel target/riscv64gc-unknown-none-elf/release/axorigin.bin -nographic
+
+# 把二进制形式virt.dtb，转化为可读的文本形式
+dtc ./virt.dtb -o ./virt.dts
+</code></pre>
+<blockquote>
+<p><font size=2>注意：执行上面的命令行导出 fdt 时，一定要保留所有参数。qemu 是根据参数来决定 fdt 中一些配置项的具体内容。例如，参数指定了<code>-m 128M</code>，则 qemu 就会模拟 128M 的物理内存，相应的 fdt 中描述的 memory 就是 128M。</font></p>
+</blockquote>
+<p>现在查看 <strong>virt.dts</strong> 的内容，仅节选与下步实验密切相关的部分：</p>
+<pre><code class="language-json">/dts-v1/;
+
+/ {
+    #address-cells = &lt;0x02&gt;;
+    #size-cells = &lt;0x02&gt;;
+    compatible = &quot;riscv-virtio&quot;;
+    model = &quot;riscv-virtio,qemu&quot;;
+	... ...
+    memory@80000000 {
+        device_type = &quot;memory&quot;;
+        reg = &lt;0x00 0x80000000 0x00 0x8000000&gt;;
+    };
+    ... ...
+    soc {
+        #address-cells = &lt;0x02&gt;;
+        #size-cells = &lt;0x02&gt;;
+        compatible = &quot;simple-bus&quot;;
+        ranges;
+  		... ...
+        serial@10000000 {
+            interrupts = &lt;0x0a&gt;;
+            interrupt-parent = &lt;0x03&gt;;
+            clock-frequency = &quot;\08@&quot;;
+            reg = &lt;0x00 0x10000000 0x00 0x100&gt;;
+            compatible = &quot;ns16550a&quot;;
+        };
+		... ...
+        virtio_mmio@10001000 {
+            interrupts = &lt;0x01&gt;;
+            interrupt-parent = &lt;0x03&gt;;
+            reg = &lt;0x00 0x10001000 0x00 0x1000&gt;;
+            compatible = &quot;virtio,mmio&quot;;
+        };
+        ... ...
+    };
+};
+</code></pre>
+<p>现在先跳过 fdt 的其它细节，注意 <em>memory</em>、<em>serial</em> 和 <em>virtio_mmio</em> 这几项的 <em>reg</em> 字段，该字段是一个包含四个值的序列，描述了对应设备所占用地址空间的开始地址和长度。字段 #address-cells 和 #size-cells 都是 2，说明前两个值解析为范围的开始地址，后两个值对应范围长度。另外，注意 fdt 采用大端序。这样我们就知道了物理内存从 <strong>0x8000_0000</strong> 地址开始，长度是 0x800_0000 即 128M，发现确实是与命令行参数对应的；而串口 serial 从 0x1000_0000 开始，长度 256 字节；第一个 virtio_mmio slot 的地址从 0x10001000 开始，长度是 4096 字节，后面按顺序排列了另外七个 virtio_mmio slot。现在可以画出我们实验平台大致的物理地址空间布局了：</p>
+<div style="text-align:center">
+   <img src=".\img\物理地址空间布局.svg" alt="物理地址空间布局" style="zoom:150%"/>
+</div>
+<p>在第零章，我们提到需要把 SBI 放到物理内存开始的位置 <strong>0x8000_0000</strong> 地址处，这里就解释了该地址是如何得知的。此外，通过 fdt，我们还知道了 qemu 实验平台上，各个设备所占用的 mmio 范围，它们集中在物理空间的低地址范围内。其中 virtio mmio slots 是后面实验中发现与操作 virtio 设备的基础信息，我们将在第九章再分析它们。本章暂时只关注内存管理，先完成内存部分——即 0x8000_0000 之后的虚拟地址空间映射。</p>
+<blockquote>
+<p><font size=2>从第一章我们知道，内核最早启动时，a1 寄存器保存的就是 fdt 二进制数据块 dtb 的开始指针。这个数据块与我们在本节中导出分析的 fdt 内容完全相同。fdt 是内核获取硬件平台配置信息的主要途径。目前为止，我们只是人工查看导出的 fdt 信息，并应用到内核的开发实验中。到下一章的最后一节，我们将实验让内核自动解析 fdt 来获取这些关键信息。</font></p>
+</blockquote>
+<h3 id="虚拟地址空间"><a class="header" href="#虚拟地址空间">虚拟地址空间</a></h3>
+<p>本章我们建立的虚拟地址空间只需要与物理空间形成简单的<strong>线性映射</strong>，并且只处理包含 SBI 和 Kernel 存储区的 1G 范围。如下图，虚拟地址范围 0xFFFF_FFC0_8000_0000 ~ 0xFFFF_FFC0_C000_0000 线性映射到物理地址范围0x8000_0000 ~ 0xC000_0000。</p>
+<div style="text-align:center">
+   <img src=".\img\虚拟到物理空间映射.svg" alt="虚拟到物理空间映射" style="zoom:100%"/>
+</div>
+<p>线性偏移的好处是，只需要通过加减偏移运算，内核就能够在虚拟地址与物理地址进行转换，我们把这个线性偏移的常量称为 <strong>PHYS_VIRT_OFFSET</strong>，相应的运算公式表示为：</p>
+<pre><code class="language-js">VA = PA + PHYS_VIRT_OFFSET;
+PA = VA - PHYS_VIRT_OFFSET;
+</code></pre>
+<p>当前实验中 PHYS_VIRT_OFFSET=0xFFFF_FFC0_0000_0000，与我们选择的分页机制方案 Sv39 有关。我们开发的内核是 64 位系统，原本最大可用的地址空间范围是 64 位；但是按照 Riscv 规范，Sv39 有效的虚拟地址范围被约束为最大 39 位，从 40 位往上那些未使用的位必须与第 39 位一致。也就是说，如果第 39 位是 1，从第 40 位向上全部填充 1，有效范围 0xFFFF_FFC0_0000_0000 ~ 0xFFFF_FFFF_FFFF_FFFF；如果第 39 位是 0，高位全部填充 0，那么有效地址范围就是从 0 到 0x3F_FFFF_FFFF 。这两个范围处于 64 位空间最高端和最低端这两头的位置。按照惯例，我们选择了高端的这个范围，把它作为内核本身的虚拟地址空间；低端的那个范围暂时预留，将来支持宏内核模式时，我们把它作为应用进程的虚拟地址空间。</p>
+<p>下一节开始基于 Sv39 方案，建立我们内核的分页机制。</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="ch02-00.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="ch02-02.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="ch02-00.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="ch02-02.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+        <script src="ace.js"></script>
+        <script src="editor.js"></script>
+        <script src="mode-rust.js"></script>
+        <script src="theme-dawn.js"></script>
+        <script src="theme-tomorrow_night.js"></script>
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+        <script src="mermaid.min.js"></script>
+        <script src="mermaid-init.js"></script>
+
+
+    </div>
+    </body>
+</html>

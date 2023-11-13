@@ -1,0 +1,385 @@
+<!DOCTYPE HTML>
+<html lang="cn" class="light" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>早期内存分配器 - ArceOS Tutorial Book</title>
+
+
+        <!-- Custom HTML head -->
+        
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+    </head>
+    <body class="sidebar-visible no-js">
+    <div id="body-container">
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('light')
+            html.classList.add(theme);
+            var body = document.querySelector('body');
+            body.classList.remove('no-js')
+            body.classList.add('js');
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var body = document.querySelector('body');
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            body.classList.remove('sidebar-visible');
+            body.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="Prefix.html">前言</a></li><li class="chapter-item expanded "><a href="ch00-00.html"><strong aria-hidden="true">1.</strong> 第零章 史前时代 - 从开机到内核启动</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch00-01.html"><strong aria-hidden="true">1.1.</strong> 实验环境</a></li><li class="chapter-item expanded "><a href="ch00-02.html"><strong aria-hidden="true">1.2.</strong> 计算机启动过程和对内核的要求</a></li><li class="chapter-item expanded "><a href="ch00-03.html"><strong aria-hidden="true">1.3.</strong> 内核第一行代码</a></li><li class="chapter-item expanded "><a href="ch00-04.html"><strong aria-hidden="true">1.4.</strong> 编译与运行环境</a></li><li class="chapter-item expanded "><div><strong aria-hidden="true">1.5.</strong> Unikernel</div></li><li class="chapter-item expanded "><a href="ch00-06.html"><strong aria-hidden="true">1.6.</strong> 本章总结</a></li></ol></li><li class="chapter-item expanded "><a href="ch01-00.html"><strong aria-hidden="true">2.</strong> 第一章 Hello, ArceOS！- 内核启动和组件诞生</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch01-01.html"><strong aria-hidden="true">2.1.</strong> 内核启动</a></li><li class="chapter-item expanded "><a href="ch01-02.html"><strong aria-hidden="true">2.2.</strong> SBI 功能调用</a></li><li class="chapter-item expanded "><a href="ch01-03.html"><strong aria-hidden="true">2.3.</strong> 应用组件与硬件抽象组件</a></li><li class="chapter-item expanded "><a href="ch01-04.html"><strong aria-hidden="true">2.4.</strong> 全局配置与同步支持</a></li><li class="chapter-item expanded "><a href="ch01-05.html"><strong aria-hidden="true">2.5.</strong> 本章总结</a></li></ol></li><li class="chapter-item expanded "><a href="ch02-00.html"><strong aria-hidden="true">3.</strong> 第二章 内存管理1 - 初始的地址空间和早期内存分配</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch02-01.html"><strong aria-hidden="true">3.1.</strong> 地址空间</a></li><li class="chapter-item expanded "><a href="ch02-02.html"><strong aria-hidden="true">3.2.</strong> 分页机制 - 页表和页表项</a></li><li class="chapter-item expanded "><a href="ch02-03.html"><strong aria-hidden="true">3.3.</strong> 启用分页 - 进入虚拟地址空间</a></li><li class="chapter-item expanded "><a href="ch02-04.html" class="active"><strong aria-hidden="true">3.4.</strong> 早期内存分配器</a></li><li class="chapter-item expanded "><a href="ch02-05.html"><strong aria-hidden="true">3.5.</strong> 主干组件 axruntime</a></li><li class="chapter-item expanded "><a href="ch02-06.html"><strong aria-hidden="true">3.6.</strong> 本章总结</a></li></ol></li><li class="chapter-item expanded "><div><strong aria-hidden="true">4.</strong> 第三章 输入输出 - 标准输出和启动参数 todo</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">5.</strong> 第四章 内存管理2 - 地址空间重建和正式内存分配 todo</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">6.</strong> 第五章 多任务1 - 从串行到协作式并发 todo</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">7.</strong> 第六章 异常和中断 - 响应意外情况和外部事件 todo</div></li><li><ol class="section"><li class="chapter-item expanded "><div><strong aria-hidden="true">7.1.</strong> 异常处理</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">7.2.</strong> 时钟中断</div></li></ol></li><li class="chapter-item expanded "><div><strong aria-hidden="true">8.</strong> 第七章 多任务2 -从协作式到抢占式 todo</div></li><li><ol class="section"><li class="chapter-item expanded "><div><strong aria-hidden="true">8.1.</strong> 抢占机制 - 任务切换的内外条件</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">8.2.</strong> round-robin 调度算法</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">8.3.</strong> 同步原语 - 等待与唤醒</div></li></ol></li><li class="chapter-item expanded "><a href="ch08-00.html"><strong aria-hidden="true">9.</strong> 附录A</a></li><li class="chapter-item expanded "><a href="ch09-00.html"><strong aria-hidden="true">10.</strong> 附录B</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <!-- Track and set sidebar scroll position -->
+        <script>
+            var sidebarScrollbox = document.querySelector('#sidebar .sidebar-scrollbox');
+            sidebarScrollbox.addEventListener('click', function(e) {
+                if (e.target.tagName === 'A') {
+                    sessionStorage.setItem('sidebar-scroll', sidebarScrollbox.scrollTop);
+                }
+            }, { passive: true });
+            var sidebarScrollTop = sessionStorage.getItem('sidebar-scroll');
+            sessionStorage.removeItem('sidebar-scroll');
+            if (sidebarScrollTop) {
+                // preserve sidebar scroll position when navigating via links within sidebar
+                sidebarScrollbox.scrollTop = sidebarScrollTop;
+            } else {
+                // scroll sidebar to current active section when navigating via "next/previous chapter" buttons
+                var activeSection = document.querySelector('#sidebar .active');
+                if (activeSection) {
+                    activeSection.scrollIntoView({ block: 'center' });
+                }
+            }
+        </script>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">ArceOS Tutorial Book</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        <a href="https://github.com/rcore-os/arceos-tutorial-book" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h2 id="第四节-早期内存分配器"><a class="header" href="#第四节-早期内存分配器">第四节 早期内存分配器</a></h2>
+<p>内核目前还不支持 String、Vector，因为没有动态内存分配器；这也是为什么不能用 println! 宏，因为它对变参的处理同样需要动态内存分配。我们可以来尝试一下，把 axorigin 的 main 函数改成这样：</p>
+<pre><pre class="playground"><code class="language-rust edition2021">extern crate alloc;
+use alloc::string::String;
+
+pub fn main(_hartid: usize, _dtb: usize) {
+    let s = String::from(&quot;\nHello, ArceOS![from String]\n&quot;);
+    axhal::console::write_bytes(s.as_bytes());
+}</code></pre></pre>
+<p>通过 <code>make build</code> 编译一下，发现果然不支持：</p>
+<pre><code class="language-shell">error: no global memory allocator found but one is required; link to std or add `#[global_allocator]` to a static item that implements the GlobalAlloc trait
+</code></pre>
+<p>String 需要动态内存即堆管理的支持，普通应用程序总是经由 std 标准库去申请底层操作系统内核的支持。但是我们本身就是在实现内核，所以只能自己实现。也就是说，我们需要在 rust 的框架下，实现内核的动态内存分配器。</p>
+<p>内存分配器需要满足两个方面的要求：</p>
+<ul>
+<li>实现 GlobalAlloc trait，以支持 String、Vector 等集合数据类型对申请内存的要求，这是以字节为最小单位的内存分配。</li>
+<li>支持以<strong>页</strong>为单位的内存分配，并且分配块必须按页对齐。这种分配请求在内核开发中是十分常用和必要的。如果我们把页分配与上面字节分配混在一起处理，内存的使用效率将会非常差，因此有必要独立出来。</li>
+</ul>
+<p>总结一下，我们需要两种相互独立的内存分配器，一种基于字节分配，另一种基于页分配。</p>
+<p>当前实验，我们先采用最简单的设计方案，让一个分配器同时支持两种分配需求。</p>
+<div style="text-align:center">
+   <img src=".\img\早期内存分配器.svg" alt="早期内存分配器" style="zoom:50%"/>
+</div>
+<p><strong>从前向后字节分配，从后向前页分配</strong>。</p>
+<p>在内存释放方面，也采用最简单的策略：</p>
+<ul>
+<li>针对字节分配，用 count 变量记录分配次数，仅在 count 恢复到<strong>零</strong>时，才把当前位置指针重置成起始位置。也就是说，只有在所有申请的内存块全部释放时，才真正的释放空间。</li>
+<li>对于页分配，我们的设计中没有释放机制。一方面是为了简单，另一方面在早期内存分配器生效的这段时间，内核需要申请的页是它这一生都需要的。</li>
+</ul>
+<p>分配器数据结构定义与初始化：</p>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>#[derive(Default)]
+pub struct EarlyAllocator {
+    start:  usize,
+    end:    usize,
+    count:  usize,
+    b_pos:  usize,
+    p_pos:  usize,
+}
+
+impl EarlyAllocator {
+    fn init(&amp;mut self, start: usize, size: usize) {
+        self.start = start;
+        self.end = start + size;
+        self.b_pos = start;
+        self.p_pos = self.end;
+    }
+}
+<span class="boring">}</span></code></pre></pre>
+<p>字节分配功能的实现：</p>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>impl EarlyAllocator {
+	fn alloc_bytes(&amp;mut self, layout: Layout) -&gt; AllocResult&lt;NonNull&lt;u8&gt;&gt; {
+        let start = ALIGN_UP!(self.b_pos, layout.align());
+        let next = start + layout.size();
+        if next &gt; self.p_pos {
+            alloc::alloc::handle_alloc_error(layout)
+        } else {
+            self.b_pos = next;
+            self.count += 1;
+            NonNull::new(start as *mut u8).ok_or(AllocError::NoMemory)
+        }
+    }
+
+    fn dealloc_bytes(&amp;mut self, _ptr: NonNull&lt;u8&gt;, _layout: Layout) {
+        self.count -= 1;
+        if self.count == 0 {
+            self.b_pos = self.start;
+        }
+    }
+}
+<span class="boring">}</span></code></pre></pre>
+<p>执行测试 <code>make test</code> 验证：</p>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>#[test]
+fn test_alloc_bytes() {
+    let space: [u8; PAGE_SIZE] = [0; PAGE_SIZE];
+    let base = space.as_ptr() as usize;
+
+    let mut early = EarlyAllocator::default();
+    early.init(base, PAGE_SIZE);
+    assert_eq!(early.total_bytes(), PAGE_SIZE);
+    assert_eq!(early.available_bytes(), PAGE_SIZE);
+    assert_eq!(early.used_bytes(), 0);
+
+    let layout = Layout::from_size_align(2, 2).unwrap();
+    let p0 = early.alloc_bytes(layout).unwrap();
+    assert_eq!(p0.as_ptr() as usize - base, 0);
+    assert_eq!(early.used_bytes(), 2);
+
+    let layout = Layout::from_size_align(4, 4).unwrap();
+    let p1 = early.alloc_bytes(layout).unwrap();
+    assert_eq!(p1.as_ptr() as usize - base, 4);
+    assert_eq!(early.used_bytes(), 8);
+
+    early.dealloc_bytes(p0, Layout::new::&lt;usize&gt;());
+    early.dealloc_bytes(p1, Layout::new::&lt;usize&gt;());
+    assert_eq!(early.total_bytes(), PAGE_SIZE);
+    assert_eq!(early.available_bytes(), PAGE_SIZE);
+    assert_eq!(early.used_bytes(), 0);
+}
+<span class="boring">}</span></code></pre></pre>
+<p>页分配功能的实现：</p>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>impl EarlyAllocator {
+	fn alloc_pages(&amp;mut self, layout: Layout) -&gt; AllocResult&lt;NonNull&lt;u8&gt;&gt; {
+        assert_eq!(layout.size() % PAGE_SIZE, 0);
+        let next = ALIGN_DOWN!(self.p_pos - layout.size(), layout.align());
+        if next &lt;= self.b_pos {
+            alloc::alloc::handle_alloc_error(layout)
+        } else {
+            self.p_pos = next;
+            NonNull::new(next as *mut u8).ok_or(AllocError::NoMemory)
+        }
+    }
+}
+<span class="boring">}</span></code></pre></pre>
+<p>执行测试 <code>make test</code> 验证</p>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>#[test]
+fn test_alloc_pages() {
+    let num_pages = 16;
+    let total_size = PAGE_SIZE * num_pages;
+    let layout = Layout::from_size_align(total_size, PAGE_SIZE).unwrap();
+    let space = unsafe { alloc::alloc::alloc(layout) };
+    let start = space as usize;
+    let end = start + total_size;
+
+    let mut early = EarlyAllocator::default();
+    early.init(start, total_size);
+    assert_eq!(early.total_pages(), num_pages);
+    assert_eq!(early.available_pages(), num_pages);
+    assert_eq!(early.used_pages(), 0);
+
+    let layout = Layout::from_size_align(PAGE_SIZE, PAGE_SIZE).unwrap();
+    let p0 = early.alloc_pages(layout).unwrap();
+    assert_eq!(p0.as_ptr() as usize, end - PAGE_SIZE);
+    assert_eq!(early.used_pages(), 1);
+
+    let layout = Layout::from_size_align(PAGE_SIZE*2, PAGE_SIZE).unwrap();
+    let p1 = early.alloc_pages(layout).unwrap();
+    assert_eq!(p1.as_ptr() as usize, end - PAGE_SIZE*3);
+    assert_eq!(early.used_pages(), 3);
+}
+<span class="boring">}</span></code></pre></pre>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="ch02-03.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="ch02-05.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="ch02-03.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="ch02-05.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+        <script src="ace.js"></script>
+        <script src="editor.js"></script>
+        <script src="mode-rust.js"></script>
+        <script src="theme-dawn.js"></script>
+        <script src="theme-tomorrow_night.js"></script>
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+        <script src="mermaid.min.js"></script>
+        <script src="mermaid-init.js"></script>
+
+
+    </div>
+    </body>
+</html>

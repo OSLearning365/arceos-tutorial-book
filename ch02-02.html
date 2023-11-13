@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>全局配置与同步支持 - ArceOS Tutorial Book</title>
+        <title>分页机制 - 页表和页表项 - ArceOS Tutorial Book</title>
 
 
         <!-- Custom HTML head -->
@@ -88,7 +88,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="Prefix.html">前言</a></li><li class="chapter-item expanded "><a href="ch00-00.html"><strong aria-hidden="true">1.</strong> 第零章 史前时代 - 从开机到内核启动</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch00-01.html"><strong aria-hidden="true">1.1.</strong> 实验环境</a></li><li class="chapter-item expanded "><a href="ch00-02.html"><strong aria-hidden="true">1.2.</strong> 计算机启动过程和对内核的要求</a></li><li class="chapter-item expanded "><a href="ch00-03.html"><strong aria-hidden="true">1.3.</strong> 内核第一行代码</a></li><li class="chapter-item expanded "><a href="ch00-04.html"><strong aria-hidden="true">1.4.</strong> 编译与运行环境</a></li><li class="chapter-item expanded "><div><strong aria-hidden="true">1.5.</strong> Unikernel</div></li><li class="chapter-item expanded "><a href="ch00-06.html"><strong aria-hidden="true">1.6.</strong> 本章总结</a></li></ol></li><li class="chapter-item expanded "><a href="ch01-00.html"><strong aria-hidden="true">2.</strong> 第一章 Hello, ArceOS！- 内核启动和组件诞生</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch01-01.html"><strong aria-hidden="true">2.1.</strong> 内核启动</a></li><li class="chapter-item expanded "><a href="ch01-02.html"><strong aria-hidden="true">2.2.</strong> SBI 功能调用</a></li><li class="chapter-item expanded "><a href="ch01-03.html"><strong aria-hidden="true">2.3.</strong> 应用组件与硬件抽象组件</a></li><li class="chapter-item expanded "><a href="ch01-04.html" class="active"><strong aria-hidden="true">2.4.</strong> 全局配置与同步支持</a></li><li class="chapter-item expanded "><a href="ch01-05.html"><strong aria-hidden="true">2.5.</strong> 本章总结</a></li></ol></li><li class="chapter-item expanded "><a href="ch02-00.html"><strong aria-hidden="true">3.</strong> 第二章 内存管理1 - 初始的地址空间和早期内存分配</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch02-01.html"><strong aria-hidden="true">3.1.</strong> 地址空间</a></li><li class="chapter-item expanded "><a href="ch02-02.html"><strong aria-hidden="true">3.2.</strong> 分页机制 - 页表和页表项</a></li><li class="chapter-item expanded "><a href="ch02-03.html"><strong aria-hidden="true">3.3.</strong> 启用分页 - 进入虚拟地址空间</a></li><li class="chapter-item expanded "><a href="ch02-04.html"><strong aria-hidden="true">3.4.</strong> 早期内存分配器</a></li><li class="chapter-item expanded "><a href="ch02-05.html"><strong aria-hidden="true">3.5.</strong> 主干组件 axruntime</a></li><li class="chapter-item expanded "><a href="ch02-06.html"><strong aria-hidden="true">3.6.</strong> 本章总结</a></li></ol></li><li class="chapter-item expanded "><div><strong aria-hidden="true">4.</strong> 第三章 输入输出 - 标准输出和启动参数 todo</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">5.</strong> 第四章 内存管理2 - 地址空间重建和正式内存分配 todo</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">6.</strong> 第五章 多任务1 - 从串行到协作式并发 todo</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">7.</strong> 第六章 异常和中断 - 响应意外情况和外部事件 todo</div></li><li><ol class="section"><li class="chapter-item expanded "><div><strong aria-hidden="true">7.1.</strong> 异常处理</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">7.2.</strong> 时钟中断</div></li></ol></li><li class="chapter-item expanded "><div><strong aria-hidden="true">8.</strong> 第七章 多任务2 -从协作式到抢占式 todo</div></li><li><ol class="section"><li class="chapter-item expanded "><div><strong aria-hidden="true">8.1.</strong> 抢占机制 - 任务切换的内外条件</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">8.2.</strong> round-robin 调度算法</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">8.3.</strong> 同步原语 - 等待与唤醒</div></li></ol></li><li class="chapter-item expanded "><a href="ch08-00.html"><strong aria-hidden="true">9.</strong> 附录A</a></li><li class="chapter-item expanded "><a href="ch09-00.html"><strong aria-hidden="true">10.</strong> 附录B</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="Prefix.html">前言</a></li><li class="chapter-item expanded "><a href="ch00-00.html"><strong aria-hidden="true">1.</strong> 第零章 史前时代 - 从开机到内核启动</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch00-01.html"><strong aria-hidden="true">1.1.</strong> 实验环境</a></li><li class="chapter-item expanded "><a href="ch00-02.html"><strong aria-hidden="true">1.2.</strong> 计算机启动过程和对内核的要求</a></li><li class="chapter-item expanded "><a href="ch00-03.html"><strong aria-hidden="true">1.3.</strong> 内核第一行代码</a></li><li class="chapter-item expanded "><a href="ch00-04.html"><strong aria-hidden="true">1.4.</strong> 编译与运行环境</a></li><li class="chapter-item expanded "><div><strong aria-hidden="true">1.5.</strong> Unikernel</div></li><li class="chapter-item expanded "><a href="ch00-06.html"><strong aria-hidden="true">1.6.</strong> 本章总结</a></li></ol></li><li class="chapter-item expanded "><a href="ch01-00.html"><strong aria-hidden="true">2.</strong> 第一章 Hello, ArceOS！- 内核启动和组件诞生</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch01-01.html"><strong aria-hidden="true">2.1.</strong> 内核启动</a></li><li class="chapter-item expanded "><a href="ch01-02.html"><strong aria-hidden="true">2.2.</strong> SBI 功能调用</a></li><li class="chapter-item expanded "><a href="ch01-03.html"><strong aria-hidden="true">2.3.</strong> 应用组件与硬件抽象组件</a></li><li class="chapter-item expanded "><a href="ch01-04.html"><strong aria-hidden="true">2.4.</strong> 全局配置与同步支持</a></li><li class="chapter-item expanded "><a href="ch01-05.html"><strong aria-hidden="true">2.5.</strong> 本章总结</a></li></ol></li><li class="chapter-item expanded "><a href="ch02-00.html"><strong aria-hidden="true">3.</strong> 第二章 内存管理1 - 初始的地址空间和早期内存分配</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch02-01.html"><strong aria-hidden="true">3.1.</strong> 地址空间</a></li><li class="chapter-item expanded "><a href="ch02-02.html" class="active"><strong aria-hidden="true">3.2.</strong> 分页机制 - 页表和页表项</a></li><li class="chapter-item expanded "><a href="ch02-03.html"><strong aria-hidden="true">3.3.</strong> 启用分页 - 进入虚拟地址空间</a></li><li class="chapter-item expanded "><a href="ch02-04.html"><strong aria-hidden="true">3.4.</strong> 早期内存分配器</a></li><li class="chapter-item expanded "><a href="ch02-05.html"><strong aria-hidden="true">3.5.</strong> 主干组件 axruntime</a></li><li class="chapter-item expanded "><a href="ch02-06.html"><strong aria-hidden="true">3.6.</strong> 本章总结</a></li></ol></li><li class="chapter-item expanded "><div><strong aria-hidden="true">4.</strong> 第三章 输入输出 - 标准输出和启动参数 todo</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">5.</strong> 第四章 内存管理2 - 地址空间重建和正式内存分配 todo</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">6.</strong> 第五章 多任务1 - 从串行到协作式并发 todo</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">7.</strong> 第六章 异常和中断 - 响应意外情况和外部事件 todo</div></li><li><ol class="section"><li class="chapter-item expanded "><div><strong aria-hidden="true">7.1.</strong> 异常处理</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">7.2.</strong> 时钟中断</div></li></ol></li><li class="chapter-item expanded "><div><strong aria-hidden="true">8.</strong> 第七章 多任务2 -从协作式到抢占式 todo</div></li><li><ol class="section"><li class="chapter-item expanded "><div><strong aria-hidden="true">8.1.</strong> 抢占机制 - 任务切换的内外条件</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">8.2.</strong> round-robin 调度算法</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">8.3.</strong> 同步原语 - 等待与唤醒</div></li></ol></li><li class="chapter-item expanded "><a href="ch08-00.html"><strong aria-hidden="true">9.</strong> 附录A</a></li><li class="chapter-item expanded "><a href="ch09-00.html"><strong aria-hidden="true">10.</strong> 附录B</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -174,127 +174,138 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h2 id="第四节-全局配置与同步支持"><a class="header" href="#第四节-全局配置与同步支持">第四节 全局配置与同步支持</a></h2>
-<p>在本章的最后，我们再增加几个常用的工具组件，为后续的实验工作做好准备。</p>
-<h3 id="全局配置-axconfig"><a class="header" href="#全局配置-axconfig">全局配置 axconfig</a></h3>
-<p>axconfig 组件主要用来提供全局的配置参数和一些常用的工具函数，它的 main.rs 就如这样：</p>
-<pre><pre class="playground"><code class="language-rust editable edition2021">#![no_std]
+                        <h2 id="第二节-分页机制---页表和页表项"><a class="header" href="#第二节-分页机制---页表和页表项">第二节 分页机制 - 页表和页表项</a></h2>
+<p>每一级页表都占用一个内存页，我们采用最常用的内存页配置 4096 字节。Sv39 是针对 64 位系统的分页方案，页表项长度是 8 字节，所以每个页表包含 512 个页表项。页表是一种多级嵌套结构，由 page_table 和page_table_entry 两种基本元素组成，它们符合如下的模式：</p>
+<div style="text-align:center">
+   <img src=".\img\页表模式.svg" alt="页表模式" style="zoom:70%"/>
+</div>
+<p>页表 page_table 由一系列连续的页表项 page_table_entry 构成；页表项由物理页帧号 pfn 和标志位组 flags 这两部分构成。根据标志位的不同，页表项有三种情况：</p>
+<ul>
+<li>空页表项：尚未与物理页建立映射；</li>
+<li>指向下级页表：pfn 保存的是下级页表的物理页帧号，当进行地址映射时，需要递归到下一级页表继续处理；</li>
+<li>指向最终页：这种是叶子页表项（leaf entry），它的 pfn 直接就保存着一个物理页或者<strong>大页</strong>的页帧号。</li>
+</ul>
+<p>实现一个单独组件，定义页表和页表项的数据结构和页表的初始化函数：</p>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>const ENTRIES_COUNT: usize = 1 &lt;&lt; (PAGE_SHIFT - 3);
 
-pub const PAGE_SHIFT: usize = 12;
+#[derive(Clone, Copy)]
+#[repr(transparent)]
+pub struct PTEntry(u64);
+
+pub struct PageTable&lt;'a&gt; {
+    level: usize,
+    table: &amp;'a mut [PTEntry],
+}
+
+impl PageTable&lt;'_&gt; {
+    pub fn init(root_pa: usize, level: usize) -&gt; Self {
+        let table = unsafe {
+            core::slice::from_raw_parts_mut(root_pa as *mut PTEntry, ENTRIES_COUNT)
+        };
+        Self { level, table }
+    }
+}
+<span class="boring">}</span></code></pre></pre>
+<p>实现从虚拟地址到物理地址的映射函数 map：</p>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>impl PageTable&lt;'_&gt; {
+	pub fn map(&amp;mut self, mut va: usize, mut pa: usize,
+        mut total_size: usize, leaf_size: usize, flags: usize
+    ) -&gt; PagingResult {
+        let entry_size = self.entry_size();
+        while total_size &gt;= entry_size {
+            let index = self.entry_index(va);
+            if entry_size == leaf_size {
+                self.table[index].set(pa, flags);
+            } else {
+                let pt = self.next_table_mut(index)?;
+                pt.map(va, pa, entry_size, leaf_size, flags)?;
+            }
+            total_size -= entry_size;
+            va += entry_size;
+            pa += entry_size;
+        }
+        Ok(())
+    }
+
+    const fn entry_shift(&amp;self) -&gt; usize {
+        ASPACE_BITS - (self.level + 1) * (PAGE_SHIFT - 3)
+    }
+    const fn entry_size(&amp;self) -&gt; usize {
+        1 &lt;&lt; self.entry_shift()
+    }
+    const fn entry_index(&amp;self, va: usize) -&gt; usize {
+        (va &gt;&gt; self.entry_shift()) &amp; (ENTRIES_COUNT - 1)
+    }
+
+    fn next_table_mut(&amp;mut self, _index: usize) -&gt; PagingResult&lt;&amp;mut PageTable&gt; {
+        unimplemented!();
+    }
+}
+<span class="boring">}</span></code></pre></pre>
+<p>引入测试 page_table/tests/basic.rs：</p>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>use page_table::PageTable;
+use axconfig::SIZE_1G;
+
+#[test]
+fn test_basic() {
+    let boot_pt: [u64; 512] = [0; 512];
+
+    let mut pt: PageTable = PageTable::init(boot_pt.as_ptr() as usize, 0);
+    let _ = pt.map(0x8000_0000, 0x8000_0000, SIZE_1G, SIZE_1G, 0x00ef);
+    let _ = pt.map(0xffff_ffc0_8000_0000, 0x8000_0000, SIZE_1G, SIZE_1G, 0x00ef);
+    assert_eq!(boot_pt[2], 0x200000ef, &quot;pgd[2] = {:#x}&quot;, boot_pt[2]);
+    assert_eq!(boot_pt[0x102], 0x200000ef, &quot;pgd[0x102] = {:#x}&quot;, boot_pt[0x102]);
+}
+<span class="boring">}</span></code></pre></pre>
+<p>引入新组件用于维护系统级参数 axconfig/src/lib.rs：</p>
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
+</span>#![no_std]
+
+<span class="boring">fn main() {
+</span>pub const PAGE_SHIFT: usize = 12;
 pub const PAGE_SIZE: usize = 1 &lt;&lt; PAGE_SHIFT;
+pub const PHYS_VIRT_OFFSET: usize = 0xffff_ffc0_0000_0000;
+pub const ASPACE_BITS: usize = 39;
 
 pub const SIZE_1G: usize = 0x4000_0000;
-
-#[inline]
-pub const fn align_up(val: usize, align: usize) -&gt; usize {
-    (val + align - 1) &amp; !(align - 1)
-}
-#[inline]
-pub const fn align_down(val: usize, align: usize) -&gt; usize {
-    (val) &amp; !(align - 1)
-}</code></pre></pre>
-<p>在咱们的实验中，页面 Page 采用的最常见的尺寸是 4096 字节。</p>
-<p>后面我们会陆续加入更多的配置参数和工具函数。</p>
-<h3 id="自旋锁-spinlock-的最初实现"><a class="header" href="#自旋锁-spinlock-的最初实现">自旋锁 spinlock 的最初实现</a></h3>
-<p>在真正启动多任务和启用中断之前，内核一直处于纯粹的单线程执行状态，没有任何并发，自然也没有同步的问题，这种情况下对于全局变量的修改是安全的。但是 Rust 不清楚这一点，所以我们需要先实现一个最初版本的自旋锁 SpinRaw，用它包装 mutable 全局变量，假定已经有了同步保护，但眼下它只是个空壳。</p>
+<span class="boring">}</span></code></pre></pre>
+<p>为 workspace 增加 Cargo.toml：</p>
 <pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>pub struct SpinRaw&lt;T&gt; {
-    data: UnsafeCell&lt;T&gt;,
-}
+</span>[workspace]
+resolver = &quot;2&quot;
 
-pub struct SpinRawGuard&lt;T&gt; {
-    data: *mut T,
-}
+members = [
+    &quot;axorigin&quot;,
+    &quot;axhal&quot;,
+    &quot;axconfig&quot;,
+    &quot;page_table&quot;,
+]
 
-unsafe impl&lt;T&gt; Sync for SpinRaw&lt;T&gt; {}
-unsafe impl&lt;T&gt; Send for SpinRaw&lt;T&gt; {}
-
-impl&lt;T&gt; SpinRaw&lt;T&gt; {
-    #[inline(always)]
-    pub const fn new(data: T) -&gt; Self {
-        Self {
-            data: UnsafeCell::new(data),
-        }
-    }
-
-    #[inline(always)]
-    pub fn lock(&amp;self) -&gt; SpinRawGuard&lt;T&gt; {
-        SpinRawGuard {
-            data: unsafe { &amp;mut *self.data.get() },
-        }
-    }
-}
+[profile.release]
+lto = true
 <span class="boring">}</span></code></pre></pre>
-<p>按照 Rust 的要求，标记 SpinRaw 具有 Send 和 Sync 的标记 trait。</p>
-<p>实现 lock 方法返回 SpinRawGuard，假定这个 guard 持有了锁，guard 是 RAII 的模式，当它释放即执行 drop 方法时自动解锁。目前没有实际解锁动作，直接忽略对 Drop trait 的实现。</p>
-<p>最后，我们为 guard 实现 deref 和 deref_mut，把它所为智能指针以方便直接访问 SpinRaw 包装变量的方法。</p>
-<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>impl&lt;T&gt; Deref for SpinRawGuard&lt;T&gt; {
-    type Target = T;
-    #[inline(always)]
-    fn deref(&amp;self) -&gt; &amp;T {
-        unsafe { &amp;*self.data }
-    }
-}
-
-impl&lt;T&gt; DerefMut for SpinRawGuard&lt;T&gt; {
-    #[inline(always)]
-    fn deref_mut(&amp;mut self) -&gt; &amp;mut T {
-        unsafe { &amp;mut *self.data }
-    }
-}
-<span class="boring">}</span></code></pre></pre>
-<h3 id="bootoncecell"><a class="header" href="#bootoncecell"><strong>BootOnceCell</strong></a></h3>
-<p>类似于上面，有些全局变量虽然需要改变，但是仅需要一次，之后就一直是只读状态，这通常属于延迟初始化的情况。</p>
-<p>例如下一章马上要涉及的早期页表根目录 KERNEL_PAGE_TABLE，这个全局变量只需要初始化一次，但是负责初始化的是一个函数，没法在定义时直接调用，只能延迟初始化。那么我们就可以借助这个 BootOnceCell 来封装 KERNEL_PAGE_TABLE。</p>
-<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>use core::cell::OnceCell;
-
-pub struct BootOnceCell&lt;T&gt; {
-    inner: OnceCell&lt;T&gt;,
-}
-
-impl&lt;T&gt; BootOnceCell&lt;T&gt; {
-    pub const unsafe fn new() -&gt; Self {
-        Self {
-            inner: OnceCell::new()
-        }
-    }
-
-    pub fn init(&amp;self, val: T) {
-        let _ = self.inner.set(val);
-    }
-
-    pub fn get(&amp;self) -&gt; &amp;T {
-        self.inner.get().unwrap()
-    }
-
-    pub fn is_init(&amp;self) -&gt; bool {
-        self.inner.get().is_some()
-    }
-}
-
-unsafe impl&lt;T&gt; Sync for BootOnceCell&lt;T&gt; {}
-<span class="boring">}</span></code></pre></pre>
-<p>注意两点：</p>
-<ul>
-<li>我们以 Rust 库提供的 OnceCell 为基础进行实现，比较简便。</li>
-<li>顾名思义，BootOnceCell 的那一次初始化调用必须在 Boot 阶段，即单线程环境下完成，之后就变成了只读变量，这样再启用多线程也没有问题。但如果在启用多线程或中断之后再进行初始化操作，就是<strong>不安全</strong>的。一定注意这个调用时机。</li>
-</ul>
-<p>当然 BootOnceCell 的功能也可以通过引入 lazy_static 等外部 crate 来实现。</p>
+<p>修改 Makefile，增加测试入口：</p>
+<pre><code class="language-makefile">test:
+    cargo test --workspace --exclude &quot;axhal&quot; --exclude &quot;axorigin&quot;
+</code></pre>
+<p>执行 <code>make test</code> 测试通过。</p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="ch01-03.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="ch02-01.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next prefetch" href="ch01-05.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="ch02-03.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -304,11 +315,11 @@ unsafe impl&lt;T&gt; Sync for BootOnceCell&lt;T&gt; {}
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="ch01-03.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="ch02-01.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next prefetch" href="ch01-05.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="ch02-03.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>
