@@ -659,7 +659,7 @@ axhal = { path = &quot;../axhal&quot; }
 <p>在本章的最后，我们再增加几个常用的工具组件，为后续的实验工作做好准备。</p>
 <h3 id="全局配置-axconfig"><a class="header" href="#全局配置-axconfig">全局配置 axconfig</a></h3>
 <p>axconfig 组件主要用来提供全局的配置参数和一些常用的工具函数，它的 main.rs 就如这样：</p>
-<pre><pre class="playground"><code class="language-rust editable edition2021">#![no_std]
+<pre><code class="language-rust ignore">#![no_std]
 
 pub const PAGE_SHIFT: usize = 12;
 pub const PAGE_SIZE: usize = 1 &lt;&lt; PAGE_SHIFT;
@@ -673,14 +673,12 @@ pub const fn align_up(val: usize, align: usize) -&gt; usize {
 #[inline]
 pub const fn align_down(val: usize, align: usize) -&gt; usize {
     (val) &amp; !(align - 1)
-}</code></pre></pre>
+}</code></pre>
 <p>在咱们的实验中，页面 Page 采用的最常见的尺寸是 4096 字节。</p>
 <p>后面我们会陆续加入更多的配置参数和工具函数。</p>
 <h3 id="自旋锁-spinlock-的最初实现"><a class="header" href="#自旋锁-spinlock-的最初实现">自旋锁 spinlock 的最初实现</a></h3>
 <p>在真正启动多任务和启用中断之前，内核一直处于纯粹的单线程执行状态，没有任何并发，自然也没有同步的问题，这种情况下对于全局变量的修改是安全的。但是 Rust 不清楚这一点，所以我们需要先实现一个最初版本的自旋锁 SpinRaw，用它包装 mutable 全局变量，假定已经有了同步保护，但眼下它只是个空壳。</p>
-<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>pub struct SpinRaw&lt;T&gt; {
+<pre><code class="language-rust ignore">pub struct SpinRaw&lt;T&gt; {
     data: UnsafeCell&lt;T&gt;,
 }
 
@@ -705,14 +703,11 @@ impl&lt;T&gt; SpinRaw&lt;T&gt; {
             data: unsafe { &amp;mut *self.data.get() },
         }
     }
-}
-<span class="boring">}</span></code></pre></pre>
+}</code></pre>
 <p>按照 Rust 的要求，标记 SpinRaw 具有 Send 和 Sync 的标记 trait。</p>
 <p>实现 lock 方法返回 SpinRawGuard，假定这个 guard 持有了锁，guard 是 RAII 的模式，当它释放即执行 drop 方法时自动解锁。目前没有实际解锁动作，直接忽略对 Drop trait 的实现。</p>
 <p>最后，我们为 guard 实现 deref 和 deref_mut，把它作为智能指针以方便直接访问 SpinRaw 包装变量的方法。</p>
-<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>impl&lt;T&gt; Deref for SpinRawGuard&lt;T&gt; {
+<pre><code class="language-rust ignore">impl&lt;T&gt; Deref for SpinRawGuard&lt;T&gt; {
     type Target = T;
     #[inline(always)]
     fn deref(&amp;self) -&gt; &amp;T {
@@ -725,14 +720,11 @@ impl&lt;T&gt; DerefMut for SpinRawGuard&lt;T&gt; {
     fn deref_mut(&amp;mut self) -&gt; &amp;mut T {
         unsafe { &amp;mut *self.data }
     }
-}
-<span class="boring">}</span></code></pre></pre>
+}</code></pre>
 <h3 id="bootoncecell"><a class="header" href="#bootoncecell"><strong>BootOnceCell</strong></a></h3>
 <p>类似于上面，有些全局变量虽然需要改变，但是仅需要一次，之后就一直是只读状态，这通常属于延迟初始化的情况。</p>
 <p>例如下一章马上要涉及的早期页表根目录 KERNEL_PAGE_TABLE，这个全局变量只需要初始化一次，但是负责初始化的是一个函数，没法在定义时直接调用，只能延迟初始化。那么我们就可以借助这个 BootOnceCell 来封装 KERNEL_PAGE_TABLE。</p>
-<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>use core::cell::OnceCell;
+<pre><code class="language-rust ignore">use core::cell::OnceCell;
 
 pub struct BootOnceCell&lt;T&gt; {
     inner: OnceCell&lt;T&gt;,
@@ -758,8 +750,7 @@ impl&lt;T&gt; BootOnceCell&lt;T&gt; {
     }
 }
 
-unsafe impl&lt;T&gt; Sync for BootOnceCell&lt;T&gt; {}
-<span class="boring">}</span></code></pre></pre>
+unsafe impl&lt;T&gt; Sync for BootOnceCell&lt;T&gt; {}</code></pre>
 <p>注意两点：</p>
 <ul>
 <li>我们以 Rust 库提供的 OnceCell 为基础进行实现，比较简便。</li>
@@ -870,9 +861,7 @@ PA = VA - PHYS_VIRT_OFFSET;
 <li>指向最终页：这种是叶子页表项（leaf entry），它的 pfn 直接保存着一个物理页或者<strong>大页</strong>的页帧号。</li>
 </ul>
 <p>实现一个单独组件，定义页表和页表项的数据结构和页表的初始化函数：</p>
-<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>const ENTRIES_COUNT: usize = 1 &lt;&lt; (PAGE_SHIFT - 3);
+<pre><code class="language-rust ignore">const ENTRIES_COUNT: usize = 1 &lt;&lt; (PAGE_SHIFT - 3);
 
 #[derive(Clone, Copy)]
 #[repr(transparent)]
@@ -890,12 +879,9 @@ impl PageTable&lt;'_&gt; {
         };
         Self { level, table }
     }
-}
-<span class="boring">}</span></code></pre></pre>
+}</code></pre>
 <p>实现从虚拟地址到物理地址的映射函数 map：</p>
-<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>impl PageTable&lt;'_&gt; {
+<pre><code class="language-rust ignore">impl PageTable&lt;'_&gt; {
 	pub fn map(&amp;mut self, mut va: usize, mut pa: usize,
         mut total_size: usize, leaf_size: usize, flags: usize
     ) -&gt; PagingResult {
@@ -928,12 +914,9 @@ impl PageTable&lt;'_&gt; {
     fn next_table_mut(&amp;mut self, _index: usize) -&gt; PagingResult&lt;&amp;mut PageTable&gt; {
         unimplemented!();
     }
-}
-<span class="boring">}</span></code></pre></pre>
+}</code></pre>
 <p>引入测试 page_table/tests/basic.rs：</p>
-<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>use page_table::PageTable;
+<pre><code class="language-rust ignore">use page_table::PageTable;
 use axconfig::SIZE_1G;
 
 #[test]
@@ -945,24 +928,18 @@ fn test_basic() {
     let _ = pt.map(0xffff_ffc0_8000_0000, 0x8000_0000, SIZE_1G, SIZE_1G, 0x00ef);
     assert_eq!(boot_pt[2], 0x200000ef, &quot;pgd[2] = {:#x}&quot;, boot_pt[2]);
     assert_eq!(boot_pt[0x102], 0x200000ef, &quot;pgd[0x102] = {:#x}&quot;, boot_pt[0x102]);
-}
-<span class="boring">}</span></code></pre></pre>
+}</code></pre>
 <p>引入新组件用于维护系统级参数 axconfig/src/lib.rs：</p>
-<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
-</span>#![no_std]
+<pre><code class="language-rust ignore">#![no_std]
 
-<span class="boring">fn main() {
-</span>pub const PAGE_SHIFT: usize = 12;
+pub const PAGE_SHIFT: usize = 12;
 pub const PAGE_SIZE: usize = 1 &lt;&lt; PAGE_SHIFT;
 pub const PHYS_VIRT_OFFSET: usize = 0xffff_ffc0_0000_0000;
 pub const ASPACE_BITS: usize = 39;
 
-pub const SIZE_1G: usize = 0x4000_0000;
-<span class="boring">}</span></code></pre></pre>
+pub const SIZE_1G: usize = 0x4000_0000;</code></pre>
 <p>为 workspace 增加 Cargo.toml：</p>
-<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>[workspace]
+<pre><code class="language-rust ignore">[workspace]
 resolver = &quot;2&quot;
 
 members = [
@@ -973,8 +950,7 @@ members = [
 ]
 
 [profile.release]
-lto = true
-<span class="boring">}</span></code></pre></pre>
+lto = true</code></pre>
 <p>修改 Makefile，增加测试入口：</p>
 <pre><code class="language-makefile">test:
     cargo test --workspace --exclude &quot;axhal&quot; --exclude &quot;axorigin&quot;
@@ -992,9 +968,7 @@ lto = true
 </ul>
 <p>扩展组件 axhal，准备启动阶段的页表，然后启用分页，实现上述切换。</p>
 <p><strong>准备启动页表</strong>：</p>
-<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>extern &quot;C&quot; {
+<pre><code class="language-rust ignore">extern &quot;C&quot; {
     fn boot_page_table();
 }
 
@@ -1003,25 +977,18 @@ pub unsafe fn init_boot_page_table() {
 
     let _ = pt.map(0x8000_0000, 0x8000_0000, SIZE_1G, SIZE_1G, PAGE_KERNEL_EXEC);
     let _ = pt.map(0xffff_ffc0_8000_0000, 0x8000_0000, SIZE_1G, SIZE_1G, PAGE_KERNEL_EXEC);
-}
-<span class="boring">}</span></code></pre></pre>
+}</code></pre>
 <p><strong>启用分页</strong>：</p>
 <p>按照 Riscv 硬件机制的要求，设置 satp 寄存器并刷新 TLB：</p>
-<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>use riscv::register::satp;
+<pre><code class="language-rust ignore">use riscv::register::satp;
 
 pub unsafe fn init_mmu() {
     let page_table_root = boot_page_table as usize;
     satp::set(satp::Mode::Sv39, 0, phys_pfn(page_table_root));
     riscv::asm::sfence_vma_all();
-}
-<span class="boring">}</span></code></pre></pre>
+}</code></pre>
 <p>在引导启动过程中，插入上述过程：</p>
-<p>第一步：</p>
-<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>#[no_mangle]
+<pre><code class="language-rust ignore">#[no_mangle]
 #[link_section = &quot;.text.boot&quot;]
 unsafe extern &quot;C&quot; fn _start() -&gt; ! {
     // a0 = hartid
@@ -1055,8 +1022,7 @@ unsafe extern &quot;C&quot; fn _start() -&gt; ! {
         entry = sym super::rust_entry,
         options(noreturn),
     )
-}
-<span class="boring">}</span></code></pre></pre>
+}</code></pre>
 <p>我们发现，除了调用 init_boot_page_table 和 init_mmu 之外，还额外增加了两项工作。</p>
 <ul>
 <li>通过 s0 和 s1 分别对 a0 和 a1 进行保存和恢复：a0 和 a1 目前保持着当前 CPU 的 ID 和 DTB 指针，我们要防止函数调用破坏它们。</li>
@@ -1092,13 +1058,13 @@ Priv: 1; Virt: 0
 <p>对照执行 rust_entry 之前和该函数自身的执行地址，可以看到内核从物理地址空间进入到虚拟地址空间的过程。</p>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="第四节-早期内存分配器"><a class="header" href="#第四节-早期内存分配器">第四节 早期内存分配器</a></h2>
 <p>内核目前还不支持 String、Vector，因为没有动态内存分配器；这也是为什么不能用 println! 宏，因为它对变参的处理同样需要动态内存分配。我们可以来尝试一下，把 axorigin 的 main 函数改成这样：</p>
-<pre><pre class="playground"><code class="language-rust edition2021">extern crate alloc;
+<pre><code class="language-rust ignore">extern crate alloc;
 use alloc::string::String;
 
 pub fn main(_hartid: usize, _dtb: usize) {
     let s = String::from(&quot;\nHello, ArceOS![from String]\n&quot;);
     axhal::console::write_bytes(s.as_bytes());
-}</code></pre></pre>
+}</code></pre>
 <p>通过 <code>make build</code> 编译一下，发现果然不支持：</p>
 <pre><code class="language-shell">error: no global memory allocator found but one is required; link to std or add `#[global_allocator]` to a static item that implements the GlobalAlloc trait
 </code></pre>
@@ -1120,9 +1086,7 @@ pub fn main(_hartid: usize, _dtb: usize) {
 <li>对于页分配，我们的设计中没有释放机制。一方面是为了简单，另一方面在早期内存分配器生效的这段时间，内核需要申请的页是它这一生都需要的。</li>
 </ul>
 <p>分配器数据结构定义与初始化：</p>
-<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>#[derive(Default)]
+<pre><code class="language-rust ignore">#[derive(Default)]
 pub struct EarlyAllocator {
     start:  usize,
     end:    usize,
@@ -1138,12 +1102,9 @@ impl EarlyAllocator {
         self.b_pos = start;
         self.p_pos = self.end;
     }
-}
-<span class="boring">}</span></code></pre></pre>
+}</code></pre>
 <p>字节分配功能的实现：</p>
-<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>impl EarlyAllocator {
+<pre><code class="language-rust ignore">impl EarlyAllocator {
 	fn alloc_bytes(&amp;mut self, layout: Layout) -&gt; AllocResult&lt;NonNull&lt;u8&gt;&gt; {
         let start = ALIGN_UP!(self.b_pos, layout.align());
         let next = start + layout.size();
@@ -1162,12 +1123,9 @@ impl EarlyAllocator {
             self.b_pos = self.start;
         }
     }
-}
-<span class="boring">}</span></code></pre></pre>
+}</code></pre>
 <p>执行测试 <code>make test</code> 验证：</p>
-<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>#[test]
+<pre><code class="language-rust ignore">#[test]
 fn test_alloc_bytes() {
     let space: [u8; PAGE_SIZE] = [0; PAGE_SIZE];
     let base = space.as_ptr() as usize;
@@ -1193,12 +1151,9 @@ fn test_alloc_bytes() {
     assert_eq!(early.total_bytes(), PAGE_SIZE);
     assert_eq!(early.available_bytes(), PAGE_SIZE);
     assert_eq!(early.used_bytes(), 0);
-}
-<span class="boring">}</span></code></pre></pre>
+}</code></pre>
 <p>页分配功能的实现：</p>
-<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>impl EarlyAllocator {
+<pre><code class="language-rust ignore">impl EarlyAllocator {
 	fn alloc_pages(&amp;mut self, layout: Layout) -&gt; AllocResult&lt;NonNull&lt;u8&gt;&gt; {
         assert_eq!(layout.size() % PAGE_SIZE, 0);
         let next = ALIGN_DOWN!(self.p_pos - layout.size(), layout.align());
@@ -1209,12 +1164,9 @@ fn test_alloc_bytes() {
             NonNull::new(next as *mut u8).ok_or(AllocError::NoMemory)
         }
     }
-}
-<span class="boring">}</span></code></pre></pre>
+}</code></pre>
 <p>执行测试 <code>make test</code> 验证：</p>
-<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>#[test]
+<pre><code class="language-rust ignore">#[test]
 fn test_alloc_pages() {
     let num_pages = 16;
     let total_size = PAGE_SIZE * num_pages;
@@ -1238,8 +1190,7 @@ fn test_alloc_pages() {
     let p1 = early.alloc_pages(layout).unwrap();
     assert_eq!(p1.as_ptr() as usize, end - PAGE_SIZE*3);
     assert_eq!(early.used_pages(), 3);
-}
-<span class="boring">}</span></code></pre></pre>
+}</code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="第五节-主干组件-axruntime"><a class="header" href="#第五节-主干组件-axruntime">第五节 主干组件 axruntime</a></h2>
 <p>本章我们新增了内存分配器组件 axalloc，目前临时把对它的初始化工作放在了应用组件 axorigin 中。但显然，内存分配器应当划分到系统层，并在系统层被初始化。</p>
 <p>对于系统层，又可以进一步划分为硬件体系结构无关与硬件体系相关。硬件体系相关的工作已经由 axhal 承担了，现在我们再额外增加一级，专门用来对通用的、硬件体系无关的各类组件进行组织和初始化，命名为 axruntime。</p>
@@ -1250,17 +1201,14 @@ fn test_alloc_pages() {
 <p>如图，axruntime 作为主干组件承上启下，向下通过 axhal 管理硬件，向上为应用提供运行时环境。</p>
 <p>当 axruntime 加入之后，启动过程变为：axhal 的 rust_entry 最终会调用 axruntime 的 rust_main，这个函数是 axruntime 的主线逻辑函数，它负责初始化 axalloc 等功能组件，最后调用应用 axorigin 的 main 函数。</p>
 <p>先来看改造后的 axhal，它的 rust_entry 实现：</p>
-<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>unsafe extern &quot;C&quot; fn rust_entry(hartid: usize, dtb: usize) {
+<pre><code class="language-rust ignore">unsafe extern &quot;C&quot; fn rust_entry(hartid: usize, dtb: usize) {
     extern &quot;C&quot; {
         fn rust_main(hartid: usize, dtb: usize);
     }
     rust_main(hartid, dtb);
-}
-<span class="boring">}</span></code></pre></pre>
+}</code></pre>
 <p>然后是 axruntime 的主函数：</p>
-<pre><pre class="playground"><code class="language-rust edition2021">#![no_std]
+<pre><code class="language-rust ignore">#![no_std]
 
 #[cfg(not(test))]
 mod lang_items;
@@ -1275,7 +1223,7 @@ pub extern &quot;C&quot; fn rust_main(_hartid: usize, _dtb: usize) -&gt; ! {
     axalloc::early_init(_skernel as usize - 0x100000, 0x100000);
     unsafe { main(); }
     panic!(&quot;ArceOS exit ...&quot;);
-}</code></pre></pre>
+}</code></pre>
 <p>完成 axalloc 的早期初始化后，马上调用 axorigin 的 main 函数。</p>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="本章总结-2"><a class="header" href="#本章总结-2">本章总结</a></h2>
 <p>本章我们首先完成了硬件分页机制的启用，建立了初始的地址空间，这是后面各种功能组件得以初始化和运行的基础；然后让内核支持了早期的内存分配器，这个分配器的最大分配能力虽然只有 1M，但是足以支撑内核的早期启动工作了。等我们能够通过解析 fdt 信息获取实际的物理内存大小之后，将构建正式的内存分配器以替换掉它。最后，我们引入了 axruntime 这个组件，它在应用与 axhal 组件之间起到承上启下的作用，现在内核的主干框架已经基本齐备，只剩下 axstd 应用接口库还未提及，下一章的开始，我们就来引入这个组件。</p>

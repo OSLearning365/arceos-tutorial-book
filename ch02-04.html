@@ -176,13 +176,13 @@
                     <main>
                         <h2 id="第四节-早期内存分配器"><a class="header" href="#第四节-早期内存分配器">第四节 早期内存分配器</a></h2>
 <p>内核目前还不支持 String、Vector，因为没有动态内存分配器；这也是为什么不能用 println! 宏，因为它对变参的处理同样需要动态内存分配。我们可以来尝试一下，把 axorigin 的 main 函数改成这样：</p>
-<pre><pre class="playground"><code class="language-rust edition2021">extern crate alloc;
+<pre><code class="language-rust ignore">extern crate alloc;
 use alloc::string::String;
 
 pub fn main(_hartid: usize, _dtb: usize) {
     let s = String::from(&quot;\nHello, ArceOS![from String]\n&quot;);
     axhal::console::write_bytes(s.as_bytes());
-}</code></pre></pre>
+}</code></pre>
 <p>通过 <code>make build</code> 编译一下，发现果然不支持：</p>
 <pre><code class="language-shell">error: no global memory allocator found but one is required; link to std or add `#[global_allocator]` to a static item that implements the GlobalAlloc trait
 </code></pre>
@@ -204,9 +204,7 @@ pub fn main(_hartid: usize, _dtb: usize) {
 <li>对于页分配，我们的设计中没有释放机制。一方面是为了简单，另一方面在早期内存分配器生效的这段时间，内核需要申请的页是它这一生都需要的。</li>
 </ul>
 <p>分配器数据结构定义与初始化：</p>
-<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>#[derive(Default)]
+<pre><code class="language-rust ignore">#[derive(Default)]
 pub struct EarlyAllocator {
     start:  usize,
     end:    usize,
@@ -222,12 +220,9 @@ impl EarlyAllocator {
         self.b_pos = start;
         self.p_pos = self.end;
     }
-}
-<span class="boring">}</span></code></pre></pre>
+}</code></pre>
 <p>字节分配功能的实现：</p>
-<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>impl EarlyAllocator {
+<pre><code class="language-rust ignore">impl EarlyAllocator {
 	fn alloc_bytes(&amp;mut self, layout: Layout) -&gt; AllocResult&lt;NonNull&lt;u8&gt;&gt; {
         let start = ALIGN_UP!(self.b_pos, layout.align());
         let next = start + layout.size();
@@ -246,12 +241,9 @@ impl EarlyAllocator {
             self.b_pos = self.start;
         }
     }
-}
-<span class="boring">}</span></code></pre></pre>
+}</code></pre>
 <p>执行测试 <code>make test</code> 验证：</p>
-<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>#[test]
+<pre><code class="language-rust ignore">#[test]
 fn test_alloc_bytes() {
     let space: [u8; PAGE_SIZE] = [0; PAGE_SIZE];
     let base = space.as_ptr() as usize;
@@ -277,12 +269,9 @@ fn test_alloc_bytes() {
     assert_eq!(early.total_bytes(), PAGE_SIZE);
     assert_eq!(early.available_bytes(), PAGE_SIZE);
     assert_eq!(early.used_bytes(), 0);
-}
-<span class="boring">}</span></code></pre></pre>
+}</code></pre>
 <p>页分配功能的实现：</p>
-<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>impl EarlyAllocator {
+<pre><code class="language-rust ignore">impl EarlyAllocator {
 	fn alloc_pages(&amp;mut self, layout: Layout) -&gt; AllocResult&lt;NonNull&lt;u8&gt;&gt; {
         assert_eq!(layout.size() % PAGE_SIZE, 0);
         let next = ALIGN_DOWN!(self.p_pos - layout.size(), layout.align());
@@ -293,12 +282,9 @@ fn test_alloc_bytes() {
             NonNull::new(next as *mut u8).ok_or(AllocError::NoMemory)
         }
     }
-}
-<span class="boring">}</span></code></pre></pre>
+}</code></pre>
 <p>执行测试 <code>make test</code> 验证：</p>
-<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>#[test]
+<pre><code class="language-rust ignore">#[test]
 fn test_alloc_pages() {
     let num_pages = 16;
     let total_size = PAGE_SIZE * num_pages;
@@ -322,8 +308,7 @@ fn test_alloc_pages() {
     let p1 = early.alloc_pages(layout).unwrap();
     assert_eq!(p1.as_ptr() as usize, end - PAGE_SIZE*3);
     assert_eq!(early.used_pages(), 3);
-}
-<span class="boring">}</span></code></pre></pre>
+}</code></pre>
 
                     </main>
 

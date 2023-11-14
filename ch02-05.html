@@ -184,17 +184,14 @@
 <p>如图，axruntime 作为主干组件承上启下，向下通过 axhal 管理硬件，向上为应用提供运行时环境。</p>
 <p>当 axruntime 加入之后，启动过程变为：axhal 的 rust_entry 最终会调用 axruntime 的 rust_main，这个函数是 axruntime 的主线逻辑函数，它负责初始化 axalloc 等功能组件，最后调用应用 axorigin 的 main 函数。</p>
 <p>先来看改造后的 axhal，它的 rust_entry 实现：</p>
-<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>unsafe extern &quot;C&quot; fn rust_entry(hartid: usize, dtb: usize) {
+<pre><code class="language-rust ignore">unsafe extern &quot;C&quot; fn rust_entry(hartid: usize, dtb: usize) {
     extern &quot;C&quot; {
         fn rust_main(hartid: usize, dtb: usize);
     }
     rust_main(hartid, dtb);
-}
-<span class="boring">}</span></code></pre></pre>
+}</code></pre>
 <p>然后是 axruntime 的主函数：</p>
-<pre><pre class="playground"><code class="language-rust edition2021">#![no_std]
+<pre><code class="language-rust ignore">#![no_std]
 
 #[cfg(not(test))]
 mod lang_items;
@@ -209,7 +206,7 @@ pub extern &quot;C&quot; fn rust_main(_hartid: usize, _dtb: usize) -&gt; ! {
     axalloc::early_init(_skernel as usize - 0x100000, 0x100000);
     unsafe { main(); }
     panic!(&quot;ArceOS exit ...&quot;);
-}</code></pre></pre>
+}</code></pre>
 <p>完成 axalloc 的早期初始化后，马上调用 axorigin 的 main 函数。</p>
 
                     </main>

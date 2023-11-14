@@ -178,7 +178,7 @@
 <p>在本章的最后，我们再增加几个常用的工具组件，为后续的实验工作做好准备。</p>
 <h3 id="全局配置-axconfig"><a class="header" href="#全局配置-axconfig">全局配置 axconfig</a></h3>
 <p>axconfig 组件主要用来提供全局的配置参数和一些常用的工具函数，它的 main.rs 就如这样：</p>
-<pre><pre class="playground"><code class="language-rust editable edition2021">#![no_std]
+<pre><code class="language-rust ignore">#![no_std]
 
 pub const PAGE_SHIFT: usize = 12;
 pub const PAGE_SIZE: usize = 1 &lt;&lt; PAGE_SHIFT;
@@ -192,14 +192,12 @@ pub const fn align_up(val: usize, align: usize) -&gt; usize {
 #[inline]
 pub const fn align_down(val: usize, align: usize) -&gt; usize {
     (val) &amp; !(align - 1)
-}</code></pre></pre>
+}</code></pre>
 <p>在咱们的实验中，页面 Page 采用的最常见的尺寸是 4096 字节。</p>
 <p>后面我们会陆续加入更多的配置参数和工具函数。</p>
 <h3 id="自旋锁-spinlock-的最初实现"><a class="header" href="#自旋锁-spinlock-的最初实现">自旋锁 spinlock 的最初实现</a></h3>
 <p>在真正启动多任务和启用中断之前，内核一直处于纯粹的单线程执行状态，没有任何并发，自然也没有同步的问题，这种情况下对于全局变量的修改是安全的。但是 Rust 不清楚这一点，所以我们需要先实现一个最初版本的自旋锁 SpinRaw，用它包装 mutable 全局变量，假定已经有了同步保护，但眼下它只是个空壳。</p>
-<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>pub struct SpinRaw&lt;T&gt; {
+<pre><code class="language-rust ignore">pub struct SpinRaw&lt;T&gt; {
     data: UnsafeCell&lt;T&gt;,
 }
 
@@ -224,14 +222,11 @@ impl&lt;T&gt; SpinRaw&lt;T&gt; {
             data: unsafe { &amp;mut *self.data.get() },
         }
     }
-}
-<span class="boring">}</span></code></pre></pre>
+}</code></pre>
 <p>按照 Rust 的要求，标记 SpinRaw 具有 Send 和 Sync 的标记 trait。</p>
 <p>实现 lock 方法返回 SpinRawGuard，假定这个 guard 持有了锁，guard 是 RAII 的模式，当它释放即执行 drop 方法时自动解锁。目前没有实际解锁动作，直接忽略对 Drop trait 的实现。</p>
 <p>最后，我们为 guard 实现 deref 和 deref_mut，把它作为智能指针以方便直接访问 SpinRaw 包装变量的方法。</p>
-<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>impl&lt;T&gt; Deref for SpinRawGuard&lt;T&gt; {
+<pre><code class="language-rust ignore">impl&lt;T&gt; Deref for SpinRawGuard&lt;T&gt; {
     type Target = T;
     #[inline(always)]
     fn deref(&amp;self) -&gt; &amp;T {
@@ -244,14 +239,11 @@ impl&lt;T&gt; DerefMut for SpinRawGuard&lt;T&gt; {
     fn deref_mut(&amp;mut self) -&gt; &amp;mut T {
         unsafe { &amp;mut *self.data }
     }
-}
-<span class="boring">}</span></code></pre></pre>
+}</code></pre>
 <h3 id="bootoncecell"><a class="header" href="#bootoncecell"><strong>BootOnceCell</strong></a></h3>
 <p>类似于上面，有些全局变量虽然需要改变，但是仅需要一次，之后就一直是只读状态，这通常属于延迟初始化的情况。</p>
 <p>例如下一章马上要涉及的早期页表根目录 KERNEL_PAGE_TABLE，这个全局变量只需要初始化一次，但是负责初始化的是一个函数，没法在定义时直接调用，只能延迟初始化。那么我们就可以借助这个 BootOnceCell 来封装 KERNEL_PAGE_TABLE。</p>
-<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>use core::cell::OnceCell;
+<pre><code class="language-rust ignore">use core::cell::OnceCell;
 
 pub struct BootOnceCell&lt;T&gt; {
     inner: OnceCell&lt;T&gt;,
@@ -277,8 +269,7 @@ impl&lt;T&gt; BootOnceCell&lt;T&gt; {
     }
 }
 
-unsafe impl&lt;T&gt; Sync for BootOnceCell&lt;T&gt; {}
-<span class="boring">}</span></code></pre></pre>
+unsafe impl&lt;T&gt; Sync for BootOnceCell&lt;T&gt; {}</code></pre>
 <p>注意两点：</p>
 <ul>
 <li>我们以 Rust 库提供的 OnceCell 为基础进行实现，比较简便。</li>

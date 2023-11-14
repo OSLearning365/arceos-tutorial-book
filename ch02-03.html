@@ -186,9 +186,7 @@
 </ul>
 <p>扩展组件 axhal，准备启动阶段的页表，然后启用分页，实现上述切换。</p>
 <p><strong>准备启动页表</strong>：</p>
-<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>extern &quot;C&quot; {
+<pre><code class="language-rust ignore">extern &quot;C&quot; {
     fn boot_page_table();
 }
 
@@ -197,25 +195,18 @@ pub unsafe fn init_boot_page_table() {
 
     let _ = pt.map(0x8000_0000, 0x8000_0000, SIZE_1G, SIZE_1G, PAGE_KERNEL_EXEC);
     let _ = pt.map(0xffff_ffc0_8000_0000, 0x8000_0000, SIZE_1G, SIZE_1G, PAGE_KERNEL_EXEC);
-}
-<span class="boring">}</span></code></pre></pre>
+}</code></pre>
 <p><strong>启用分页</strong>：</p>
 <p>按照 Riscv 硬件机制的要求，设置 satp 寄存器并刷新 TLB：</p>
-<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>use riscv::register::satp;
+<pre><code class="language-rust ignore">use riscv::register::satp;
 
 pub unsafe fn init_mmu() {
     let page_table_root = boot_page_table as usize;
     satp::set(satp::Mode::Sv39, 0, phys_pfn(page_table_root));
     riscv::asm::sfence_vma_all();
-}
-<span class="boring">}</span></code></pre></pre>
+}</code></pre>
 <p>在引导启动过程中，插入上述过程：</p>
-<p>第一步：</p>
-<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>#[no_mangle]
+<pre><code class="language-rust ignore">#[no_mangle]
 #[link_section = &quot;.text.boot&quot;]
 unsafe extern &quot;C&quot; fn _start() -&gt; ! {
     // a0 = hartid
@@ -249,8 +240,7 @@ unsafe extern &quot;C&quot; fn _start() -&gt; ! {
         entry = sym super::rust_entry,
         options(noreturn),
     )
-}
-<span class="boring">}</span></code></pre></pre>
+}</code></pre>
 <p>我们发现，除了调用 init_boot_page_table 和 init_mmu 之外，还额外增加了两项工作。</p>
 <ul>
 <li>通过 s0 和 s1 分别对 a0 和 a1 进行保存和恢复：a0 和 a1 目前保持着当前 CPU 的 ID 和 DTB 指针，我们要防止函数调用破坏它们。</li>
