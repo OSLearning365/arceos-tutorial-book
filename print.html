@@ -91,7 +91,9 @@
             <div class="sidebar-scrollbox">
                 <ol class="chapter"><li class="chapter-item expanded affix "><a href="Prefix.html">前言</a></li><li class="chapter-item expanded "><a href="ch00-00.html"><strong aria-hidden="true">1.</strong> 第零章 史前时代 - 从开机到内核启动</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch00-01.html"><strong aria-hidden="true">1.1.</strong> 实验环境</a></li><li class="chapter-item expanded "><a href="ch00-02.html"><strong aria-hidden="true">1.2.</strong> 计算机启动过程和对内核的要求</a></li><li class="chapter-item expanded "><a href="ch00-03.html"><strong aria-hidden="true">1.3.</strong> 内核第一行代码</a></li><li class="chapter-item expanded "><a href="ch00-04.html"><strong aria-hidden="true">1.4.</strong> 编译与运行环境</a></li><li class="chapter-item expanded "><div><strong aria-hidden="true">1.5.</strong> Unikernel的概念</div></li><li class="chapter-item expanded "><a href="ch00-06.html"><strong aria-hidden="true">1.6.</strong> 本章总结</a></li></ol></li><li class="chapter-item expanded "><a href="ch01-00.html"><strong aria-hidden="true">2.</strong> 第一章 Hello, ArceOS！- 内核启动和组件诞生</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch01-01.html"><strong aria-hidden="true">2.1.</strong> 内核启动</a></li><li class="chapter-item expanded "><a href="ch01-02.html"><strong aria-hidden="true">2.2.</strong> SBI 功能调用</a></li><li class="chapter-item expanded "><a href="ch01-03.html"><strong aria-hidden="true">2.3.</strong> 应用组件与硬件抽象组件</a></li><li class="chapter-item expanded "><a href="ch01-04.html"><strong aria-hidden="true">2.4.</strong> 全局配置与同步支持</a></li><li class="chapter-item expanded "><a href="ch01-05.html"><strong aria-hidden="true">2.5.</strong> 本章总结</a></li></ol></li><li class="chapter-item expanded "><a href="ch02-00.html"><strong aria-hidden="true">3.</strong> 第二章 内存管理1 - 初始的地址空间和早期内存分配</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch02-01.html"><strong aria-hidden="true">3.1.</strong> 地址空间</a></li><li class="chapter-item expanded "><a href="ch02-02.html"><strong aria-hidden="true">3.2.</strong> 分页机制 - 页表和页表项</a></li><li class="chapter-item expanded "><a href="ch02-03.html"><strong aria-hidden="true">3.3.</strong> 启用分页 - 进入虚拟地址空间</a></li><li class="chapter-item expanded "><a href="ch02-04.html"><strong aria-hidden="true">3.4.</strong> 早期内存分配器</a></li><li class="chapter-item expanded "><a href="ch02-05.html"><strong aria-hidden="true">3.5.</strong> 主干组件 axruntime</a></li><li class="chapter-item expanded "><a href="ch02-06.html"><strong aria-hidden="true">3.6.</strong> 本章总结</a></li></ol></li><li class="chapter-item expanded "><div><strong aria-hidden="true">4.</strong> 第三章 输入输出 - 标准输出和启动参数 todo</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">5.</strong> 第四章 内存管理2 - 地址空间重建和正式内存分配 todo</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">6.</strong> 第五章 多任务1 - 从串行到协作式并发 todo</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">7.</strong> 第六章 异常和中断 - 响应意外情况和外部事件 todo</div></li><li><ol class="section"><li class="chapter-item expanded "><div><strong aria-hidden="true">7.1.</strong> 异常处理</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">7.2.</strong> 时钟中断</div></li></ol></li><li class="chapter-item expanded "><div><strong aria-hidden="true">8.</strong> 第七章 多任务2 -从协作式到抢占式 todo</div></li><li><ol class="section"><li class="chapter-item expanded "><div><strong aria-hidden="true">8.1.</strong> 抢占机制 - 任务切换的内外条件</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">8.2.</strong> round-robin 调度算法</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">8.3.</strong> 同步原语 - 等待与唤醒</div></li></ol></li><li class="chapter-item expanded "><a href="ch08-00.html"><strong aria-hidden="true">9.</strong> 附录A</a></li><li class="chapter-item expanded "><a href="ch09-00.html"><strong aria-hidden="true">10.</strong> 附录B</a></li></ol>
             </div>
-            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
         </nav>
 
         <!-- Track and set sidebar scroll position -->
@@ -178,10 +180,24 @@
                         <h2 id="前言"><a class="header" href="#前言">前言</a></h2>
 <p>ArceOS 是基于组件化思想构造、以 Rust 为主要开发语言、Unikernel 形态的操作系统。与传统操作系统的构建方式不同，组件是构成 ArceOS 的基本元素。</p>
 <p>本实验指导从零开始，带领大家一步一步的完成 ArceOS 的构建过程。每一步都是一个小型实验，在前一步实验的基础上，以增加和扩展组件的方式，增强 ArceOS 的功能特性，最终形成一个功能相对完备的 Unikernel 操作系统。在实验过程中，我们主要采用 Rust 语言进行开发，探寻如何发挥这种新型语言的特点，实践构建操作系统的新模式和新方法。</p>
+<script src="https://utteranc.es/client.js"
+        repo="OSLearning365/blog-issues"
+        issue-term="pathname"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="第零章-史前时代---从开机到内核启动"><a class="header" href="#第零章-史前时代---从开机到内核启动">第零章 史前时代 - 从开机到内核启动</a></h2>
 <p>在操作系统正式启动之前，计算机需要进行一系列的引导和初始化工作，从硬件加电开始，到 BIOS 自检，再到 BootLoader 启动，然后才会把计算机的控制权交给操作系统内核（以下操作系统内核简称内核）。</p>
 <p>本章将追踪这一过程，了解各个启动阶段的机制作用，明确内核获得控制权必须符合的条件；然后基于 Rust 语言开发一个只包含一行代码的裸机程序，这将是我们实验的第一个内核版本，当观察到这行代码被执行时，证明我们的内核首次获得了计算机控制权，它将从此开启自己的时代！</p>
 <p>在此之前，我们首先需要为实验搭建开发和运行环境。</p>
+<script src="https://utteranc.es/client.js"
+        repo="OSLearning365/blog-issues"
+        issue-term="pathname"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="第一节-实验环境"><a class="header" href="#第一节-实验环境">第一节 实验环境</a></h2>
 <p>基于 WSL2+Unbuntu22.04.2 LTS，在此基础上安装：</p>
 <p><strong>1、开发运行的依赖包</strong></p>
@@ -195,7 +211,7 @@
 </code></pre>
 <p><strong>3、Qemu 模拟器（RiscV64）</strong></p>
 <p>下载并编译针对 RiscV64 架构的模拟器：</p>
-<pre><code class="language-bash">git clone https://git.qemu.org/git/qemu.git --depth 1
+<pre><code class="language-bash{.line-numbers}">git clone https://git.qemu.org/git/qemu.git --depth 1
 cd qemu
 ./configure --target-list=riscv64-softmmu
 make -j $(nproc)
@@ -217,7 +233,13 @@ export PATH=$PATH:/path/to/qemu/build
 rustup component add llvm-tools-preview
 </code></pre>
 <p>实验中需要用到其中的 objcopy 等工具。</p>
-<div style="break-before: page; page-break-before: always;"></div><h2 id="第二节-计算机启动过程和对内核的要求"><a class="header" href="#第二节-计算机启动过程和对内核的要求">第二节 计算机启动过程和对内核的要求</a></h2>
+<script src="https://utteranc.es/client.js"
+        repo="OSLearning365/blog-issues"
+        issue-term="pathname"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script><div style="break-before: page; page-break-before: always;"></div><h2 id="第二节-计算机启动过程和对内核的要求"><a class="header" href="#第二节-计算机启动过程和对内核的要求">第二节 计算机启动过程和对内核的要求</a></h2>
 <p>计算机启动时，逐个引导 BIOS、BootLoader 和内核。本实验基于 RiscV64 架构 qemu 模拟器，模拟器对应模拟了这一过程。</p>
 <div style="text-align:center">
    <img src=".\img\启动过程.svg" alt="启动过程" style="zoom:70%"/>
@@ -242,26 +264,30 @@ rustup component add llvm-tools-preview
 </blockquote>
 <p>总结一下，我们要让自己开发的内核等候在正确的位置上，并以正确的形式存在：</p>
 <ol>
-<li><details><summary>内核被加载到 0x8020_0000 地址</summary>
-    这是qemu的职责，我们只需要指定正确的参数。
-</details>
+<li>
+<p>内核被加载到 0x8020_0000 地址</p>
+<ul>
+<li>这是qemu的职责，我们只需要指定正确的参数。</li>
+</ul>
 </li>
-<li><details><summary>内核编译后的形式必须是 binary</summary>
-    Rust 编译器输出的默认执行程序格式是 ELF，它需要被 ELF 加载器解析和加载，ELF 加载器通常是操作系统的内置功能。但是我们开发的就是操作系统内核，除非上一级即 SBI 具备这样的功能，否则我们只能让内核 Image 文件以原始 binary 的形式提供。
-</details>
-</li>
-</ol>
+<li>
+<p>内核编译后的形式必须是 binary</p>
+<ul>
+<li>
+<p>Rust 编译器输出的默认执行程序格式是 ELF，它需要被 ELF 加载器解析和加载，ELF 加载器通常是操作系统的内置功能。但是我们开发的就是操作系统内核，除非上一级即 SBI 具备这样的功能，否则我们只能让内核 Image 文件以原始 binary 的形式提供。</p>
 <blockquote>
 <p><font size=2>至少目前 OpenSBI 还没有支持 ELF 的计划。但是确实存在一些其它的 BootLoader 支持这样的功能。</font></p>
 </blockquote>
-<ol start="3">
-<li><details><summary>内核入口必须在 Image 文件的开头</summary>
-    Rust 编译器默认情况下，会自己安排可执行程序文件的分段与符号布局。由于我们必须确保内核入口在最前面，所以需要通过自定义 LDS 文件方式，控制内核 Image 文件的布局。
-</details>
-<p>后面的实验将会用到下面的 LDS 文件定义 linker.lds：</p>
 </li>
-</ol>
-<pre><code class="language-bash">   OUTPUT_ARCH(riscv)
+</ul>
+</li>
+<li>
+<p>内核入口必须在 Image 文件的开头</p>
+<ul>
+<li>Rust 编译器默认情况下，会自己安排可执行程序文件的分段与符号布局。由于我们必须确保内核入口在最前面，所以需要通过自定义 LDS 文件方式，控制内核 Image 文件的布局。</li>
+<li>后面的实验将会用到下面的 LDS 文件定义 linker.lds：</li>
+</ul>
+<pre><code class="language-bash{.line-numbers}">   OUTPUT_ARCH(riscv)
    
    BASE_ADDRESS = 0x80200000;
    
@@ -282,13 +308,32 @@ rustup component add llvm-tools-preview
        ...
    }
 </code></pre>
+<ul>
+<li>
 <p>有两个地方需要注意：</p>
+<ul>
+<li>
 <p>首先是把代码区 .text 作为第一个 section，并且其中 *(.text.boot) 在 *(.text .text.*) 之前，后者是代码默认情况下所属的 section 属性。将来我们会把内核入口的代码标记在 .text.boot 区域中，确保它们会被最早执行。</p>
+</li>
+<li>
 <p>此外，起始地址 BASE_ADDRESS 就是从 0x8020_0000 开始，正是内核的运行地址，这样我们就把链接地址和运行地址一致起来了，否则那些以绝对寻址方式产生的指令无法正常运行，将导致内核崩溃。将来当我们启用分页机制之后，会把这个地址固定改成相应的虚拟地址 0xffff_ffc0_8020_0000，直观可以发现，似乎这个虚拟地址对物理地址存在一个偏移量 0xffff_ffc0_0000_0000，其实这个偏移量的名字是 <strong>PHYS_VIRT_OFFSET</strong>，将来它会发挥重要作用，后面第二章的第一节会介绍与这个偏移量是如何得出的。</p>
 <blockquote>
 <p><font size=2>注：如果此时就把 BASE_ADDRESS 设置为 0xffff_ffc0_8020_0000 或者其它的什么值，似乎程序最初也可以正常运行一部分代码。主要原因是，内核启动早期的那些汇编指令，通常会被有意保持为相对寻址，即它们是位置无关指令，BASE_ADDRESS 对它们不起作用。但是相对寻址的地址范围受到限制，我们不能要求内核完全采用这种寻址方式，通常只是要求在启用分页之前的指令必须是相对寻址方式。</font></p>
 </blockquote>
+</li>
+</ul>
 <p>LDS 中还有一些其它的关键信息，在后边章节涉及时再详细介绍。完整的 linker.lds 文件见 <a href="ch08-00.html">附录A</a>。</p>
+</li>
+</ul>
+</li>
+</ol>
+<script src="https://utteranc.es/client.js"
+        repo="OSLearning365/blog-issues"
+        issue-term="pathname"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="第三节-内核第一行代码"><a class="header" href="#第三节-内核第一行代码">第三节 内核第一行代码</a></h2>
 <p>现在我们开始动手用 Rust 编写内核的第一个版本 v0.1。虽然它只包含一行代码，但是当我们观测到这行代码被执行时，就意味着计算机经过漫长的启动，终于把系统控制权交到内核的手里了，后面将会是 ArceOS 的 ShowTime!</p>
 <p>首先建立工作目录 <em>arceos</em>，以后我们将在该目录下逐步建立组件工程，同时维护一些对编译、运行进行支持的配置和脚本。</p>
@@ -376,6 +421,13 @@ Priv: 1; Virt: 0
 0x80200004:  0000              illegal
 </code></pre>
 <p>qemu 在执行过程的最后阶段，到达了预设的内核入口地址 0x8020_0000，并且执行的正是我们安排的 <code>wfi</code> 指令。这证明：我们之前的努力获得了成功，从此计算机(模拟器)的控制权就落入我们内核的手中，后面将通过一步步的工作逐渐增强完善内核的功能。</p>
+<script src="https://utteranc.es/client.js"
+        repo="OSLearning365/blog-issues"
+        issue-term="pathname"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="第四节-编译与运行环境"><a class="header" href="#第四节-编译与运行环境">第四节 编译与运行环境</a></h2>
 <p>我们成功完成了第一个内核版本的编译和运行实验，但是前面命令输入的过程太过繁琐了。下面来建立一个 Makefile，以简化输入工作。</p>
 <pre><code class="language-makefile">LD_SCRIPT := $(CURDIR)/linker.lds
@@ -420,14 +472,34 @@ make clean
 ├── README.md
 └── rust-toolchain.toml
 </code></pre>
+<script src="https://utteranc.es/client.js"
+        repo="OSLearning365/blog-issues"
+        issue-term="pathname"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="本章总结"><a class="header" href="#本章总结">本章总结</a></h2>
 <p>这一章我们学习了从计算机启动到进入内核的过程；建立了实验环境，并且实现了一个仅包含一行代码的最小内核。</p>
 <p>从下一章开始，我们将会以组件化的方式，逐步的扩展这个内核的功能与特性。</p>
-<div style="break-before: page; page-break-before: always;"></div><h2 id="第一章-hello-arceos---内核启动和组件诞生"><a class="header" href="#第一章-hello-arceos---内核启动和组件诞生">第一章 Hello, ArceOS! - 内核启动和组件诞生</a></h2>
+<script src="https://utteranc.es/client.js"
+        repo="OSLearning365/blog-issues"
+        issue-term="pathname"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script><div style="break-before: page; page-break-before: always;"></div><h2 id="第一章-hello-arceos---内核启动和组件诞生"><a class="header" href="#第一章-hello-arceos---内核启动和组件诞生">第一章 Hello, ArceOS! - 内核启动和组件诞生</a></h2>
 <p>通过前面一章的工作，我们已经得到了只有一条指令的内核。这一章将以此为起点，让内核完成启动和初始化工作，并且以打印屏幕信息的方式宣告启动成功。</p>
 <p>在此基础上，我们将按照分层原则，把内核分裂为两个组件：管理屏蔽硬件的基础组件和反映业务逻辑的应用组件，再把这两个组件重新组合为内核。</p>
 <p>这个分裂又重组的工作，当前看来或许无聊可笑，但在将来会逐渐体现出它的意义，这一步将是以组件化方式构造操作系统内核的开始，后面我们会以重用性为目标，提炼总结组件形成仓库，并不断寻找更好的组件管理和组合方式。</p>
 <p>下面，先来看在最初的启动阶段，内核需要完成哪些工作。</p>
+<script src="https://utteranc.es/client.js"
+        repo="OSLearning365/blog-issues"
+        issue-term="pathname"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="第一节-内核启动"><a class="header" href="#第一节-内核启动">第一节 内核启动</a></h2>
 <p>各种操作系统内核在最初启动时，通常需要完成类似的几项工作：</p>
 <ol>
@@ -509,6 +581,13 @@ unsafe extern &quot;C&quot; fn rust_entry(_hartid: usize, _dtb: usize) {
 <p><font size=2>在 qemu.log 中看到的指令，在形式上与我们编写的汇编指令有一点出入。</font>
 <font size=2>主要是因为我们用了一些伪指令，大家可通过 RiscV ASM 手册，查阅这些伪指令与实际指令的对应关系。</font></p>
 </blockquote>
+<script src="https://utteranc.es/client.js"
+        repo="OSLearning365/blog-issues"
+        issue-term="pathname"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="第二节-sbi-功能调用"><a class="header" href="#第二节-sbi-功能调用">第二节 SBI 功能调用</a></h2>
 <p>到目前为止，我们还看不到内核的输出信息，只能通过查看 qemu 跟踪日志，确认工作成果。现在是实现打印输出的时候了！</p>
 <p>有两个办法可以让内核支持 console，一是通过管理 Uart 串口设备进行输出，二是直接调用 OpenSBI 提供的功能。前一个方式实际是实现驱动，但目前我们连最基础的内存管理都未能完成，缺乏实现驱动的条件；所以决定采用第二个办法。</p>
@@ -540,6 +619,13 @@ unsafe extern &quot;C&quot; fn rust_entry(_hartid: usize, _dtb: usize) {
    console::write_bytes(b&quot;\nHello, ArceOS!\n&quot;);
 }</code></pre>
 <p>通过 <code>make run</code> 运行，终于在屏幕上看到了输出！</p>
+<script src="https://utteranc.es/client.js"
+        repo="OSLearning365/blog-issues"
+        issue-term="pathname"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="第三节-应用组件与硬件抽象组件"><a class="header" href="#第三节-应用组件与硬件抽象组件">第三节 应用组件与硬件抽象组件</a></h2>
 <p>从本节开始，我们将开启组件化构造操作系统内核的旅程。</p>
 <p>与传统构造内核的方法不同，组件化构造内核包括两个部分：一是建立一个组件仓库，其中的组件都具有高度可复用性；二是建立一种管理、选择和组合组件的方法与机制。在二者的基础上，我们就可以根据需要，基于组件组合的方式快速定制生产目标内核。</p>
@@ -655,6 +741,13 @@ axhal = { path = &quot;../axhal&quot; }
 </div>
 <p>从图中可以看到，两个组件之间存在相互调用的关系，启动过程中 axhal 调用 axorigin 的 main 函数；运行过程中 axorigin 作为应用需要调用系统组件 axhal 的各种功能。既然 axorigin 已经通过 Cargo.toml 对 axhal 建立了依赖，那么另一个方向的依赖就不成立了，否则就会导致<strong>循环依赖</strong>。因此只好在启动过程中，采用 extern ABI 的方式调用 main 函数。</p>
 <p>在我们将来构造内核的实验中，循环依赖将会是一个比较麻烦的问题。在第三章里，将会引入一个特殊的组件 crate_interface 用于专门处理循环依赖，本质上它仍然是基于 extern ABI，但是基于该组件提供了一种 Rusty 风格的调用方式，代码的可读性更好，同时可以有效减少编程出错的概率。</p>
+<script src="https://utteranc.es/client.js"
+        repo="OSLearning365/blog-issues"
+        issue-term="pathname"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="第四节-全局配置与同步支持"><a class="header" href="#第四节-全局配置与同步支持">第四节 全局配置与同步支持</a></h2>
 <p>在本章的最后，我们再增加几个常用的工具组件，为后续的实验工作做好准备。</p>
 <h3 id="全局配置-axconfig"><a class="header" href="#全局配置-axconfig">全局配置 axconfig</a></h3>
@@ -757,11 +850,32 @@ unsafe impl&lt;T&gt; Sync for BootOnceCell&lt;T&gt; {}</code></pre>
 <li>顾名思义，BootOnceCell 的那一次初始化调用必须在 Boot 阶段，即单线程环境下完成，之后就变成了只读变量，这样再启用多线程也没有问题。但如果在启用多线程或中断之后再进行初始化操作，就是<strong>不安全</strong>的。一定注意这个调用时机。</li>
 </ul>
 <p>当然 BootOnceCell 的功能也可以通过引入 lazy_static 等外部 crate 来实现。</p>
+<script src="https://utteranc.es/client.js"
+        repo="OSLearning365/blog-issues"
+        issue-term="pathname"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="本章总结-1"><a class="header" href="#本章总结-1">本章总结</a></h2>
 <p>这一章我们完成了内核的初始化，并且向屏幕输出了信息。在此基础上，我们建立了最早的组件集合和组合组件的方式。</p>
 <p>下一章，我们将会针对操作系统内核的第一项重要功能 - 内存管理进行实验。</p>
+<script src="https://utteranc.es/client.js"
+        repo="OSLearning365/blog-issues"
+        issue-term="pathname"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="第二章-内存管理1---初始的地址空间和早期内存分配"><a class="header" href="#第二章-内存管理1---初始的地址空间和早期内存分配">第二章 内存管理1 - 初始的地址空间和早期内存分配</a></h2>
 <p>内存管理是内核最基础的功能，它几乎是其它所有功能得以初始化和运行的前提与支撑。因此，在内核启动的过程中，我们首先要建立内存管理方面的机制和功能。这通常包括两个部分：建立初始的地址空间和建立最初的动态内存分配机制。</p>
+<script src="https://utteranc.es/client.js"
+        repo="OSLearning365/blog-issues"
+        issue-term="pathname"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="第一节-地址空间"><a class="header" href="#第一节-地址空间">第一节 地址空间</a></h2>
 <p>地址空间是内核与应用进程的生存活动空间。内核或应用要运行，就首先需要被加载到指定地址的一段内存中，以指令流的形式存在；CPU 的指令寄存器 <strong>PC</strong> 将从入口指令的地址开始执行，过程中需要不断的跳转，读写特定地址的内存数据，访问指定地址的IO端口等等。地址是内核与应用管理自身和环境资源的主要标识。我们需要在内核或应用（进程）投入运行之前，为它们可能涉及的各种资源的初始地址和占用范围进行统一的安排，这种安排就是地址空间。</p>
 <p>我们目前开发的内核是 <strong>Unikernel</strong> 形态，关于地址空间：</p>
@@ -849,6 +963,13 @@ PA = VA - PHYS_VIRT_OFFSET;
 </code></pre>
 <p>当前实验中 PHYS_VIRT_OFFSET = 0xFFFF_FFC0_0000_0000，与我们选择的分页机制方案 Sv39 有关。我们开发的内核是 64 位系统，原本最大可用的地址空间范围是 64 位；但是按照 Riscv 规范，Sv39 有效的虚拟地址范围被约束为最大 39 位，从 40 位往上那些未使用的位必须与第 39 位一致。也就是说，如果第 39 位是 1，从第 40 位向上全部填充 1，有效范围 0xFFFF_FFC0_0000_0000 ~ 0xFFFF_FFFF_FFFF_FFFF；如果第 39 位是 0，高位全部填充 0，那么有效地址范围就是从 0 到 0x3F_FFFF_FFFF 。这两个范围处于 64 位空间最高端和最低端这两头的位置。按照惯例，我们选择了高端的这个范围，把它作为内核本身的虚拟地址空间；低端的那个范围暂时预留，将来支持宏内核模式时，我们把它作为应用进程的虚拟地址空间。</p>
 <p>下一节开始基于 Sv39 方案，建立我们内核的分页机制。</p>
+<script src="https://utteranc.es/client.js"
+        repo="OSLearning365/blog-issues"
+        issue-term="pathname"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="第二节-分页机制---页表和页表项"><a class="header" href="#第二节-分页机制---页表和页表项">第二节 分页机制 - 页表和页表项</a></h2>
 <p>每一级页表都占用一个内存页，我们采用最常用的内存页配置 4096 字节。Sv39 是针对 64 位系统的分页方案，页表项长度是 8 字节，所以每个页表包含 512 个页表项。页表是一种多级嵌套结构，由 page_table 和 page_table_entry 两种基本元素组成，它们符合如下的模式：</p>
 <div style="text-align:center">
@@ -956,6 +1077,13 @@ lto = true</code></pre>
     cargo test --workspace --exclude &quot;axhal&quot; --exclude &quot;axorigin&quot;
 </code></pre>
 <p>执行 <code>make test</code> 测试通过。</p>
+<script src="https://utteranc.es/client.js"
+        repo="OSLearning365/blog-issues"
+        issue-term="pathname"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="第三节-启用分页---进入虚拟地址空间"><a class="header" href="#第三节-启用分页---进入虚拟地址空间">第三节 启用分页 - 进入虚拟地址空间</a></h2>
 <p>上一节中我们实现了组件 page_table，本节就基于它们来为我们的内核启用分页，从物理地址空间进入到虚拟地址空间。</p>
 <div style="text-align:center">
@@ -1056,6 +1184,13 @@ Priv: 1; Virt: 0
 0xffffffc080200090:  e406              sd                      ra,8(sp)
 </code></pre>
 <p>对照执行 rust_entry 之前和该函数自身的执行地址，可以看到内核从物理地址空间进入到虚拟地址空间的过程。</p>
+<script src="https://utteranc.es/client.js"
+        repo="OSLearning365/blog-issues"
+        issue-term="pathname"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="第四节-早期内存分配器"><a class="header" href="#第四节-早期内存分配器">第四节 早期内存分配器</a></h2>
 <p>内核目前还不支持 String、Vector，因为没有动态内存分配器；这也是为什么不能用 println! 宏，因为它对变参的处理同样需要动态内存分配。我们可以来尝试一下，把 axorigin 的 main 函数改成这样：</p>
 <pre><code class="language-rust ignore">extern crate alloc;
@@ -1191,6 +1326,13 @@ fn test_alloc_pages() {
     assert_eq!(p1.as_ptr() as usize, end - PAGE_SIZE*3);
     assert_eq!(early.used_pages(), 3);
 }</code></pre>
+<script src="https://utteranc.es/client.js"
+        repo="OSLearning365/blog-issues"
+        issue-term="pathname"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="第五节-主干组件-axruntime"><a class="header" href="#第五节-主干组件-axruntime">第五节 主干组件 axruntime</a></h2>
 <p>本章我们新增了内存分配器组件 axalloc，目前临时把对它的初始化工作放在了应用组件 axorigin 中。但显然，内存分配器应当划分到系统层，并在系统层被初始化。</p>
 <p>对于系统层，又可以进一步划分为硬件体系结构无关与硬件体系相关。硬件体系相关的工作已经由 axhal 承担了，现在我们再额外增加一级，专门用来对通用的、硬件体系无关的各类组件进行组织和初始化，命名为 axruntime。</p>
@@ -1225,8 +1367,22 @@ pub extern &quot;C&quot; fn rust_main(_hartid: usize, _dtb: usize) -&gt; ! {
     panic!(&quot;ArceOS exit ...&quot;);
 }</code></pre>
 <p>完成 axalloc 的早期初始化后，马上调用 axorigin 的 main 函数。</p>
+<script src="https://utteranc.es/client.js"
+        repo="OSLearning365/blog-issues"
+        issue-term="pathname"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="本章总结-2"><a class="header" href="#本章总结-2">本章总结</a></h2>
 <p>本章我们首先完成了硬件分页机制的启用，建立了初始的地址空间，这是后面各种功能组件得以初始化和运行的基础；然后让内核支持了早期的内存分配器，这个分配器的最大分配能力虽然只有 1M，但是足以支撑内核的早期启动工作了。等我们能够通过解析 fdt 信息获取实际的物理内存大小之后，将构建正式的内存分配器以替换掉它。最后，我们引入了 axruntime 这个组件，它在应用与 axhal 组件之间起到承上启下的作用，现在内核的主干框架已经基本齐备，只剩下 axstd 应用接口库还未提及，下一章的开始，我们就来引入这个组件。</p>
+<script src="https://utteranc.es/client.js"
+        repo="OSLearning365/blog-issues"
+        issue-term="pathname"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="附录a"><a class="header" href="#附录a">附录A</a></h2>
 <pre><code class="language-x86asm editable">OUTPUT_ARCH(riscv)
 
@@ -1289,6 +1445,13 @@ SECTIONS
 }
 </code></pre>
 <p>注：启用分页之后，<code>BASE_ADDRESS = 0xffffffc080200000;</code></p>
+<script src="https://utteranc.es/client.js"
+        repo="OSLearning365/blog-issues"
+        issue-term="pathname"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="附录b"><a class="header" href="#附录b">附录B</a></h2>
 <pre><code class="language-makefile editable"># General options
 ARCH ?= riscv64
@@ -1356,6 +1519,13 @@ FORCE:
 .PHONY: all build disasm run justrun debug clippy fmt test test_no_fail_fast clean FORCE
 </code></pre>
 <p>注：建立axhal组件后，把 linker.lds 挪到该组件目录之下，<code>LD_SCRIPT := $(CURDIR)/axhal/linker.lds</code>。</p>
+<script src="https://utteranc.es/client.js"
+        repo="OSLearning365/blog-issues"
+        issue-term="pathname"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script>
 
                     </main>
 
