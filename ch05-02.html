@@ -1,0 +1,429 @@
+<!DOCTYPE HTML>
+<html lang="cn" class="light" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>初始任务 - MainTask - ArceOS Tutorial Book</title>
+
+
+        <!-- Custom HTML head -->
+        
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+        <!-- MathJax -->
+        <script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    </head>
+    <body class="sidebar-visible no-js">
+    <div id="body-container">
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('light')
+            html.classList.add(theme);
+            var body = document.querySelector('body');
+            body.classList.remove('no-js')
+            body.classList.add('js');
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var body = document.querySelector('body');
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            body.classList.remove('sidebar-visible');
+            body.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="Prefix.html">前言</a></li><li class="chapter-item expanded "><a href="ch00-00.html"><strong aria-hidden="true">1.</strong> 第零章 史前时代 - 从开机到内核启动</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch00-01.html"><strong aria-hidden="true">1.1.</strong> 实验环境</a></li><li class="chapter-item expanded "><a href="ch00-02.html"><strong aria-hidden="true">1.2.</strong> 计算机启动过程和对内核的要求</a></li><li class="chapter-item expanded "><a href="ch00-03.html"><strong aria-hidden="true">1.3.</strong> 内核第一行代码</a></li><li class="chapter-item expanded "><a href="ch00-04.html"><strong aria-hidden="true">1.4.</strong> 编译与运行环境</a></li><li class="chapter-item expanded "><a href="ch00-05.html"><strong aria-hidden="true">1.5.</strong> Unikernel与组件化概念</a></li><li class="chapter-item expanded "><a href="ch00-06.html"><strong aria-hidden="true">1.6.</strong> 本章总结</a></li></ol></li><li class="chapter-item expanded "><a href="ch01-00.html"><strong aria-hidden="true">2.</strong> 第一章 Hello, ArceOS！- 内核启动和组件诞生</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch01-01.html"><strong aria-hidden="true">2.1.</strong> 内核启动</a></li><li class="chapter-item expanded "><a href="ch01-02.html"><strong aria-hidden="true">2.2.</strong> SBI 功能调用</a></li><li class="chapter-item expanded "><a href="ch01-03.html"><strong aria-hidden="true">2.3.</strong> 应用组件与硬件抽象组件</a></li><li class="chapter-item expanded "><a href="ch01-04.html"><strong aria-hidden="true">2.4.</strong> 组件测试和模块测试</a></li><li class="chapter-item expanded "><a href="ch01-05.html"><strong aria-hidden="true">2.5.</strong> 全局配置与同步支持</a></li><li class="chapter-item expanded "><a href="ch01-06.html"><strong aria-hidden="true">2.6.</strong> 本章总结</a></li></ol></li><li class="chapter-item expanded "><a href="ch02-00.html"><strong aria-hidden="true">3.</strong> 第二章 内存管理1 - 初始的地址空间和早期内存分配</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch02-01.html"><strong aria-hidden="true">3.1.</strong> 基本概念 - 地址空间</a></li><li class="chapter-item expanded "><a href="ch02-02.html"><strong aria-hidden="true">3.2.</strong> 分页机制 - 页表和页表项</a></li><li class="chapter-item expanded "><a href="ch02-03.html"><strong aria-hidden="true">3.3.</strong> 启用分页 - 进入虚拟地址空间</a></li><li class="chapter-item expanded "><a href="ch02-04.html"><strong aria-hidden="true">3.4.</strong> 早期内存分配器的设计</a></li><li class="chapter-item expanded "><a href="ch02-05.html"><strong aria-hidden="true">3.5.</strong> 启用动态内存分配</a></li><li class="chapter-item expanded "><a href="ch02-06.html"><strong aria-hidden="true">3.6.</strong> 内核分层和主干组件</a></li><li class="chapter-item expanded "><a href="ch02-07.html"><strong aria-hidden="true">3.7.</strong> 本章总结</a></li></ol></li><li class="chapter-item expanded "><a href="ch03-00.html"><strong aria-hidden="true">4.</strong> 第三章 基础组件 - 时间、日志和设备树</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch03-01.html"><strong aria-hidden="true">4.1.</strong> 获得系统时间</a></li><li class="chapter-item expanded "><a href="ch03-02.html"><strong aria-hidden="true">4.2.</strong> 组件crate_interface - 打破循环依赖</a></li><li class="chapter-item expanded "><a href="ch03-03.html"><strong aria-hidden="true">4.3.</strong> 组件axlog - 支持log</a></li><li class="chapter-item expanded "><a href="ch03-04.html"><strong aria-hidden="true">4.4.</strong> 组件axdtb - 操作设备树</a></li><li class="chapter-item expanded "><a href="ch03-05.html"><strong aria-hidden="true">4.5.</strong> 基于设备树获取内存信息</a></li><li class="chapter-item expanded "><a href="ch03-06.html"><strong aria-hidden="true">4.6.</strong> 组件linked_list - 侵入式链表</a></li><li class="chapter-item expanded "><a href="ch03-07.html"><strong aria-hidden="true">4.7.</strong> 本章总结</a></li></ol></li><li class="chapter-item expanded "><a href="ch04-00.html"><strong aria-hidden="true">5.</strong> 第四章 内存管理2 - 地址空间重建和正式内存分配</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch04-01.html"><strong aria-hidden="true">5.1.</strong> 分页机制-支持多级页表</a></li><li class="chapter-item expanded "><a href="ch04-02.html"><strong aria-hidden="true">5.2.</strong> 重建地址空间</a></li><li class="chapter-item expanded "><a href="ch04-03.html"><strong aria-hidden="true">5.3.</strong> bitmap位分配器</a></li><li class="chapter-item expanded "><a href="ch04-04.html"><strong aria-hidden="true">5.4.</strong> 启用页内存分配器</a></li><li class="chapter-item expanded "><a href="ch04-05.html"><strong aria-hidden="true">5.5.</strong> 实现字节内存分配器</a></li><li class="chapter-item expanded "><a href="ch04-06.html"><strong aria-hidden="true">5.6.</strong> 集成字节内存分配器</a></li><li class="chapter-item expanded "><a href="ch04-07.html"><strong aria-hidden="true">5.7.</strong> 本章总结</a></li></ol></li><li class="chapter-item expanded "><a href="ch05-00.html"><strong aria-hidden="true">6.</strong> 第五章 多任务1 - 从串行到并发</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch05-01.html"><strong aria-hidden="true">6.1.</strong> 基本概念-任务与调度</a></li><li class="chapter-item expanded "><a href="ch05-02.html" class="active"><strong aria-hidden="true">6.2.</strong> 初始任务 - MainTask</a></li><li class="chapter-item expanded "><a href="ch05-03.html"><strong aria-hidden="true">6.3.</strong> 创建任务 - spawn</a></li><li class="chapter-item expanded "><a href="ch05-04.html"><strong aria-hidden="true">6.4.</strong> 任务退出和等待任务退出</a></li><li class="chapter-item expanded "><a href="ch05-05.html"><strong aria-hidden="true">6.5.</strong> 系统任务 - Gc和Idle任务</a></li><li class="chapter-item expanded "><a href="ch04-07.html"><strong aria-hidden="true">6.6.</strong> 本章总结</a></li></ol></li><li class="chapter-item expanded "><a href="ch06-00.html"><strong aria-hidden="true">7.</strong> 第六章 异常和中断 - 响应意外情况和外部事件</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch06-01.html"><strong aria-hidden="true">7.1.</strong> 异常处理</a></li><li class="chapter-item expanded "><a href="ch06-02.html"><strong aria-hidden="true">7.2.</strong> 自旋锁与中断</a></li><li class="chapter-item expanded "><a href="ch06-03.html"><strong aria-hidden="true">7.3.</strong> 时钟中断</a></li><li class="chapter-item expanded "><a href="ch06-04.html"><strong aria-hidden="true">7.4.</strong> 本章总结</a></li></ol></li><li class="chapter-item expanded "><a href="ch07-00.html"><strong aria-hidden="true">8.</strong> 第七章 多任务2 -从协作式到抢占式</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch07-01.html"><strong aria-hidden="true">8.1.</strong> 任务调度中的抢占</a></li><li class="chapter-item expanded "><a href="ch07-02.html"><strong aria-hidden="true">8.2.</strong> 抢占式调度框架</a></li><li class="chapter-item expanded "><a href="ch07-03.html"><strong aria-hidden="true">8.3.</strong> 触发抢占的外部条件与触发点</a></li><li class="chapter-item expanded "><a href="ch07-04.html"><strong aria-hidden="true">8.4.</strong> 同步原语 - Mutex</a></li><li class="chapter-item expanded "><div><strong aria-hidden="true">8.5.</strong> 本章总结</div></li></ol></li><li class="chapter-item expanded "><div><strong aria-hidden="true">9.</strong> 第八章 文件系统1 - 基于内存的文件系统</div></li><li><ol class="section"><li class="chapter-item expanded "><div><strong aria-hidden="true">9.1.</strong> 文件系统框架</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">9.2.</strong> ramfs基本文件与目录操作</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">9.3.</strong> devfs管理随机数设备、网卡设备和块设备</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">9.4.</strong> 本章总结</div></li></ol></li><li class="chapter-item expanded "><div><strong aria-hidden="true">10.</strong> 第九章 总线与设备 - 发现设备</div></li><li><ol class="section"><li class="chapter-item expanded "><div><strong aria-hidden="true">10.1.</strong> virtio-mmio驱动 - 发现virtio设备</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">10.2.</strong> virtio-rng设备驱动</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">10.3.</strong> 本章总结</div></li></ol></li><li class="chapter-item expanded "><div><strong aria-hidden="true">11.</strong> 第十章 网卡与协议栈 - 连接外部世界</div></li><li><ol class="section"><li class="chapter-item expanded "><div><strong aria-hidden="true">11.1.</strong> virtio-net网卡驱动</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">11.2.</strong> 网络协议栈，支持socket</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">11.3.</strong> 本章总结</div></li></ol></li><li class="chapter-item expanded "><div><strong aria-hidden="true">12.</strong> 第十一章 文件系统2 - 持久化文件系统</div></li><li><ol class="section"><li class="chapter-item expanded "><div><strong aria-hidden="true">12.1.</strong> virtio-blk块设备驱动</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">12.2.</strong> easy-fs文件系统</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">12.3.</strong> 本章总结</div></li></ol></li><li class="chapter-item expanded "><div><strong aria-hidden="true">13.</strong> 第十二章 Rust应用接口库 - 兼容官方标准库</div></li><li><ol class="section"><li class="chapter-item expanded "><div><strong aria-hidden="true">13.1.</strong> 重构axstd组件</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">13.2.</strong> todo</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">13.3.</strong> 本章总结</div></li></ol></li><li class="chapter-item expanded "><div><strong aria-hidden="true">14.</strong> 第十三章 多核SMP - 并行处理</div></li><li><ol class="section"><li class="chapter-item expanded "><div><strong aria-hidden="true">14.1.</strong> PerCPU</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">14.2.</strong> 内存屏障</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">14.3.</strong> 核间调度</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">14.4.</strong> 本章总结</div></li></ol></li><li class="chapter-item expanded "><div><strong aria-hidden="true">15.</strong> 第十四章 迈向新世界 - 支持Linux应用</div></li><li><ol class="section"><li class="chapter-item expanded "><div><strong aria-hidden="true">15.1.</strong> 加载应用</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">15.2.</strong> 启动应用</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">15.3.</strong> 支持系统调用</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">15.4.</strong> 本章总结</div></li></ol></li><li class="chapter-item expanded "><a href="chfa-00.html"><strong aria-hidden="true">16.</strong> 附录A 内核布局文件LDS</a></li><li class="chapter-item expanded "><a href="chfb-00.html"><strong aria-hidden="true">17.</strong> 附录B 内核编译文件Makefile</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <!-- Track and set sidebar scroll position -->
+        <script>
+            var sidebarScrollbox = document.querySelector('#sidebar .sidebar-scrollbox');
+            sidebarScrollbox.addEventListener('click', function(e) {
+                if (e.target.tagName === 'A') {
+                    sessionStorage.setItem('sidebar-scroll', sidebarScrollbox.scrollTop);
+                }
+            }, { passive: true });
+            var sidebarScrollTop = sessionStorage.getItem('sidebar-scroll');
+            sessionStorage.removeItem('sidebar-scroll');
+            if (sidebarScrollTop) {
+                // preserve sidebar scroll position when navigating via links within sidebar
+                sidebarScrollbox.scrollTop = sidebarScrollTop;
+            } else {
+                // scroll sidebar to current active section when navigating via "next/previous chapter" buttons
+                var activeSection = document.querySelector('#sidebar .active');
+                if (activeSection) {
+                    activeSection.scrollIntoView({ block: 'center' });
+                }
+            }
+        </script>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">ArceOS Tutorial Book</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        <a href="https://github.com/rcore-os/arceos-tutorial-book" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h2 id="第二节-初始任务---maintask"><a class="header" href="#第二节-初始任务---maintask">第二节 初始任务 - MainTask</a></h2>
+<p>内核从启动开始的主执行流程，将来也会作为一个任务参与多任务的调度，我们称它为 MainTask。这个初始任务有它的特殊性，无论是初始化还是调度方面，都需要特殊处理。后续我们将要创建的那些任务，都是 MainTask 的分支和子任务，需要受到它的管理。这一节我们先来建立起 MainTask 的运行框架，为后面创建更多的任务做一个准备。</p>
+<p>完整的 MainTask 的运行过程如下，主要关注三个阶段：封装 MainTask、尝试调度执行 yield 和 exit 退出系统。</p>
+<div style="text-align:center">
+   <img src=".\img\初始任务InitTask.svg" alt="初始任务InitTask" style="zoom:70%"/>
+</div>
+<p><strong>封装 MainTask</strong></p>
+<p>内核启动之后，以<strong>单线程</strong>方式执行一系列的初始化步骤，直至初始化多任务这一步。此时需要把当前这个执行流程本身也封装为一个任务 MainTask，以便将来与其它任务一起接受调度。MainTask 的特殊之处在于：首先它当前就正处于运行状态，所以初始 status 就是 <strong>Running</strong> 而非 Ready，并且它在初始化后直接就是 <strong>CurrentTask</strong>；此外，它的 entry 无意义置空，kstack 也不必创建，因为已经存在，就是内核栈。封装构建 MainTask 的代码在 axtask/src/run_queue.rs 的 init(...) 中：</p>
+<pre><code class="language-rust editable">pub(crate) fn init() {
+	let main_task = Task::new_init(&quot;main&quot;.into());
+	main_task.set_state(TaskState::Running);
+	unsafe { CurrentTask::init_current(main_task) }
+}</code></pre>
+<p>构造 main_task 实例后，直接设置 state 是 Running，然后让 CurrentTask 指向该任务。</p>
+<p>看一下 MainTask 的初始化方法：</p>
+<pre><code class="language-rust editable">impl Task {
+	pub(crate) fn new_init(name: String) -&gt; AxTaskRef {
+        let mut t = Self::new_common(TaskId::new(), name);
+        t.is_init = true;
+        Arc::new(t)
+    }
+
+    fn new_common(id: TaskId, name: String) -&gt; Self {
+        Self {
+            name,
+            entry: None,
+            state: AtomicU8::new(TaskState::Ready as u8),
+            kstack: None,
+            ctx: UnsafeCell::new(TaskContext::new()),
+        }
+    }
+    
+    #[inline]
+    pub(crate) fn set_state(&amp;self, state: TaskState) {
+        self.state.store(state as u8, Ordering::Release)
+    }
+}</code></pre>
+<p>CurrentTask::init_current 用于指明当前任务，实际是调用 axhal 的实现【记录在 tp 中】：</p>
+<pre><code class="language-rust editable">// axtask/src/task.rs
+impl CurrentTask {
+    pub(crate) unsafe fn init_current(init_task: AxTaskRef) {
+        let ptr = Arc::into_raw(init_task);
+        axhal::cpu::set_current_task_ptr(ptr);
+    }
+    
+    pub(crate) fn try_get() -&gt; Option&lt;Self&gt; {
+        let ptr: *const Task = axhal::cpu::current_task_ptr();
+        if !ptr.is_null() {
+            Some(Self(unsafe { ManuallyDrop::new(AxTaskRef::from_raw(ptr)) }))
+        } else {
+            None
+        }
+    }
+
+    pub(crate) fn get() -&gt; Self {
+        Self::try_get().expect(&quot;current task is uninitialized&quot;)
+    }
+}
+
+pub fn current() -&gt; CurrentTask {
+    CurrentTask::get()
+}
+
+// axhal/src/riscv64/cpu.rs
+static mut CURRENT_TASK_PTR: usize = 0;
+
+#[inline]
+pub fn current_task_ptr&lt;T&gt;() -&gt; *const T {
+    unsafe { CURRENT_TASK_PTR as _ }
+}
+
+#[inline]
+pub unsafe fn set_current_task_ptr&lt;T&gt;(ptr: *const T) {
+    CURRENT_TASK_PTR = ptr as usize
+}</code></pre>
+<p>有两个系列的函数，由 axtask 和 axhal 共同实现。一组是全局函数 current() 及其支撑，用于返回当前正在执行的任务指针；另一组是初始化或设置当前任务的函数。它们在后面的调度中，都会起到重要作用。</p>
+<p>下面来考虑一下调度的问题，除了 Task 之外，调度还涉及两个数据结构，当前任务指针 CurrentTask 和任务运行队列 run_queue。</p>
+<div style="text-align:center">
+   <img src=".\img\调度原理与概念.svg" alt="调度原理与概念" style="zoom:80%"/>
+</div>
+<p>如图，我们内核中任务的调度，常称为 resched，主要要解决的问题就是：确定<strong>谁是下一个执行任务</strong>，这是通过在 CurrentTask 和 run_queue 之间交换任务来实现。</p>
+<p>通过前面提到的 current() 函数可以获得 CurrentTask，它指向当前任务。在调度时，必须完整的执行如下两步：</p>
+<p>第一步 Put - 把当前任务放回到运行队列 run_queue 中。</p>
+<p>第二步 Get - 从运行队列 run_queue 中取出一个任务作为当前任务。</p>
+<blockquote>
+<p><font size=2>注意：一定是先把当前任务放回运行队列，然后再从队列中选出下一个任务。这意味着，当前任务也会与运行队列中的其它任务一起平等的参与竞争，基于调度策略选出下一个，所以选择结果仍有可能是它。</font></p>
+</blockquote>
+<p>完成上述两步之后，可能出现 3 种结果：</p>
+<ol>
+<li>当前任务变成了另外一个。这是最常见的情况，说明调度生效了，CPU 开始执行目前更有资格或更紧迫的任务。至于谁更有资格或更紧迫取决于调度的策略。</li>
+<li>当前任务还是调度前的那个任务，相当于调度没有生效。这可能是因为 run_queue 是空的，也有可能在所有待命的任务中，原任务依然是最有资格执行的那个。</li>
+<li>上面第二步 Get 取不到下一个可执行的任务。对于此情况，内核中预设一个名为 IDLE 的特殊的内部任务，充当下一个任务，它名副其实的什么都不做，一旦有其它有效的任务可以运行了，它就会立即让出。本节不涉及它，我们将在本章的最后，说明它的实现。</li>
+</ol>
+<p>由于我们目前只有一个任务 MainTask，如果触发调度，将出现上面第 2 种结果，即调度后仍然是 MainTask。</p>
+<p>下面来实现 yield api 和背后的 resched 过程，首先是运行队列 run_queue 的实现：</p>
+<pre><code class="language-rust editable">pub(crate) static RUN_QUEUE: SpinNoIrq&lt;AxRunQueue&gt; = SpinNoIrq::new(AxRunQueue::new());
+
+pub(crate) struct AxRunQueue {
+    ready_queue: VecDeque&lt;Arc&lt;Task&gt;&gt;,
+}
+
+impl AxRunQueue {
+    pub fn yield_current(&amp;mut self) {
+        self.resched();
+    }
+    
+    fn resched(&amp;mut self) {
+        let prev = current();
+        if prev.is_running() {
+            prev.set_state(TaskState::Ready);
+            if !prev.is_idle() {
+                self.put_prev_task(prev.clone());
+            }
+        }
+        let next = self.pick_next_task().unwrap(); // FixMe: with IDLE_TASK.get().clone()
+        self.switch_to(prev, next);
+    }
+    
+    fn switch_to(&amp;mut self, prev_task: CurrentTask, next_task: AxTaskRef) {
+        next_task.set_preempt_pending(false);
+        next_task.set_state(TaskState::Running);
+        if prev_task.ptr_eq(&amp;next_task) {
+            return;
+        }
+		todo!(&quot;Implement it in future!&quot;);
+    }
+
+    pub fn pick_next_task(&amp;mut self) -&gt; Option&lt;Arc&lt;Task&gt;&gt; {
+        self.ready_queue.pop_front()
+    }
+
+    pub fn put_prev_task(&amp;mut self, prev: Arc&lt;Task&gt;, preempt: bool) {
+        self.ready_queue.push_back(prev)
+    }
+}</code></pre>
+<p>运行队列采取 VecDeque 的数据结构，可以方便的在两头进行 push/pop。</p>
+<p>注意 yield_current，其实就是调用 resched()，实现逻辑已经在上面交代过了，最后是对前后两个任务执行 switch_to 切换。</p>
+<p>关于 switch_to(...) 函数，这个是整个调度机制的<strong>核心</strong>，本节的实现是不完整的，但是那句 todo! 不会被执行到，因为目前我们只有一个任务 MainTask，是在同一个任务上切换，从上面那行 <code>return</code> 就返回了。下一节我们来完成这个 switch_to(...) 函数。</p>
+<p>然后，把 yield 的功能通过 axstd 暴露给应用：</p>
+<pre><code class="language-rust editable">// axstd/src/thread.rs
+pub fn yield_now() {
+    axtask::yield_now();
+}
+
+// axtask/src/lib.rs
+pub fn yield_now() {
+    run_queue::RUN_QUEUE.lock().yield_current();
+}
+</code></pre>
+<p>最后，我们为 MainTask 实现 exit：</p>
+<pre><code class="language-rust editable">// axtask/src/lib.rs
+pub fn exit(exit_code: i32) -&gt; ! {
+    run_queue::RUN_QUEUE.lock().exit_current(exit_code)
+}
+
+// axtask/src/run_queue.rs
+impl AxRunQueue {
+	pub fn exit_current(&amp;mut self, exit_code: i32) -&gt; ! {
+		axhal::misc::terminate();
+    }
+}</code></pre>
+<p>对于 MainTask，任务退出就意味着系统退出。但是对于其它任务，则只是自己退出，并等待资源被回收。所以 exit_current(...) 的实现是不完整的，下一节我们再来完成它。</p>
+<p>在 axruntime 中，初始化 axtask 组件，以支持多任务：</p>
+<pre><code class="language-rust editable">// axruntime/src/lib.rs
+pub extern &quot;C&quot; fn rust_main(hartid: usize, dtb: usize) -&gt; ! {
+    ... ...
+    axtask::init_scheduler();
+    ... ...
+    unsafe {
+        main();
+    }
+    axtask::exit(0);
+}
+
+pub fn init_scheduler() {
+    info!(&quot;Initialize scheduling...&quot;);
+    run_queue::init();
+}</code></pre>
+<p>现在来运行一下，从运行效果来看，与启用多任务之前没有区别，毕竟目前也只有一个任务；但是在形式上，我们已经完成了多任务框架的支持，为并发计算与按策略调度做好了准备。</p>
+<p>下一节，我们将通过 spawn 这个 API 创建一个新的任务，完善调度机制，与初始任务形成真正的并发关系。</p>
+<script src="https://utteranc.es/client.js"
+        repo="OSLearning365/blog-issues"
+        issue-term="pathname"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="ch05-01.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="ch05-03.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="ch05-01.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="ch05-03.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+        <script>
+            window.playground_line_numbers = true;
+        </script>
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+        <script src="ace.js"></script>
+        <script src="editor.js"></script>
+        <script src="mode-rust.js"></script>
+        <script src="theme-dawn.js"></script>
+        <script src="theme-tomorrow_night.js"></script>
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+        <script src="mermaid.min.js"></script>
+        <script src="mermaid-init.js"></script>
+
+
+    </div>
+    </body>
+</html>

@@ -1,0 +1,448 @@
+<!DOCTYPE HTML>
+<html lang="cn" class="light" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>启用页内存分配器 - ArceOS Tutorial Book</title>
+
+
+        <!-- Custom HTML head -->
+        
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+        <!-- MathJax -->
+        <script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    </head>
+    <body class="sidebar-visible no-js">
+    <div id="body-container">
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('light')
+            html.classList.add(theme);
+            var body = document.querySelector('body');
+            body.classList.remove('no-js')
+            body.classList.add('js');
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var body = document.querySelector('body');
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            body.classList.remove('sidebar-visible');
+            body.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="Prefix.html">前言</a></li><li class="chapter-item expanded "><a href="ch00-00.html"><strong aria-hidden="true">1.</strong> 第零章 史前时代 - 从开机到内核启动</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch00-01.html"><strong aria-hidden="true">1.1.</strong> 实验环境</a></li><li class="chapter-item expanded "><a href="ch00-02.html"><strong aria-hidden="true">1.2.</strong> 计算机启动过程和对内核的要求</a></li><li class="chapter-item expanded "><a href="ch00-03.html"><strong aria-hidden="true">1.3.</strong> 内核第一行代码</a></li><li class="chapter-item expanded "><a href="ch00-04.html"><strong aria-hidden="true">1.4.</strong> 编译与运行环境</a></li><li class="chapter-item expanded "><a href="ch00-05.html"><strong aria-hidden="true">1.5.</strong> Unikernel与组件化概念</a></li><li class="chapter-item expanded "><a href="ch00-06.html"><strong aria-hidden="true">1.6.</strong> 本章总结</a></li></ol></li><li class="chapter-item expanded "><a href="ch01-00.html"><strong aria-hidden="true">2.</strong> 第一章 Hello, ArceOS！- 内核启动和组件诞生</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch01-01.html"><strong aria-hidden="true">2.1.</strong> 内核启动</a></li><li class="chapter-item expanded "><a href="ch01-02.html"><strong aria-hidden="true">2.2.</strong> SBI 功能调用</a></li><li class="chapter-item expanded "><a href="ch01-03.html"><strong aria-hidden="true">2.3.</strong> 应用组件与硬件抽象组件</a></li><li class="chapter-item expanded "><a href="ch01-04.html"><strong aria-hidden="true">2.4.</strong> 组件测试和模块测试</a></li><li class="chapter-item expanded "><a href="ch01-05.html"><strong aria-hidden="true">2.5.</strong> 全局配置与同步支持</a></li><li class="chapter-item expanded "><a href="ch01-06.html"><strong aria-hidden="true">2.6.</strong> 本章总结</a></li></ol></li><li class="chapter-item expanded "><a href="ch02-00.html"><strong aria-hidden="true">3.</strong> 第二章 内存管理1 - 初始的地址空间和早期内存分配</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch02-01.html"><strong aria-hidden="true">3.1.</strong> 基本概念 - 地址空间</a></li><li class="chapter-item expanded "><a href="ch02-02.html"><strong aria-hidden="true">3.2.</strong> 分页机制 - 页表和页表项</a></li><li class="chapter-item expanded "><a href="ch02-03.html"><strong aria-hidden="true">3.3.</strong> 启用分页 - 进入虚拟地址空间</a></li><li class="chapter-item expanded "><a href="ch02-04.html"><strong aria-hidden="true">3.4.</strong> 早期内存分配器的设计</a></li><li class="chapter-item expanded "><a href="ch02-05.html"><strong aria-hidden="true">3.5.</strong> 启用动态内存分配</a></li><li class="chapter-item expanded "><a href="ch02-06.html"><strong aria-hidden="true">3.6.</strong> 内核分层和主干组件</a></li><li class="chapter-item expanded "><a href="ch02-07.html"><strong aria-hidden="true">3.7.</strong> 本章总结</a></li></ol></li><li class="chapter-item expanded "><a href="ch03-00.html"><strong aria-hidden="true">4.</strong> 第三章 基础组件 - 时间、日志和设备树</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch03-01.html"><strong aria-hidden="true">4.1.</strong> 获得系统时间</a></li><li class="chapter-item expanded "><a href="ch03-02.html"><strong aria-hidden="true">4.2.</strong> 组件crate_interface - 打破循环依赖</a></li><li class="chapter-item expanded "><a href="ch03-03.html"><strong aria-hidden="true">4.3.</strong> 组件axlog - 支持log</a></li><li class="chapter-item expanded "><a href="ch03-04.html"><strong aria-hidden="true">4.4.</strong> 组件axdtb - 操作设备树</a></li><li class="chapter-item expanded "><a href="ch03-05.html"><strong aria-hidden="true">4.5.</strong> 基于设备树获取内存信息</a></li><li class="chapter-item expanded "><a href="ch03-06.html"><strong aria-hidden="true">4.6.</strong> 组件linked_list - 侵入式链表</a></li><li class="chapter-item expanded "><a href="ch03-07.html"><strong aria-hidden="true">4.7.</strong> 本章总结</a></li></ol></li><li class="chapter-item expanded "><a href="ch04-00.html"><strong aria-hidden="true">5.</strong> 第四章 内存管理2 - 地址空间重建和正式内存分配</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch04-01.html"><strong aria-hidden="true">5.1.</strong> 分页机制-支持多级页表</a></li><li class="chapter-item expanded "><a href="ch04-02.html"><strong aria-hidden="true">5.2.</strong> 重建地址空间</a></li><li class="chapter-item expanded "><a href="ch04-03.html"><strong aria-hidden="true">5.3.</strong> bitmap位分配器</a></li><li class="chapter-item expanded "><a href="ch04-04.html" class="active"><strong aria-hidden="true">5.4.</strong> 启用页内存分配器</a></li><li class="chapter-item expanded "><a href="ch04-05.html"><strong aria-hidden="true">5.5.</strong> 实现字节内存分配器</a></li><li class="chapter-item expanded "><a href="ch04-06.html"><strong aria-hidden="true">5.6.</strong> 集成字节内存分配器</a></li><li class="chapter-item expanded "><a href="ch04-07.html"><strong aria-hidden="true">5.7.</strong> 本章总结</a></li></ol></li><li class="chapter-item expanded "><a href="ch05-00.html"><strong aria-hidden="true">6.</strong> 第五章 多任务1 - 从串行到并发</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch05-01.html"><strong aria-hidden="true">6.1.</strong> 基本概念-任务与调度</a></li><li class="chapter-item expanded "><a href="ch05-02.html"><strong aria-hidden="true">6.2.</strong> 初始任务 - MainTask</a></li><li class="chapter-item expanded "><a href="ch05-03.html"><strong aria-hidden="true">6.3.</strong> 创建任务 - spawn</a></li><li class="chapter-item expanded "><a href="ch05-04.html"><strong aria-hidden="true">6.4.</strong> 任务退出和等待任务退出</a></li><li class="chapter-item expanded "><a href="ch05-05.html"><strong aria-hidden="true">6.5.</strong> 系统任务 - Gc和Idle任务</a></li><li class="chapter-item expanded "><a href="ch04-07.html"><strong aria-hidden="true">6.6.</strong> 本章总结</a></li></ol></li><li class="chapter-item expanded "><a href="ch06-00.html"><strong aria-hidden="true">7.</strong> 第六章 异常和中断 - 响应意外情况和外部事件</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch06-01.html"><strong aria-hidden="true">7.1.</strong> 异常处理</a></li><li class="chapter-item expanded "><a href="ch06-02.html"><strong aria-hidden="true">7.2.</strong> 自旋锁与中断</a></li><li class="chapter-item expanded "><a href="ch06-03.html"><strong aria-hidden="true">7.3.</strong> 时钟中断</a></li><li class="chapter-item expanded "><a href="ch06-04.html"><strong aria-hidden="true">7.4.</strong> 本章总结</a></li></ol></li><li class="chapter-item expanded "><a href="ch07-00.html"><strong aria-hidden="true">8.</strong> 第七章 多任务2 -从协作式到抢占式</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch07-01.html"><strong aria-hidden="true">8.1.</strong> 任务调度中的抢占</a></li><li class="chapter-item expanded "><a href="ch07-02.html"><strong aria-hidden="true">8.2.</strong> 抢占式调度框架</a></li><li class="chapter-item expanded "><a href="ch07-03.html"><strong aria-hidden="true">8.3.</strong> 触发抢占的外部条件与触发点</a></li><li class="chapter-item expanded "><a href="ch07-04.html"><strong aria-hidden="true">8.4.</strong> 同步原语 - Mutex</a></li><li class="chapter-item expanded "><div><strong aria-hidden="true">8.5.</strong> 本章总结</div></li></ol></li><li class="chapter-item expanded "><div><strong aria-hidden="true">9.</strong> 第八章 文件系统1 - 基于内存的文件系统</div></li><li><ol class="section"><li class="chapter-item expanded "><div><strong aria-hidden="true">9.1.</strong> 文件系统框架</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">9.2.</strong> ramfs基本文件与目录操作</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">9.3.</strong> devfs管理随机数设备、网卡设备和块设备</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">9.4.</strong> 本章总结</div></li></ol></li><li class="chapter-item expanded "><div><strong aria-hidden="true">10.</strong> 第九章 总线与设备 - 发现设备</div></li><li><ol class="section"><li class="chapter-item expanded "><div><strong aria-hidden="true">10.1.</strong> virtio-mmio驱动 - 发现virtio设备</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">10.2.</strong> virtio-rng设备驱动</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">10.3.</strong> 本章总结</div></li></ol></li><li class="chapter-item expanded "><div><strong aria-hidden="true">11.</strong> 第十章 网卡与协议栈 - 连接外部世界</div></li><li><ol class="section"><li class="chapter-item expanded "><div><strong aria-hidden="true">11.1.</strong> virtio-net网卡驱动</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">11.2.</strong> 网络协议栈，支持socket</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">11.3.</strong> 本章总结</div></li></ol></li><li class="chapter-item expanded "><div><strong aria-hidden="true">12.</strong> 第十一章 文件系统2 - 持久化文件系统</div></li><li><ol class="section"><li class="chapter-item expanded "><div><strong aria-hidden="true">12.1.</strong> virtio-blk块设备驱动</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">12.2.</strong> easy-fs文件系统</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">12.3.</strong> 本章总结</div></li></ol></li><li class="chapter-item expanded "><div><strong aria-hidden="true">13.</strong> 第十二章 Rust应用接口库 - 兼容官方标准库</div></li><li><ol class="section"><li class="chapter-item expanded "><div><strong aria-hidden="true">13.1.</strong> 重构axstd组件</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">13.2.</strong> todo</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">13.3.</strong> 本章总结</div></li></ol></li><li class="chapter-item expanded "><div><strong aria-hidden="true">14.</strong> 第十三章 多核SMP - 并行处理</div></li><li><ol class="section"><li class="chapter-item expanded "><div><strong aria-hidden="true">14.1.</strong> PerCPU</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">14.2.</strong> 内存屏障</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">14.3.</strong> 核间调度</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">14.4.</strong> 本章总结</div></li></ol></li><li class="chapter-item expanded "><div><strong aria-hidden="true">15.</strong> 第十四章 迈向新世界 - 支持Linux应用</div></li><li><ol class="section"><li class="chapter-item expanded "><div><strong aria-hidden="true">15.1.</strong> 加载应用</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">15.2.</strong> 启动应用</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">15.3.</strong> 支持系统调用</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">15.4.</strong> 本章总结</div></li></ol></li><li class="chapter-item expanded "><a href="chfa-00.html"><strong aria-hidden="true">16.</strong> 附录A 内核布局文件LDS</a></li><li class="chapter-item expanded "><a href="chfb-00.html"><strong aria-hidden="true">17.</strong> 附录B 内核编译文件Makefile</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <!-- Track and set sidebar scroll position -->
+        <script>
+            var sidebarScrollbox = document.querySelector('#sidebar .sidebar-scrollbox');
+            sidebarScrollbox.addEventListener('click', function(e) {
+                if (e.target.tagName === 'A') {
+                    sessionStorage.setItem('sidebar-scroll', sidebarScrollbox.scrollTop);
+                }
+            }, { passive: true });
+            var sidebarScrollTop = sessionStorage.getItem('sidebar-scroll');
+            sessionStorage.removeItem('sidebar-scroll');
+            if (sidebarScrollTop) {
+                // preserve sidebar scroll position when navigating via links within sidebar
+                sidebarScrollbox.scrollTop = sidebarScrollTop;
+            } else {
+                // scroll sidebar to current active section when navigating via "next/previous chapter" buttons
+                var activeSection = document.querySelector('#sidebar .active');
+                if (activeSection) {
+                    activeSection.scrollIntoView({ block: 'center' });
+                }
+            }
+        </script>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">ArceOS Tutorial Book</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        <a href="https://github.com/rcore-os/arceos-tutorial-book" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h2 id="第四节-启用页内存分配器"><a class="header" href="#第四节-启用页内存分配器">第四节 启用页内存分配器</a></h2>
+<p>上一节我们实现了一个 bitmap 位分配器，其中每个位可以对应管理一个页。本节就对其进行封装，实现一个正式的页内存分配器，用于在内核启动的后期取代早期页分配器的功能，管理内核所有的空闲内存。</p>
+<p>首先是封装上节的 bitmap 位分配器，实现可以与 axalloc 组件的框架相适应的页内存分配器 BitmapPageAllocator：</p>
+<pre><code class="language-rust editable">//axalloc/src/bitmap.rs
+use core::ptr::NonNull;
+use crate::{AllocError, AllocResult};
+use axconfig::PAGE_SIZE;
+use bitmap_allocator::{BitAlloc1M, BitAlloc};
+use alloc::alloc::Layout;
+
+pub struct BitmapPageAllocator {
+    base: usize,
+    inner: BitAlloc1M,
+}
+
+impl BitmapPageAllocator {
+    pub const fn new() -&gt; Self {
+        Self { base: 0, inner: BitAlloc1M::DEFAULT }
+    }
+    pub fn init(&amp;mut self, start: usize, size: usize) {
+        let end = axconfig::align_down(start + size, PAGE_SIZE);
+        let start = axconfig::align_up(start, PAGE_SIZE);
+        self.base = start;
+        let total_pages = (end - start) / PAGE_SIZE;
+        self.inner.insert(0..total_pages);
+    }
+}
+
+// axalloc/Cargo.toml
+[dependencies]
+bitmap_allocator = { path = &quot;../bitmap_allocator&quot; }</code></pre>
+<p>第 8~11 行：定义 BitmapPageAllocator，其中 <code>inner</code> 就是被封装的 bitmap 位分配器。</p>
+<p>第 17~23 行：把内存地址范围换算成以页为单位，每个页对应 1 位，然后就可以利用内嵌的位分配管理器来标记页的分配情况。默认所有位初始都是 0，表示页面不可分配。第 22 行的 insert 设置了一系列连续的 1，标记这些位对应的页面是可以分配的。</p>
+<p>然后为 BitmapPageAllocator 实现分配和释放的方法：</p>
+<pre><code class="language-rust editable">impl BitmapPageAllocator {
+    pub fn alloc_pages(&amp;mut self, layout: Layout) -&gt; AllocResult&lt;NonNull&lt;u8&gt;&gt; {
+        if layout.align() % PAGE_SIZE != 0 {
+            return Err(AllocError::InvalidParam);
+        }
+        let align_pow2 = layout.align() / PAGE_SIZE;
+        if !align_pow2.is_power_of_two() {
+            return Err(AllocError::InvalidParam);
+        }
+        let num_pages = layout.size() / PAGE_SIZE;
+        let align_log2 = align_pow2.trailing_zeros() as usize;
+        match num_pages.cmp(&amp;1) {
+            core::cmp::Ordering::Equal =&gt; self.inner.alloc().map(|idx| idx * PAGE_SIZE + self.base),
+            core::cmp::Ordering::Greater =&gt; self
+                .inner
+                .alloc_contiguous(num_pages, align_log2)
+                .map(|idx| idx * PAGE_SIZE + self.base),
+            _ =&gt; return Err(AllocError::InvalidParam),
+        }
+        .map(|pos| NonNull::new(pos as *mut u8).unwrap())
+        .ok_or(AllocError::NoMemory)
+    }
+    pub fn dealloc_pages(&amp;mut self, pos: usize, num_pages: usize) {
+        let idx = (pos - self.base) / PAGE_SIZE;
+        for i in 0..num_pages {
+            self.inner.dealloc(idx+i)
+        }
+    }
+}</code></pre>
+<p>第 12~19 行：分配的关键，如果申请一页，就直接调用位管理器的 alloc() 把对应位置的位清零，标记已分配；申请连续的多页时，则调用 alloc_contiguous() 把对应的连续位集合清零，标记它们已经分配。</p>
+<p>第 23~27 行：释放回收页面时，先算出页面对应的第一个位的索引，从它开始逐个设置 1，标记它们已经被回收，恢复可分配状态。</p>
+<p>目前 bitmap 页分配器已经准备好，下面把它集成到全局分配器框架中：</p>
+<pre><code class="language-rust editable">// axalloc/src/lib.rs
+use axsync::BootOnceCell;
+
+mod bitmap;
+use bitmap::BitmapPageAllocator;
+
+struct GlobalAllocator {
+    early_alloc: SpinRaw&lt;EarlyAllocator&gt;,
+    page_alloc: SpinRaw&lt;BitmapPageAllocator&gt;,
+    finalized: BootOnceCell&lt;bool&gt;,
+}
+
+impl GlobalAllocator {
+    pub const fn new() -&gt; Self {
+        Self {
+            early_alloc: SpinRaw::new(EarlyAllocator::uninit_new()),
+            page_alloc: SpinRaw::new(BitmapPageAllocator::new()),
+            finalized: BootOnceCell::new(),
+        }
+    }
+}</code></pre>
+<p>第 9~10 行：在 GlobalAllocator 中增加 page_alloc 和 finalized，前者是正式的页内存分配器，后者区分是否处于内核的早期启动阶段，早期使用 early 分配器，后期则替换为正式的内存分配器。</p>
+<p>基于 finalized 标记的阶段，扩展 GlobalAllocator 框架分配和释放页面的方法：</p>
+<pre><code class="language-rust editable">// axalloc/src/lib.rs
+impl GlobalAllocator {
+    fn alloc_pages(&amp;self, layout: Layout) -&gt; *mut u8 {
+        let ret = if self.finalized.is_init() {
+            self.page_alloc.lock().alloc_pages(layout)
+        } else {
+            self.early_alloc.lock().alloc_pages(layout)
+        };
+
+        if let Ok(ptr) = ret {
+            ptr.as_ptr()
+        } else {
+            alloc::alloc::handle_alloc_error(layout)
+        }
+    }
+    fn dealloc_pages(&amp;self, ptr: *mut u8, layout: Layout) {
+        if self.finalized.is_init() {
+            self.page_alloc.lock().dealloc_pages(ptr as usize, layout.size()/PAGE_SIZE)
+        } else {
+            unimplemented!()
+        };
+    }
+}</code></pre>
+<p>第 4 行：在分配方法中，根据成员 finalized 确定当前是什么阶段，早期使用 early_alloc，后期使用 page_alloc。</p>
+<p>第 17 行：类似的，在回收的方法中同样需要检查 finalized，只有后期才需要基于 page_alloc 实现。</p>
+<p>然后，实现 final_init() 函数，它负责启用正式的内存分配器：</p>
+<pre><code class="language-rust editable">// axalloc/src/lib.rs
+pub fn final_init(start: usize, len: usize) {
+    GLOBAL_ALLOCATOR.final_init(start, len)
+}
+
+impl GlobalAllocator {
+    pub fn final_init(&amp;self, start: usize, size: usize) {
+        self.page_alloc.lock().init(start, size);
+        self.finalized.init(true);
+    }
+}</code></pre>
+<p>第 8~9 行：final_init() 需要完成两项具体工作，初始化 page_alloc 页内存分配器，再标识 finalized 为 true，说明进入正式的内存分配器的使用阶段。从上面的 alloc_pages 和 dealloc_pages 方法可以看到，设置该标识之后，早期内存分配器被禁用，切换到正式内存分配器。</p>
+<blockquote>
+<p><font size=2>实际上本节只是处理了页内存分配器，下节会扩展 final_init() 等方法，继续处理字节内存分配器。</font></p>
+</blockquote>
+<p>万事俱备，现在就来调用 final_init()，实施内存分配器的切换：</p>
+<pre><code class="language-rust editable">// axruntime/src/lib.rs
+pub extern &quot;C&quot; fn rust_main(hartid: usize, dtb: usize) -&gt; ! {
+    ... ...
+    let phys_memory_size = dtb_info.memory_size;
+
+    info!(&quot;Initialize kernel page table...&quot;);
+    remap_kernel_memory(dtb_info);
+
+    info!(&quot;Initialize formal allocators ...&quot;);
+    for r in free_regions(phys_memory_size) {
+        axalloc::final_init(phys_to_virt(r.paddr), r.size);
+    }
+
+    unsafe { main(); }
+    axhal::terminate();
+}</code></pre>
+<p>第 4 行：预先保存物理内存的大小，因为按照 Rust 语法，remap_kernel_memory() 会 move 那个 dtb_info 变量。</p>
+<p>第 10~12 行：遍历所有的空闲内存区域，对每一个调用 final_init，由此启用正式的内存分配器。</p>
+<p>最后，在 axorigin 应用组件中申请页面，验证正式的内存分配器的功能：</p>
+<pre><code class="language-rust editable">// axorigin/src/main.rs
+#![no_std]
+#![no_main]
+
+use axstd::{String, println, time, PAGE_SIZE};
+
+#[no_mangle]
+pub fn main(_hartid: usize, _dtb: usize) {
+    let now = time::Instant::now();
+    println!(&quot;\nNow: {}&quot;, now);
+
+    let s = String::from(&quot;from String&quot;);
+    println!(&quot;Hello, ArceOS![{}]&quot;, s);
+
+    try_alloc_pages();
+
+    let d = now.elapsed();
+    println!(&quot;Elapsed: {}.{:06}&quot;, d.as_secs(), d.subsec_micros());
+}
+
+fn try_alloc_pages() {
+    use core::alloc::Layout;
+    extern crate alloc;
+
+    const NUM_PAGES: usize = 300;
+    let layout = Layout::from_size_align(NUM_PAGES*PAGE_SIZE, PAGE_SIZE).unwrap();
+    let p = unsafe { alloc::alloc::alloc(layout) };
+    println!(&quot;Allocate pages: [{:?}].&quot;, p);
+    unsafe { alloc::alloc::dealloc(p, layout) };
+    println!(&quot;Release pages ok!&quot;);
+}</code></pre>
+<p>第 21~31 行：申请 300 个页面，然后释放。早期内存分配器的最大分配能力只有 1M，承担不了申请 300 个页面的任务（300*4K），如果分配成功，可以从侧面证明，内核已经切换到分配能力更强的正式内存分配器。</p>
+<p>另外，应用 axorigin 调用了 PAGE_SIZE 这个常量，我们需要扩展一下 axstd，引出该常量。</p>
+<pre><code class="language-rust editable">// axstd/Cargo.toml
+[dependencies]
+axconfig = { path = &quot;../axconfig&quot; }
+
+// axstd/src/lib.rs
+pub use axconfig::PAGE_SIZE;</code></pre>
+<p>现在来测试一下我们的最新成果，<code>make run</code>，看到 axorigin 正常申请了 300 个页面然后释放：</p>
+<blockquote>
+<p>ArceOS is starting ...</p>
+<p>Now: 0.114120
+Hello, ArceOS![from String]
+Allocate pages: [0xffffffc08026c000].
+Release pages ok!
+Elapsed: 0.006793</p>
+</blockquote>
+<p>正式的 bitmap 页分配器已经成功启用！</p>
+<script src="https://utteranc.es/client.js"
+        repo="OSLearning365/blog-issues"
+        issue-term="pathname"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="ch04-03.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="ch04-05.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="ch04-03.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="ch04-05.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+        <script>
+            window.playground_line_numbers = true;
+        </script>
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+        <script src="ace.js"></script>
+        <script src="editor.js"></script>
+        <script src="mode-rust.js"></script>
+        <script src="theme-dawn.js"></script>
+        <script src="theme-tomorrow_night.js"></script>
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+        <script src="mermaid.min.js"></script>
+        <script src="mermaid-init.js"></script>
+
+
+    </div>
+    </body>
+</html>

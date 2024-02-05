@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>早期内存分配器 - ArceOS Tutorial Book</title>
+        <title>早期内存分配器的设计 - ArceOS Tutorial Book</title>
 
 
         <!-- Custom HTML head -->
@@ -30,6 +30,8 @@
 
         <!-- Custom theme stylesheets -->
 
+        <!-- MathJax -->
+        <script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     </head>
     <body class="sidebar-visible no-js">
     <div id="body-container">
@@ -88,7 +90,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="Prefix.html">前言</a></li><li class="chapter-item expanded "><a href="ch00-00.html"><strong aria-hidden="true">1.</strong> 第零章 史前时代 - 从开机到内核启动</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch00-01.html"><strong aria-hidden="true">1.1.</strong> 实验环境</a></li><li class="chapter-item expanded "><a href="ch00-02.html"><strong aria-hidden="true">1.2.</strong> 计算机启动过程和对内核的要求</a></li><li class="chapter-item expanded "><a href="ch00-03.html"><strong aria-hidden="true">1.3.</strong> 内核第一行代码</a></li><li class="chapter-item expanded "><a href="ch00-04.html"><strong aria-hidden="true">1.4.</strong> 编译与运行环境</a></li><li class="chapter-item expanded "><div><strong aria-hidden="true">1.5.</strong> Unikernel的概念</div></li><li class="chapter-item expanded "><a href="ch00-06.html"><strong aria-hidden="true">1.6.</strong> 本章总结</a></li></ol></li><li class="chapter-item expanded "><a href="ch01-00.html"><strong aria-hidden="true">2.</strong> 第一章 Hello, ArceOS！- 内核启动和组件诞生</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch01-01.html"><strong aria-hidden="true">2.1.</strong> 内核启动</a></li><li class="chapter-item expanded "><a href="ch01-02.html"><strong aria-hidden="true">2.2.</strong> SBI 功能调用</a></li><li class="chapter-item expanded "><a href="ch01-03.html"><strong aria-hidden="true">2.3.</strong> 应用组件与硬件抽象组件</a></li><li class="chapter-item expanded "><a href="ch01-04.html"><strong aria-hidden="true">2.4.</strong> 全局配置与同步支持</a></li><li class="chapter-item expanded "><a href="ch01-05.html"><strong aria-hidden="true">2.5.</strong> 本章总结</a></li></ol></li><li class="chapter-item expanded "><a href="ch02-00.html"><strong aria-hidden="true">3.</strong> 第二章 内存管理1 - 初始的地址空间和早期内存分配</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch02-01.html"><strong aria-hidden="true">3.1.</strong> 地址空间</a></li><li class="chapter-item expanded "><a href="ch02-02.html"><strong aria-hidden="true">3.2.</strong> 分页机制 - 页表和页表项</a></li><li class="chapter-item expanded "><a href="ch02-03.html"><strong aria-hidden="true">3.3.</strong> 启用分页 - 进入虚拟地址空间</a></li><li class="chapter-item expanded "><a href="ch02-04.html" class="active"><strong aria-hidden="true">3.4.</strong> 早期内存分配器</a></li><li class="chapter-item expanded "><a href="ch02-05.html"><strong aria-hidden="true">3.5.</strong> 主干组件 axruntime</a></li><li class="chapter-item expanded "><a href="ch02-06.html"><strong aria-hidden="true">3.6.</strong> 本章总结</a></li></ol></li><li class="chapter-item expanded "><div><strong aria-hidden="true">4.</strong> 第三章 输入输出 - 标准输出和启动参数 todo</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">5.</strong> 第四章 内存管理2 - 地址空间重建和正式内存分配 todo</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">6.</strong> 第五章 多任务1 - 从串行到协作式并发 todo</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">7.</strong> 第六章 异常和中断 - 响应意外情况和外部事件 todo</div></li><li><ol class="section"><li class="chapter-item expanded "><div><strong aria-hidden="true">7.1.</strong> 异常处理</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">7.2.</strong> 时钟中断</div></li></ol></li><li class="chapter-item expanded "><div><strong aria-hidden="true">8.</strong> 第七章 多任务2 -从协作式到抢占式 todo</div></li><li><ol class="section"><li class="chapter-item expanded "><div><strong aria-hidden="true">8.1.</strong> 抢占机制 - 任务切换的内外条件</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">8.2.</strong> round-robin 调度算法</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">8.3.</strong> 同步原语 - 等待与唤醒</div></li></ol></li><li class="chapter-item expanded "><a href="ch08-00.html"><strong aria-hidden="true">9.</strong> 附录A</a></li><li class="chapter-item expanded "><a href="ch09-00.html"><strong aria-hidden="true">10.</strong> 附录B</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="Prefix.html">前言</a></li><li class="chapter-item expanded "><a href="ch00-00.html"><strong aria-hidden="true">1.</strong> 第零章 史前时代 - 从开机到内核启动</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch00-01.html"><strong aria-hidden="true">1.1.</strong> 实验环境</a></li><li class="chapter-item expanded "><a href="ch00-02.html"><strong aria-hidden="true">1.2.</strong> 计算机启动过程和对内核的要求</a></li><li class="chapter-item expanded "><a href="ch00-03.html"><strong aria-hidden="true">1.3.</strong> 内核第一行代码</a></li><li class="chapter-item expanded "><a href="ch00-04.html"><strong aria-hidden="true">1.4.</strong> 编译与运行环境</a></li><li class="chapter-item expanded "><a href="ch00-05.html"><strong aria-hidden="true">1.5.</strong> Unikernel与组件化概念</a></li><li class="chapter-item expanded "><a href="ch00-06.html"><strong aria-hidden="true">1.6.</strong> 本章总结</a></li></ol></li><li class="chapter-item expanded "><a href="ch01-00.html"><strong aria-hidden="true">2.</strong> 第一章 Hello, ArceOS！- 内核启动和组件诞生</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch01-01.html"><strong aria-hidden="true">2.1.</strong> 内核启动</a></li><li class="chapter-item expanded "><a href="ch01-02.html"><strong aria-hidden="true">2.2.</strong> SBI 功能调用</a></li><li class="chapter-item expanded "><a href="ch01-03.html"><strong aria-hidden="true">2.3.</strong> 应用组件与硬件抽象组件</a></li><li class="chapter-item expanded "><a href="ch01-04.html"><strong aria-hidden="true">2.4.</strong> 组件测试和模块测试</a></li><li class="chapter-item expanded "><a href="ch01-05.html"><strong aria-hidden="true">2.5.</strong> 全局配置与同步支持</a></li><li class="chapter-item expanded "><a href="ch01-06.html"><strong aria-hidden="true">2.6.</strong> 本章总结</a></li></ol></li><li class="chapter-item expanded "><a href="ch02-00.html"><strong aria-hidden="true">3.</strong> 第二章 内存管理1 - 初始的地址空间和早期内存分配</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch02-01.html"><strong aria-hidden="true">3.1.</strong> 基本概念 - 地址空间</a></li><li class="chapter-item expanded "><a href="ch02-02.html"><strong aria-hidden="true">3.2.</strong> 分页机制 - 页表和页表项</a></li><li class="chapter-item expanded "><a href="ch02-03.html"><strong aria-hidden="true">3.3.</strong> 启用分页 - 进入虚拟地址空间</a></li><li class="chapter-item expanded "><a href="ch02-04.html" class="active"><strong aria-hidden="true">3.4.</strong> 早期内存分配器的设计</a></li><li class="chapter-item expanded "><a href="ch02-05.html"><strong aria-hidden="true">3.5.</strong> 启用动态内存分配</a></li><li class="chapter-item expanded "><a href="ch02-06.html"><strong aria-hidden="true">3.6.</strong> 内核分层和主干组件</a></li><li class="chapter-item expanded "><a href="ch02-07.html"><strong aria-hidden="true">3.7.</strong> 本章总结</a></li></ol></li><li class="chapter-item expanded "><a href="ch03-00.html"><strong aria-hidden="true">4.</strong> 第三章 基础组件 - 时间、日志和设备树</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch03-01.html"><strong aria-hidden="true">4.1.</strong> 获得系统时间</a></li><li class="chapter-item expanded "><a href="ch03-02.html"><strong aria-hidden="true">4.2.</strong> 组件crate_interface - 打破循环依赖</a></li><li class="chapter-item expanded "><a href="ch03-03.html"><strong aria-hidden="true">4.3.</strong> 组件axlog - 支持log</a></li><li class="chapter-item expanded "><a href="ch03-04.html"><strong aria-hidden="true">4.4.</strong> 组件axdtb - 操作设备树</a></li><li class="chapter-item expanded "><a href="ch03-05.html"><strong aria-hidden="true">4.5.</strong> 基于设备树获取内存信息</a></li><li class="chapter-item expanded "><a href="ch03-06.html"><strong aria-hidden="true">4.6.</strong> 组件linked_list - 侵入式链表</a></li><li class="chapter-item expanded "><a href="ch03-07.html"><strong aria-hidden="true">4.7.</strong> 本章总结</a></li></ol></li><li class="chapter-item expanded "><a href="ch04-00.html"><strong aria-hidden="true">5.</strong> 第四章 内存管理2 - 地址空间重建和正式内存分配</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch04-01.html"><strong aria-hidden="true">5.1.</strong> 分页机制-支持多级页表</a></li><li class="chapter-item expanded "><a href="ch04-02.html"><strong aria-hidden="true">5.2.</strong> 重建地址空间</a></li><li class="chapter-item expanded "><a href="ch04-03.html"><strong aria-hidden="true">5.3.</strong> bitmap位分配器</a></li><li class="chapter-item expanded "><a href="ch04-04.html"><strong aria-hidden="true">5.4.</strong> 启用页内存分配器</a></li><li class="chapter-item expanded "><a href="ch04-05.html"><strong aria-hidden="true">5.5.</strong> 实现字节内存分配器</a></li><li class="chapter-item expanded "><a href="ch04-06.html"><strong aria-hidden="true">5.6.</strong> 集成字节内存分配器</a></li><li class="chapter-item expanded "><a href="ch04-07.html"><strong aria-hidden="true">5.7.</strong> 本章总结</a></li></ol></li><li class="chapter-item expanded "><a href="ch05-00.html"><strong aria-hidden="true">6.</strong> 第五章 多任务1 - 从串行到并发</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch05-01.html"><strong aria-hidden="true">6.1.</strong> 基本概念-任务与调度</a></li><li class="chapter-item expanded "><a href="ch05-02.html"><strong aria-hidden="true">6.2.</strong> 初始任务 - MainTask</a></li><li class="chapter-item expanded "><a href="ch05-03.html"><strong aria-hidden="true">6.3.</strong> 创建任务 - spawn</a></li><li class="chapter-item expanded "><a href="ch05-04.html"><strong aria-hidden="true">6.4.</strong> 任务退出和等待任务退出</a></li><li class="chapter-item expanded "><a href="ch05-05.html"><strong aria-hidden="true">6.5.</strong> 系统任务 - Gc和Idle任务</a></li><li class="chapter-item expanded "><a href="ch04-07.html"><strong aria-hidden="true">6.6.</strong> 本章总结</a></li></ol></li><li class="chapter-item expanded "><a href="ch06-00.html"><strong aria-hidden="true">7.</strong> 第六章 异常和中断 - 响应意外情况和外部事件</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch06-01.html"><strong aria-hidden="true">7.1.</strong> 异常处理</a></li><li class="chapter-item expanded "><a href="ch06-02.html"><strong aria-hidden="true">7.2.</strong> 自旋锁与中断</a></li><li class="chapter-item expanded "><a href="ch06-03.html"><strong aria-hidden="true">7.3.</strong> 时钟中断</a></li><li class="chapter-item expanded "><a href="ch06-04.html"><strong aria-hidden="true">7.4.</strong> 本章总结</a></li></ol></li><li class="chapter-item expanded "><a href="ch07-00.html"><strong aria-hidden="true">8.</strong> 第七章 多任务2 -从协作式到抢占式</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch07-01.html"><strong aria-hidden="true">8.1.</strong> 任务调度中的抢占</a></li><li class="chapter-item expanded "><a href="ch07-02.html"><strong aria-hidden="true">8.2.</strong> 抢占式调度框架</a></li><li class="chapter-item expanded "><a href="ch07-03.html"><strong aria-hidden="true">8.3.</strong> 触发抢占的外部条件与触发点</a></li><li class="chapter-item expanded "><a href="ch07-04.html"><strong aria-hidden="true">8.4.</strong> 同步原语 - Mutex</a></li><li class="chapter-item expanded "><div><strong aria-hidden="true">8.5.</strong> 本章总结</div></li></ol></li><li class="chapter-item expanded "><div><strong aria-hidden="true">9.</strong> 第八章 文件系统1 - 基于内存的文件系统</div></li><li><ol class="section"><li class="chapter-item expanded "><div><strong aria-hidden="true">9.1.</strong> 文件系统框架</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">9.2.</strong> ramfs基本文件与目录操作</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">9.3.</strong> devfs管理随机数设备、网卡设备和块设备</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">9.4.</strong> 本章总结</div></li></ol></li><li class="chapter-item expanded "><div><strong aria-hidden="true">10.</strong> 第九章 总线与设备 - 发现设备</div></li><li><ol class="section"><li class="chapter-item expanded "><div><strong aria-hidden="true">10.1.</strong> virtio-mmio驱动 - 发现virtio设备</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">10.2.</strong> virtio-rng设备驱动</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">10.3.</strong> 本章总结</div></li></ol></li><li class="chapter-item expanded "><div><strong aria-hidden="true">11.</strong> 第十章 网卡与协议栈 - 连接外部世界</div></li><li><ol class="section"><li class="chapter-item expanded "><div><strong aria-hidden="true">11.1.</strong> virtio-net网卡驱动</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">11.2.</strong> 网络协议栈，支持socket</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">11.3.</strong> 本章总结</div></li></ol></li><li class="chapter-item expanded "><div><strong aria-hidden="true">12.</strong> 第十一章 文件系统2 - 持久化文件系统</div></li><li><ol class="section"><li class="chapter-item expanded "><div><strong aria-hidden="true">12.1.</strong> virtio-blk块设备驱动</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">12.2.</strong> easy-fs文件系统</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">12.3.</strong> 本章总结</div></li></ol></li><li class="chapter-item expanded "><div><strong aria-hidden="true">13.</strong> 第十二章 Rust应用接口库 - 兼容官方标准库</div></li><li><ol class="section"><li class="chapter-item expanded "><div><strong aria-hidden="true">13.1.</strong> 重构axstd组件</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">13.2.</strong> todo</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">13.3.</strong> 本章总结</div></li></ol></li><li class="chapter-item expanded "><div><strong aria-hidden="true">14.</strong> 第十三章 多核SMP - 并行处理</div></li><li><ol class="section"><li class="chapter-item expanded "><div><strong aria-hidden="true">14.1.</strong> PerCPU</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">14.2.</strong> 内存屏障</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">14.3.</strong> 核间调度</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">14.4.</strong> 本章总结</div></li></ol></li><li class="chapter-item expanded "><div><strong aria-hidden="true">15.</strong> 第十四章 迈向新世界 - 支持Linux应用</div></li><li><ol class="section"><li class="chapter-item expanded "><div><strong aria-hidden="true">15.1.</strong> 加载应用</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">15.2.</strong> 启动应用</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">15.3.</strong> 支持系统调用</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">15.4.</strong> 本章总结</div></li></ol></li><li class="chapter-item expanded "><a href="chfa-00.html"><strong aria-hidden="true">16.</strong> 附录A 内核布局文件LDS</a></li><li class="chapter-item expanded "><a href="chfb-00.html"><strong aria-hidden="true">17.</strong> 附录B 内核编译文件Makefile</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle">
                 <div class="sidebar-resize-indicator"></div>
@@ -176,76 +178,139 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h2 id="第四节-早期内存分配器"><a class="header" href="#第四节-早期内存分配器">第四节 早期内存分配器</a></h2>
-<p>内核目前还不支持 String、Vector，因为没有动态内存分配器；这也是为什么不能用 println! 宏，因为它对变参的处理同样需要动态内存分配。我们可以来尝试一下，把 axorigin 的 main 函数改成这样：</p>
-<pre><code class="language-rust ignore">extern crate alloc;
-use alloc::string::String;
+                        <h2 id="第四节-早期内存分配器的设计"><a class="header" href="#第四节-早期内存分配器的设计">第四节 早期内存分配器的设计</a></h2>
+<p>在 Rust 开发中，String、Vector 之类的各种复合类型为我们带来了很大便利。但是我们的内核目前还不支持，因为没有实现动态内存分配器。我们可以来尝试一下，把 axorigin 的 main 函数改成这样：</p>
+<pre><code class="language-rust editable">// axorigin/src/main.rs
+#![no_std]
+#![no_main]
 
+extern crate alloc;
+use alloc::string::String;
+use axhal::ax_println;
+
+#[no_mangle]
 pub fn main(_hartid: usize, _dtb: usize) {
-    let s = String::from(&quot;\nHello, ArceOS![from String]\n&quot;);
-    axhal::console::write_bytes(s.as_bytes());
+    let s = String::from(&quot;from String&quot;);
+    ax_println!(&quot;\nHello, ArceOS![{}]&quot;, s);
 }</code></pre>
-<p>通过 <code>make build</code> 编译一下，发现果然不支持：</p>
-<pre><code class="language-shell">error: no global memory allocator found but one is required; link to std or add `#[global_allocator]` to a static item that implements the GlobalAlloc trait
+<p>通过 <code>make build</code> 编译一下，报错：</p>
+<pre><code class="language-bash editable">error: no global memory allocator found but one is required; link to std or add `#[global_allocator]` to a static item that implements the GlobalAlloc trait
 </code></pre>
-<p>String 需要动态内存即堆管理的支持，普通应用程序总是经由 std 标准库去申请底层操作系统内核的支持。但是我们本身就是在实现内核，所以只能自己实现。也就是说，我们需要在 rust 的框架下，实现内核的动态内存分配器。</p>
-<p>内存分配器需要满足两个方面的要求：</p>
+<p>果然不支持，String 需要动态内存即堆管理的支持，普通 Rust 应用经由 STD 标准库去申请底层操作系统内核对内存分配的支持，但是我们本身就是在实现内核，所以只能自己实现，即 - 我们按照 Rust 框架要求，实现内核级的动态内存分配器。</p>
+<p>内核级内存分配器需要满足两个方面的要求：</p>
 <ul>
-<li>实现 GlobalAlloc trait，以支持 String、Vector 等集合数据类型对申请内存的要求，这是以字节为最小单位的内存分配。</li>
-<li>支持以<strong>页</strong>为单位的内存分配，并且分配块必须按页对齐。这种分配请求在内核开发中是十分常用和必要的。如果我们把页分配与上面字节分配混在一起处理，内存的使用效率将会非常差，因此有必要独立出来。</li>
+<li>分配器必须实现 GlobalAlloc trait，如 String、Vector 等集合数据类型都需要基于这个 trait 定义接口对分配器发出要求，请求以字节为最小分配单位。</li>
+<li>内核的很多功能都要求申请以<strong>页</strong>为基本单位，并且开始地址按页对齐的分配块。这种按页分配在内核开发中是十分常用和必要的，有必要作为独立的服务接口对外提供。</li>
 </ul>
-<p>总结一下，我们需要两种相互独立的内存分配器，一种基于字节分配，另一种基于页分配。</p>
-<p>当前实验，我们先采用最简单的设计方案，让一个分配器同时支持两种分配需求。</p>
+<p>总结一下，功能上我们需要两种相互独立的内存分配器，一种基于字节分配，另一种基于页分配。</p>
+<p>当前阶段，我们先采用最简单的设计方案，即让一个分配器同时支持两种分配功能。</p>
 <div style="text-align:center">
-   <img src=".\img\早期内存分配器.svg" alt="早期内存分配器" style="zoom:50%"/>
+   <img src=".\img\早期内存分配器.svg" alt="早期内存分配器" style="zoom:60%"/>
 </div>
-<p><strong>从前向后字节分配，从后向前页分配</strong>。</p>
-<p>在内存释放方面，也采用最简单的策略：</p>
+<p>分配机制：字节与页分配共用同一块内存空间，<strong>从前向后字节分配，从后向前页分配</strong>。它们分别使用一个指针维护当前到达的位置。</p>
+<p>释放机制，同样采取最简单的策略：</p>
 <ul>
-<li>针对字节分配，用 count 变量记录分配次数，仅在 count 恢复到<strong>零</strong>时，才把当前位置指针重置成起始位置。也就是说，只有在所有申请的内存块全部释放时，才真正的释放空间。</li>
-<li>对于页分配，我们的设计中没有释放机制。一方面是为了简单，另一方面在早期内存分配器生效的这段时间，内核需要申请的页是它这一生都需要的。</li>
+<li>针对字节分配，用 <strong>count</strong> 变量记录分配次数，仅在 count 回复到<strong>零</strong>时，才把当前位置指针重置成起始位置。也就是说，只有在所有申请的内存块全部释放时，才真正的释放空间。这样的内存使用效率当然不高，但在引导阶段这不是问题。</li>
+<li>对于页分配，<strong>没有</strong>为它设计释放机制。一方面是为了简单，另一方面在早期内存分配器生效的这段时间，内核需要申请的页都是它这一生都需要的，所以并不需要释放。</li>
 </ul>
-<p>分配器数据结构定义与初始化：</p>
-<pre><code class="language-rust ignore">#[derive(Default)]
+<p>建立新组件 axalloc 在内核中负责动态内存分配的功能。未来几章，我们将在该组件中定义一系列内存分配器，用于不同阶段和不同类型，本章首先定义早期内存分配器 EarlyAllocator：</p>
+<pre><code class="language-rust editable">// axalloc/src/lib.rs
+#![no_std]
+
+extern crate alloc;
+mod early;
+
+#[derive(Debug)]
+pub enum AllocError {
+    InvalidParam,
+    MemoryOverlap,
+    NoMemory,
+    NotAllocated,
+}
+pub type AllocResult&lt;T = ()&gt; = Result&lt;T, AllocError&gt;;
+
+// axalloc/src/early.rs
+#![allow(dead_code)]
+use core::alloc::Layout;
+use core::ptr::NonNull;
+use axconfig::{align_up, align_down, PAGE_SIZE};
+use crate::{AllocResult, AllocError};
+
+#[derive(Default)]
 pub struct EarlyAllocator {
     start:  usize,
     end:    usize,
     count:  usize,
-    b_pos:  usize,
-    p_pos:  usize,
+    byte_pos:  usize,
+    page_pos:  usize,
 }
 
 impl EarlyAllocator {
-    fn init(&amp;mut self, start: usize, size: usize) {
+    pub fn init(&amp;mut self, start: usize, size: usize) {
         self.start = start;
         self.end = start + size;
-        self.b_pos = start;
-        self.p_pos = self.end;
+        self.byte_pos = start;
+        self.page_pos = self.end;
     }
-}</code></pre>
-<p>字节分配功能的实现：</p>
-<pre><code class="language-rust ignore">impl EarlyAllocator {
-	fn alloc_bytes(&amp;mut self, layout: Layout) -&gt; AllocResult&lt;NonNull&lt;u8&gt;&gt; {
-        let start = ALIGN_UP!(self.b_pos, layout.align());
+    pub const fn uninit_new() -&gt; Self {
+        Self {
+            start: 0, end: 0, count: 0,
+            byte_pos: 0, page_pos: 0,
+        }
+    }
+}
+
+// axalloc/Cargo.toml
+[dependencies]
+axconfig = { path = &quot;../axconfig&quot; }</code></pre>
+<p>第 33~38 行：指定地址范围初始化分配器，字节分配指针 byte_pos 和页分配指针 page_pos 的初始位置分别在两端。</p>
+<p>第 17 行：目前临时加上 <code>#![allow(dead_code)]</code> 以屏蔽警告，等到正式引用 EarlyAllocator 时再取消这行。</p>
+<p>然后是字节分配功能的实现：</p>
+<pre><code class="language-rust editable">// axalloc/src/early.rs
+impl EarlyAllocator {
+    pub fn alloc_bytes(&amp;mut self, layout: Layout) -&gt; AllocResult&lt;NonNull&lt;u8&gt;&gt; {
+        let start = align_up(self.byte_pos, layout.align());
         let next = start + layout.size();
-        if next &gt; self.p_pos {
+        if next &gt; self.page_pos {
             alloc::alloc::handle_alloc_error(layout)
         } else {
-            self.b_pos = next;
+            self.byte_pos = next;
             self.count += 1;
             NonNull::new(start as *mut u8).ok_or(AllocError::NoMemory)
         }
     }
 
-    fn dealloc_bytes(&amp;mut self, _ptr: NonNull&lt;u8&gt;, _layout: Layout) {
+    pub fn dealloc_bytes(&amp;mut self, _ptr: NonNull&lt;u8&gt;, _layout: Layout) {
         self.count -= 1;
         if self.count == 0 {
-            self.b_pos = self.start;
+            self.byte_pos = self.start;
         }
     }
+
+    fn total_bytes(&amp;self) -&gt; usize {
+        self.end - self.start
+    }
+    fn used_bytes(&amp;self) -&gt; usize {
+        self.byte_pos - self.start
+    }
+    fn available_bytes(&amp;self) -&gt; usize {
+        self.page_pos - self.byte_pos
+    }
 }</code></pre>
-<p>执行测试 <code>make test</code> 验证：</p>
-<pre><code class="language-rust ignore">#[test]
+<p>第 3~13 行：字节分配方法，从前往后分配。首先对分配范围的开始位置对齐，然后计算结束位置并检查越界。<strong>注意</strong>：是否越界参照的是页分配指针 page_pos 指向的当前位置，而不是整个区域的结束位置。通过检查后，就把结束位置作为下次分配的开始搜索位置；另外，把 count 计数加一，用于记录已分配的块数。</p>
+<p>第 15~20 行：字节释放方法，每释放一块就把计数 count 减一。当 count 减到 0 时，意味着之前分配的所有内存块都已经释放，字节分配指针回到初始位置。</p>
+<p>第 22~30 行：监控字节分配率的三个方法，其中 available_bytes 是 page_pos 与 byte_pos 之间的区域长度。</p>
+<p>执行 <code>make test</code> 先来测试一下字节分配的功能：</p>
+<pre><code class="language-rust editable">// axalloc/src/early.rs
+#[cfg(test)]
+mod tests;
+
+// axalloc/src/early/tests.rs
+use axconfig::PAGE_SIZE;
+use core::alloc::Layout;
+use super::EarlyAllocator;
+
+#[test]
 fn test_alloc_bytes() {
     let space: [u8; PAGE_SIZE] = [0; PAGE_SIZE];
     let base = space.as_ptr() as usize;
@@ -272,21 +337,38 @@ fn test_alloc_bytes() {
     assert_eq!(early.available_bytes(), PAGE_SIZE);
     assert_eq!(early.used_bytes(), 0);
 }</code></pre>
-<p>页分配功能的实现：</p>
-<pre><code class="language-rust ignore">impl EarlyAllocator {
-	fn alloc_pages(&amp;mut self, layout: Layout) -&gt; AllocResult&lt;NonNull&lt;u8&gt;&gt; {
+<p>从后向前是为页分配准备的区域，如前所述，在内核引导的早期申请的页面会一直使用，所以只需要实现 alloc_pages：</p>
+<pre><code class="language-rust editable">// axalloc/src/early.rs
+impl EarlyAllocator {
+    pub fn alloc_pages(&amp;mut self, layout: Layout) -&gt; AllocResult&lt;NonNull&lt;u8&gt;&gt; {
         assert_eq!(layout.size() % PAGE_SIZE, 0);
-        let next = ALIGN_DOWN!(self.p_pos - layout.size(), layout.align());
-        if next &lt;= self.b_pos {
+        let next = align_down(self.page_pos - layout.size(), layout.align());
+        if next &lt;= self.byte_pos {
             alloc::alloc::handle_alloc_error(layout)
         } else {
-            self.p_pos = next;
+            self.page_pos = next;
             NonNull::new(next as *mut u8).ok_or(AllocError::NoMemory)
         }
     }
+
+    pub fn total_pages(&amp;self) -&gt; usize {
+        (self.end - self.start) / PAGE_SIZE
+    }
+    pub fn used_pages(&amp;self) -&gt; usize {
+        (self.end - self.page_pos) / PAGE_SIZE
+    }
+    pub fn available_pages(&amp;self) -&gt; usize {
+        (self.page_pos - self.byte_pos) / PAGE_SIZE
+    }
 }</code></pre>
-<p>执行测试 <code>make test</code> 验证：</p>
-<pre><code class="language-rust ignore">#[test]
+<p>第 4 行：页分配<strong>必须</strong>按页对齐。</p>
+<p>第 5 行：从后向前查找可分配的页内存区，并且这个待分配内存区的开始地址必须按页对齐。</p>
+<p>第 6~7 行：检查越界 - 新申请的页内存分配区域不能与现有的字节分配区域重叠。</p>
+<p>第 9~10 行：在 page_pos 中记录当前分配到的位置，并成功返回内存块的地址。</p>
+<p>第 14~22 行：跟踪页分配情况的三个方法，同样，注意 available_pages 对应的是 page_pos 和 byte_pos 之间的区域长度。</p>
+<p>现在来验证页分配功能，执行测试 <code>make test</code>：</p>
+<pre><code class="language-rust editable">// axalloc/src/early/tests.rs
+#[test]
 fn test_alloc_pages() {
     let num_pages = 16;
     let total_size = PAGE_SIZE * num_pages;
@@ -311,6 +393,8 @@ fn test_alloc_pages() {
     assert_eq!(p1.as_ptr() as usize, end - PAGE_SIZE*3);
     assert_eq!(early.used_pages(), 3);
 }</code></pre>
+<p>本节我们为内核准备了一个早期引导过程中使用的动态内存分配器，它同时支持字节分配和页分配的功能。</p>
+<p>但是该分配还没有启用，所以如果此时 <code>make run</code> 去运行本节开头的 axorigin 中的新代码，仍然会报同样的错误。下节我们来启用内存分配器，让内核初步支持动态内存分配。</p>
 <script src="https://utteranc.es/client.js"
         repo="OSLearning365/blog-issues"
         issue-term="pathname"
@@ -350,6 +434,9 @@ fn test_alloc_pages() {
 
 
 
+        <script>
+            window.playground_line_numbers = true;
+        </script>
 
         <script>
             window.playground_copyable = true;

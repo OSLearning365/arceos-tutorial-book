@@ -30,6 +30,8 @@
 
         <!-- Custom theme stylesheets -->
 
+        <!-- MathJax -->
+        <script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     </head>
     <body class="sidebar-visible no-js">
     <div id="body-container">
@@ -88,7 +90,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="Prefix.html">前言</a></li><li class="chapter-item expanded "><a href="ch00-00.html"><strong aria-hidden="true">1.</strong> 第零章 史前时代 - 从开机到内核启动</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch00-01.html"><strong aria-hidden="true">1.1.</strong> 实验环境</a></li><li class="chapter-item expanded "><a href="ch00-02.html"><strong aria-hidden="true">1.2.</strong> 计算机启动过程和对内核的要求</a></li><li class="chapter-item expanded "><a href="ch00-03.html"><strong aria-hidden="true">1.3.</strong> 内核第一行代码</a></li><li class="chapter-item expanded "><a href="ch00-04.html"><strong aria-hidden="true">1.4.</strong> 编译与运行环境</a></li><li class="chapter-item expanded "><div><strong aria-hidden="true">1.5.</strong> Unikernel的概念</div></li><li class="chapter-item expanded "><a href="ch00-06.html"><strong aria-hidden="true">1.6.</strong> 本章总结</a></li></ol></li><li class="chapter-item expanded "><a href="ch01-00.html"><strong aria-hidden="true">2.</strong> 第一章 Hello, ArceOS！- 内核启动和组件诞生</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch01-01.html"><strong aria-hidden="true">2.1.</strong> 内核启动</a></li><li class="chapter-item expanded "><a href="ch01-02.html"><strong aria-hidden="true">2.2.</strong> SBI 功能调用</a></li><li class="chapter-item expanded "><a href="ch01-03.html"><strong aria-hidden="true">2.3.</strong> 应用组件与硬件抽象组件</a></li><li class="chapter-item expanded "><a href="ch01-04.html"><strong aria-hidden="true">2.4.</strong> 全局配置与同步支持</a></li><li class="chapter-item expanded "><a href="ch01-05.html"><strong aria-hidden="true">2.5.</strong> 本章总结</a></li></ol></li><li class="chapter-item expanded "><a href="ch02-00.html"><strong aria-hidden="true">3.</strong> 第二章 内存管理1 - 初始的地址空间和早期内存分配</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch02-01.html"><strong aria-hidden="true">3.1.</strong> 地址空间</a></li><li class="chapter-item expanded "><a href="ch02-02.html"><strong aria-hidden="true">3.2.</strong> 分页机制 - 页表和页表项</a></li><li class="chapter-item expanded "><a href="ch02-03.html" class="active"><strong aria-hidden="true">3.3.</strong> 启用分页 - 进入虚拟地址空间</a></li><li class="chapter-item expanded "><a href="ch02-04.html"><strong aria-hidden="true">3.4.</strong> 早期内存分配器</a></li><li class="chapter-item expanded "><a href="ch02-05.html"><strong aria-hidden="true">3.5.</strong> 主干组件 axruntime</a></li><li class="chapter-item expanded "><a href="ch02-06.html"><strong aria-hidden="true">3.6.</strong> 本章总结</a></li></ol></li><li class="chapter-item expanded "><div><strong aria-hidden="true">4.</strong> 第三章 输入输出 - 标准输出和启动参数 todo</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">5.</strong> 第四章 内存管理2 - 地址空间重建和正式内存分配 todo</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">6.</strong> 第五章 多任务1 - 从串行到协作式并发 todo</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">7.</strong> 第六章 异常和中断 - 响应意外情况和外部事件 todo</div></li><li><ol class="section"><li class="chapter-item expanded "><div><strong aria-hidden="true">7.1.</strong> 异常处理</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">7.2.</strong> 时钟中断</div></li></ol></li><li class="chapter-item expanded "><div><strong aria-hidden="true">8.</strong> 第七章 多任务2 -从协作式到抢占式 todo</div></li><li><ol class="section"><li class="chapter-item expanded "><div><strong aria-hidden="true">8.1.</strong> 抢占机制 - 任务切换的内外条件</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">8.2.</strong> round-robin 调度算法</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">8.3.</strong> 同步原语 - 等待与唤醒</div></li></ol></li><li class="chapter-item expanded "><a href="ch08-00.html"><strong aria-hidden="true">9.</strong> 附录A</a></li><li class="chapter-item expanded "><a href="ch09-00.html"><strong aria-hidden="true">10.</strong> 附录B</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="Prefix.html">前言</a></li><li class="chapter-item expanded "><a href="ch00-00.html"><strong aria-hidden="true">1.</strong> 第零章 史前时代 - 从开机到内核启动</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch00-01.html"><strong aria-hidden="true">1.1.</strong> 实验环境</a></li><li class="chapter-item expanded "><a href="ch00-02.html"><strong aria-hidden="true">1.2.</strong> 计算机启动过程和对内核的要求</a></li><li class="chapter-item expanded "><a href="ch00-03.html"><strong aria-hidden="true">1.3.</strong> 内核第一行代码</a></li><li class="chapter-item expanded "><a href="ch00-04.html"><strong aria-hidden="true">1.4.</strong> 编译与运行环境</a></li><li class="chapter-item expanded "><a href="ch00-05.html"><strong aria-hidden="true">1.5.</strong> Unikernel与组件化概念</a></li><li class="chapter-item expanded "><a href="ch00-06.html"><strong aria-hidden="true">1.6.</strong> 本章总结</a></li></ol></li><li class="chapter-item expanded "><a href="ch01-00.html"><strong aria-hidden="true">2.</strong> 第一章 Hello, ArceOS！- 内核启动和组件诞生</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch01-01.html"><strong aria-hidden="true">2.1.</strong> 内核启动</a></li><li class="chapter-item expanded "><a href="ch01-02.html"><strong aria-hidden="true">2.2.</strong> SBI 功能调用</a></li><li class="chapter-item expanded "><a href="ch01-03.html"><strong aria-hidden="true">2.3.</strong> 应用组件与硬件抽象组件</a></li><li class="chapter-item expanded "><a href="ch01-04.html"><strong aria-hidden="true">2.4.</strong> 组件测试和模块测试</a></li><li class="chapter-item expanded "><a href="ch01-05.html"><strong aria-hidden="true">2.5.</strong> 全局配置与同步支持</a></li><li class="chapter-item expanded "><a href="ch01-06.html"><strong aria-hidden="true">2.6.</strong> 本章总结</a></li></ol></li><li class="chapter-item expanded "><a href="ch02-00.html"><strong aria-hidden="true">3.</strong> 第二章 内存管理1 - 初始的地址空间和早期内存分配</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch02-01.html"><strong aria-hidden="true">3.1.</strong> 基本概念 - 地址空间</a></li><li class="chapter-item expanded "><a href="ch02-02.html"><strong aria-hidden="true">3.2.</strong> 分页机制 - 页表和页表项</a></li><li class="chapter-item expanded "><a href="ch02-03.html" class="active"><strong aria-hidden="true">3.3.</strong> 启用分页 - 进入虚拟地址空间</a></li><li class="chapter-item expanded "><a href="ch02-04.html"><strong aria-hidden="true">3.4.</strong> 早期内存分配器的设计</a></li><li class="chapter-item expanded "><a href="ch02-05.html"><strong aria-hidden="true">3.5.</strong> 启用动态内存分配</a></li><li class="chapter-item expanded "><a href="ch02-06.html"><strong aria-hidden="true">3.6.</strong> 内核分层和主干组件</a></li><li class="chapter-item expanded "><a href="ch02-07.html"><strong aria-hidden="true">3.7.</strong> 本章总结</a></li></ol></li><li class="chapter-item expanded "><a href="ch03-00.html"><strong aria-hidden="true">4.</strong> 第三章 基础组件 - 时间、日志和设备树</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch03-01.html"><strong aria-hidden="true">4.1.</strong> 获得系统时间</a></li><li class="chapter-item expanded "><a href="ch03-02.html"><strong aria-hidden="true">4.2.</strong> 组件crate_interface - 打破循环依赖</a></li><li class="chapter-item expanded "><a href="ch03-03.html"><strong aria-hidden="true">4.3.</strong> 组件axlog - 支持log</a></li><li class="chapter-item expanded "><a href="ch03-04.html"><strong aria-hidden="true">4.4.</strong> 组件axdtb - 操作设备树</a></li><li class="chapter-item expanded "><a href="ch03-05.html"><strong aria-hidden="true">4.5.</strong> 基于设备树获取内存信息</a></li><li class="chapter-item expanded "><a href="ch03-06.html"><strong aria-hidden="true">4.6.</strong> 组件linked_list - 侵入式链表</a></li><li class="chapter-item expanded "><a href="ch03-07.html"><strong aria-hidden="true">4.7.</strong> 本章总结</a></li></ol></li><li class="chapter-item expanded "><a href="ch04-00.html"><strong aria-hidden="true">5.</strong> 第四章 内存管理2 - 地址空间重建和正式内存分配</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch04-01.html"><strong aria-hidden="true">5.1.</strong> 分页机制-支持多级页表</a></li><li class="chapter-item expanded "><a href="ch04-02.html"><strong aria-hidden="true">5.2.</strong> 重建地址空间</a></li><li class="chapter-item expanded "><a href="ch04-03.html"><strong aria-hidden="true">5.3.</strong> bitmap位分配器</a></li><li class="chapter-item expanded "><a href="ch04-04.html"><strong aria-hidden="true">5.4.</strong> 启用页内存分配器</a></li><li class="chapter-item expanded "><a href="ch04-05.html"><strong aria-hidden="true">5.5.</strong> 实现字节内存分配器</a></li><li class="chapter-item expanded "><a href="ch04-06.html"><strong aria-hidden="true">5.6.</strong> 集成字节内存分配器</a></li><li class="chapter-item expanded "><a href="ch04-07.html"><strong aria-hidden="true">5.7.</strong> 本章总结</a></li></ol></li><li class="chapter-item expanded "><a href="ch05-00.html"><strong aria-hidden="true">6.</strong> 第五章 多任务1 - 从串行到并发</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch05-01.html"><strong aria-hidden="true">6.1.</strong> 基本概念-任务与调度</a></li><li class="chapter-item expanded "><a href="ch05-02.html"><strong aria-hidden="true">6.2.</strong> 初始任务 - MainTask</a></li><li class="chapter-item expanded "><a href="ch05-03.html"><strong aria-hidden="true">6.3.</strong> 创建任务 - spawn</a></li><li class="chapter-item expanded "><a href="ch05-04.html"><strong aria-hidden="true">6.4.</strong> 任务退出和等待任务退出</a></li><li class="chapter-item expanded "><a href="ch05-05.html"><strong aria-hidden="true">6.5.</strong> 系统任务 - Gc和Idle任务</a></li><li class="chapter-item expanded "><a href="ch04-07.html"><strong aria-hidden="true">6.6.</strong> 本章总结</a></li></ol></li><li class="chapter-item expanded "><a href="ch06-00.html"><strong aria-hidden="true">7.</strong> 第六章 异常和中断 - 响应意外情况和外部事件</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch06-01.html"><strong aria-hidden="true">7.1.</strong> 异常处理</a></li><li class="chapter-item expanded "><a href="ch06-02.html"><strong aria-hidden="true">7.2.</strong> 自旋锁与中断</a></li><li class="chapter-item expanded "><a href="ch06-03.html"><strong aria-hidden="true">7.3.</strong> 时钟中断</a></li><li class="chapter-item expanded "><a href="ch06-04.html"><strong aria-hidden="true">7.4.</strong> 本章总结</a></li></ol></li><li class="chapter-item expanded "><a href="ch07-00.html"><strong aria-hidden="true">8.</strong> 第七章 多任务2 -从协作式到抢占式</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch07-01.html"><strong aria-hidden="true">8.1.</strong> 任务调度中的抢占</a></li><li class="chapter-item expanded "><a href="ch07-02.html"><strong aria-hidden="true">8.2.</strong> 抢占式调度框架</a></li><li class="chapter-item expanded "><a href="ch07-03.html"><strong aria-hidden="true">8.3.</strong> 触发抢占的外部条件与触发点</a></li><li class="chapter-item expanded "><a href="ch07-04.html"><strong aria-hidden="true">8.4.</strong> 同步原语 - Mutex</a></li><li class="chapter-item expanded "><div><strong aria-hidden="true">8.5.</strong> 本章总结</div></li></ol></li><li class="chapter-item expanded "><div><strong aria-hidden="true">9.</strong> 第八章 文件系统1 - 基于内存的文件系统</div></li><li><ol class="section"><li class="chapter-item expanded "><div><strong aria-hidden="true">9.1.</strong> 文件系统框架</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">9.2.</strong> ramfs基本文件与目录操作</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">9.3.</strong> devfs管理随机数设备、网卡设备和块设备</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">9.4.</strong> 本章总结</div></li></ol></li><li class="chapter-item expanded "><div><strong aria-hidden="true">10.</strong> 第九章 总线与设备 - 发现设备</div></li><li><ol class="section"><li class="chapter-item expanded "><div><strong aria-hidden="true">10.1.</strong> virtio-mmio驱动 - 发现virtio设备</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">10.2.</strong> virtio-rng设备驱动</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">10.3.</strong> 本章总结</div></li></ol></li><li class="chapter-item expanded "><div><strong aria-hidden="true">11.</strong> 第十章 网卡与协议栈 - 连接外部世界</div></li><li><ol class="section"><li class="chapter-item expanded "><div><strong aria-hidden="true">11.1.</strong> virtio-net网卡驱动</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">11.2.</strong> 网络协议栈，支持socket</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">11.3.</strong> 本章总结</div></li></ol></li><li class="chapter-item expanded "><div><strong aria-hidden="true">12.</strong> 第十一章 文件系统2 - 持久化文件系统</div></li><li><ol class="section"><li class="chapter-item expanded "><div><strong aria-hidden="true">12.1.</strong> virtio-blk块设备驱动</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">12.2.</strong> easy-fs文件系统</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">12.3.</strong> 本章总结</div></li></ol></li><li class="chapter-item expanded "><div><strong aria-hidden="true">13.</strong> 第十二章 Rust应用接口库 - 兼容官方标准库</div></li><li><ol class="section"><li class="chapter-item expanded "><div><strong aria-hidden="true">13.1.</strong> 重构axstd组件</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">13.2.</strong> todo</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">13.3.</strong> 本章总结</div></li></ol></li><li class="chapter-item expanded "><div><strong aria-hidden="true">14.</strong> 第十三章 多核SMP - 并行处理</div></li><li><ol class="section"><li class="chapter-item expanded "><div><strong aria-hidden="true">14.1.</strong> PerCPU</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">14.2.</strong> 内存屏障</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">14.3.</strong> 核间调度</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">14.4.</strong> 本章总结</div></li></ol></li><li class="chapter-item expanded "><div><strong aria-hidden="true">15.</strong> 第十四章 迈向新世界 - 支持Linux应用</div></li><li><ol class="section"><li class="chapter-item expanded "><div><strong aria-hidden="true">15.1.</strong> 加载应用</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">15.2.</strong> 启动应用</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">15.3.</strong> 支持系统调用</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">15.4.</strong> 本章总结</div></li></ol></li><li class="chapter-item expanded "><a href="chfa-00.html"><strong aria-hidden="true">16.</strong> 附录A 内核布局文件LDS</a></li><li class="chapter-item expanded "><a href="chfb-00.html"><strong aria-hidden="true">17.</strong> 附录B 内核编译文件Makefile</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle">
                 <div class="sidebar-resize-indicator"></div>
@@ -177,38 +179,57 @@
                 <div id="content" class="content">
                     <main>
                         <h2 id="第三节-启用分页---进入虚拟地址空间"><a class="header" href="#第三节-启用分页---进入虚拟地址空间">第三节 启用分页 - 进入虚拟地址空间</a></h2>
-<p>上一节中我们实现了组件 page_table，本节就基于它们来为我们的内核启用分页，从物理地址空间进入到虚拟地址空间。</p>
+<p>上一节中我们已经实现了组件 page_table，本节就基于它来启用分页，让内核从物理地址空间进入到虚拟地址空间。</p>
 <div style="text-align:center">
    <img src=".\img\恒等映射空间切换.svg" alt="恒等映射空间切换" style="zoom:100%"/>
 </div>
 <p>两步完成地址空间的切换：</p>
 <ul>
-<li>第一步：恒等映射保证虚拟空间与物理空间有一个相等范围的地址空间映射（0x80000000~0xC0000000）。切换前后地址范围不变，但地址空间已经从物理空间切换到虚拟空间。</li>
-<li>第二步：给指令指针寄存器 pc，栈寄存器 sp 等加偏移，在图中该偏移是 0xffff_ffc0_0000_0000。如此在虚拟空间执行平移后，就完成了到最终目标地址的映射。</li>
+<li>第一步：恒等映射保证虚拟空间与物理空间有一个相等范围的地址空间映射（0x80000000~0xC0000000）。切换前后地址范围不变，但地址空间其实已经从物理空间切换到虚拟空间；</li>
+<li>第二步：给指令指针寄存器 pc，栈寄存器 sp 等加偏移，在图中该偏移是 0xffff_ffc0_0000_0000，即 PHYS_VIRT_OFFSET。通过在虚拟空间内地址平移，我们就完成了最终的地址映射。</li>
 </ul>
-<p>扩展组件 axhal，准备启动阶段的页表，然后启用分页，实现上述切换。</p>
-<p><strong>准备启动页表</strong>：</p>
-<pre><code class="language-rust ignore">extern &quot;C&quot; {
+<p>以下扩展组件 axhal，在 RiscV64 架构下实现一个 paging 的模块，用于处理与分页管理相关的功能。</p>
+<ol>
+<li>新增 paging 模块，在其中初始化启动阶段的页表：</li>
+</ol>
+<pre><code class="language-rust editable">// axhal/src/riscv64/paging.rs
+use riscv::register::satp;
+use axconfig::SIZE_1G;
+use page_table::{PageTable, PAGE_KERNEL_RWX, phys_pfn};
+
+extern &quot;C&quot; {
     fn boot_page_table();
 }
 
 pub unsafe fn init_boot_page_table() {
     let mut pt: PageTable = PageTable::init(boot_page_table as usize, 0);
-
-    let _ = pt.map(0x8000_0000, 0x8000_0000, SIZE_1G, SIZE_1G, PAGE_KERNEL_EXEC);
-    let _ = pt.map(0xffff_ffc0_8000_0000, 0x8000_0000, SIZE_1G, SIZE_1G, PAGE_KERNEL_EXEC);
+    let _ = pt.map(0x8000_0000, 0x8000_0000, SIZE_1G, SIZE_1G, PAGE_KERNEL_RWX);
+    let _ = pt.map(0xffff_ffc0_8000_0000, 0x8000_0000, SIZE_1G, SIZE_1G, PAGE_KERNEL_RWX);
 }</code></pre>
-<p><strong>启用分页</strong>：</p>
-<p>按照 Riscv 硬件机制的要求，设置 satp 寄存器并刷新 TLB：</p>
-<pre><code class="language-rust ignore">use riscv::register::satp;
-
+<p>第 10~14 行：函数 init_boot_page_table 调用上一节 page_table 组件的功能来初始化页表，其中第 12 行建立恒等映射，第 13 行则是建立了最终的地址映射关系。这两行为上面所述的两步切换，进行了页表方面的准备。</p>
+<ol start="2">
+<li>继续在 paging 模块中，增加启用分页的功能函数 init_mmu：</li>
+</ol>
+<pre><code class="language-rust editable">// axhal/src/riscv64/paging.rs
 pub unsafe fn init_mmu() {
     let page_table_root = boot_page_table as usize;
     satp::set(satp::Mode::Sv39, 0, phys_pfn(page_table_root));
     riscv::asm::sfence_vma_all();
 }</code></pre>
-<p>在引导启动过程中，插入上述过程：</p>
-<pre><code class="language-rust ignore">#[no_mangle]
+<p>第 4 行：针对 satp 寄存器，进行了两项配置，指定 Sv39 分页模式和指定根页表的物理页帧号；</p>
+<p>第 5 行：刷新 TLB，确保此后 MMU 使用最新的页表。</p>
+<ol start="3">
+<li>注意要把 paging 模块加到 riscv64 模块下。</li>
+</ol>
+<pre><code class="language-rust editable">// axhal/src/riscv64.rs
+mod paging;</code></pre>
+<ol start="4">
+<li>调整内核启动过程，插入初始化页表和启用分页的过程，修改后 _start() 的实现如下：</li>
+</ol>
+<pre><code class="language-rust editable">// axhal/src/riscv64/boot.rs
+use crate::riscv64::paging;
+
+#[no_mangle]
 #[link_section = &quot;.text.boot&quot;]
 unsafe extern &quot;C&quot; fn _start() -&gt; ! {
     // a0 = hartid
@@ -216,66 +237,77 @@ unsafe extern &quot;C&quot; fn _start() -&gt; ! {
     core::arch::asm!(&quot;
         mv      s0, a0                  // save hartid
         mv      s1, a1                  // save DTB pointer
-
-        la      sp, {boot_stack}
-        li      t0, {boot_stack_size}
-        add     sp, sp, t0              // setup boot stack
-
-        call    {init_boot_page_table}
-        call    {init_mmu}              // setup boot page table and enabel MMU
-
+        la a3, _sbss
+        la a4, _ebss
+        ble a4, a3, 2f
+1:
+        sd zero, (a3)
+        add a3, a3, 8
+        blt a3, a4, 1b
+2:
+        la      sp, boot_stack_top      // setup boot stack
+        call    {init_boot_page_table}  // setup boot page table
+        call    {init_mmu}              // enabel MMU
         li      s2, {phys_virt_offset}  // fix up virtual high address
         add     sp, sp, s2              // readjust stack address
-
         mv      a0, s0                  // restore hartid
         mv      a1, s1                  // restore DTB pointer
-
         la      a2, {entry}
         add     a2, a2, s2              // readjust rust_entry address
         jalr    a2                      // call rust_entry(hartid, dtb)
         j       .&quot;,
-        boot_stack = sym BOOT_STACK,
-        boot_stack_size = const TASK_STACK_SIZE,
-        init_boot_page_table = sym crate::paging::init_boot_page_table,
-        init_mmu = sym crate::paging::init_mmu,
+        init_boot_page_table = sym paging::init_boot_page_table,
+        init_mmu = sym paging::init_mmu,
         phys_virt_offset = const axconfig::PHYS_VIRT_OFFSET,
         entry = sym super::rust_entry,
         options(noreturn),
     )
 }</code></pre>
-<p>我们发现，除了调用 init_boot_page_table 和 init_mmu 之外，还额外增加了两项工作。</p>
-<ul>
-<li>通过 s0 和 s1 分别对 a0 和 a1 进行保存和恢复：a0 和 a1 目前保持着当前 CPU 的 ID 和 DTB 指针，我们要防止函数调用破坏它们。</li>
-<li>用 PHYS_VIRT_OFFSET，调整栈指针寄存器和 rust_entry 入口，从物理地址转为虚拟地址，此后，内核就将开始使用虚拟地址空间中的栈，并在虚拟空间中执行后续指令流。如此，就完成了切换。</li>
-</ul>
-<p>执行 <code>make run</code>，完成地址空间切换的内核运行成功。单从屏幕输出，我们看不出区别，但是可以利用 qemu.log 确认我们的工作成果。</p>
-<p>我们知道当前版本的内核中，到调用 rust_entry 时，已经进入到了虚拟地址空间。所以先查找 rust_entry 的符号地址：</p>
-<pre><code class="language-shell">riscv64-unknown-elf-objdump -t ./target/riscv64gc-unknown-none-elf/release/axorigin | grep rust_entry
+<p>第 21 行：调用 init_boot_page_table 初始化页表；</p>
+<p>第 22 行：通过 init_mmu 启用 MMU 的分页机制；</p>
+<p>第 23 行：在 s2 寄存器存放 PHYS_VIRT_OFFSET，后面用于调整栈指针与指令寄存器偏移；</p>
+<p>第 24行：调整栈指针寄存器 sp，指向最终的虚拟地址位置；</p>
+<p>第 27~29 行：第 27 行以相对寻址的方式去取得 rust_entry 地址，实际上该地址仍是之前的物理地址，在第 28 行加偏移调整后，才是最终的虚拟地址，第 29 行跳转后完成指令寄存器 PC 中运行地址的最终切换。</p>
+<p>在上述工作之外，还有两项新增的工作：</p>
+<p>第 10~11 行：通过 s0 和 s1 分别对 a0 和 a1 进行保存：a0 和 a1 保持着当前 CPU 的 ID 和 DTB 指针，保存是要防止后面的函数调用破坏它们。</p>
+<p>第 25~26 行：从 s0 和 s1 寄存器中恢复 a0 和 a1，紧跟着再调用 rust_entry 时，它们会作为前两个参数传入 CPU_ID 和 DTB 指针。</p>
+<ol start="5">
+<li>修改 linker.lds，把 <strong>BASE_ADDRESS</strong> 从 0x80200000 改成 0xffffffc080200000。在分页机制启用的条件下，我们要求内核 Image 中的各种符号地址都以虚拟地址为准，确保将来符号地址寻址的正确性。</li>
+</ol>
+<p>执行 <code>make clean &amp; make run</code>，可以看到内核在完成地址空间切换后，启动成功了。但是单从屏幕输出，我们看不出区别，下面利用 qemu.log 确认我们的工作成果。</p>
+<p>我们知道当前版本的内核调用 rust_entry 时，已经进入到虚拟地址空间。所以先查找 rust_entry 的符号地址：</p>
+<pre><code class="language-bash editable">riscv64-unknown-elf-objdump -t ./target/riscv64gc-unknown-none-elf/release/axorigin | grep rust_entry
 </code></pre>
 <p>输出结果：</p>
-<pre><code class="language-shell">ffffffc08020008e l     F .text  00000000000000c4 _ZN5axhal10rust_entry17hfd12467dcb754cadE
+<pre><code class="language-bash editable">ffffffc0802000a6 l     F .text  0000000000000070 _ZN5axhal7riscv6410rust_entry17hde9b663f0cccf0f7E
 </code></pre>
-<p>发现它对应的地址是 0xffff_ffc0_8020_008e，然后进一步在 qemu.log 查找该地址：</p>
-<pre><code class="language-asm">----------------
+<p>发现它对应的地址是 0xffffffc0802000a6（同学们的实验环境中该值可能不同），然后进一步在 qemu.log 查找该地址：</p>
+<pre><code class="language-asm editable">----------------
 IN:
 Priv: 1; Virt: 0
-0x80200072:  12000073          sfence.vma              zero,zero
-0x80200076:  8082              ret
+0x000000008020008a:  12000073          sfence.vma      zero,zero
+0x000000008020008e:  8082              ret
 
 ----------------
 IN:
 Priv: 1; Virt: 0
-0x80200022:  597d              addi                    s2,zero,-1
-..........:  ....
-0x80200036:  9602              jalr                    ra,a2,0
+0x000000008020003a:  597d              addi            s2,zero,-1
+0x000000008020003c:  191a              slli            s2,s2,38
+0x000000008020003e:  914a              add             sp,sp,s2
+0x0000000080200040:  8522              mv              a0,s0
+0x0000000080200042:  85a6              mv              a1,s1
+0x0000000080200044:  00000617          auipc           a2,0            # 0x80200044
+0x0000000080200048:  06260613          addi            a2,a2,98
+0x000000008020004c:  964a              add             a2,a2,s2
+0x000000008020004e:  9602              jalr            ra,a2,0
 
 ----------------
 IN:
 Priv: 1; Virt: 0
-0xffffffc08020008e:  1141              addi                    sp,sp,-16
-0xffffffc080200090:  e406              sd                      ra,8(sp)
+0xffffffc0802000a6:  711d              addi            sp,sp,-96
+0xffffffc0802000a8:  ec86              sd              ra,88(sp)
 </code></pre>
-<p>对照执行 rust_entry 之前和该函数自身的执行地址，可以看到内核从物理地址空间进入到虚拟地址空间的过程。</p>
+<p>注意第 23 行，0xffffffc0802000a6 是 rust_entry 地址，基于前面的工作，当进入 rust_entry 时，此时的运行地址相对之前发生了明显变化，证明内核已经从物理地址空间切换到了虚拟地址空间。</p>
 <script src="https://utteranc.es/client.js"
         repo="OSLearning365/blog-issues"
         issue-term="pathname"
@@ -315,6 +347,9 @@ Priv: 1; Virt: 0
 
 
 
+        <script>
+            window.playground_line_numbers = true;
+        </script>
 
         <script>
             window.playground_copyable = true;
