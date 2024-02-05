@@ -1,4 +1,4 @@
-## 附录B
+## 附录B 内核编译文件Makefile
 
 
 
@@ -7,6 +7,7 @@
 ARCH ?= riscv64
 TARGET := riscv64gc-unknown-none-elf
 SMP ?= 1
+LOG ?= warn
 FEATURES ?=
 
 # Utility definitions and functions
@@ -33,40 +34,46 @@ OUT_DIR ?= target/$(TARGET)/release
 OUT_ELF := $(OUT_DIR)/$(APP_NAME)
 OUT_BIN := $(OUT_DIR)/$(APP_NAME).bin
 
+ifeq ($(filter $(MAKECMDGOALS),test),)  # not run `cargo test`
 RUSTFLAGS := -C link-arg=-T$(LD_SCRIPT) -C link-arg=-no-pie
 export RUSTFLAGS
+endif
+export LOG
 
 all: build
 
 build: $(OUT_BIN)
 
 disasm: build
-        $(OBJDUMP) $(OUT_ELF) | less
+    $(OBJDUMP) $(OUT_ELF) | less
 
 run: build justrun
 
 justrun:
-        @printf "    $(CYAN_C)Running$(END_C) on qemu...\n"
-        $(QEMU) -m 128M -smp $(SMP) -machine virt \
-                -bios default -kernel $(OUT_BIN) -nographic \
-                -D qemu.log -d in_asm
+    @printf "    $(CYAN_C)Running$(END_C) on qemu...\n"
+    $(QEMU) -m 128M -smp $(SMP) -machine virt \
+        -bios default -kernel $(OUT_BIN) -nographic \
+        -D qemu.log -d in_asm
 
 $(OUT_BIN): $(OUT_ELF)
-        $(OBJCOPY) $(OUT_ELF) --strip-all -O binary $@
+    $(OBJCOPY) $(OUT_ELF) --strip-all -O binary $@
 
 $(OUT_ELF): FORCE
-        @printf "    $(GREEN_C)Building$(END_C) App: $(APP_NAME), Arch: riscv64, Platform: qemu-virt, App type: rust\n"
-        cargo build --manifest-path $(APP)/Cargo.toml --release \
-                --target $(TARGET) --target-dir $(CURDIR)/target $(FEATURES)
+    @printf "    $(GREEN_C)Building$(END_C) App: $(APP_NAME), Arch: riscv64, Platform: qemu-virt, App type: rust\n"
+    cargo build --manifest-path $(APP)/Cargo.toml --release \
+        --target $(TARGET) --target-dir $(CURDIR)/target $(FEATURES)
 
 clean:
-        @rm -rf ./target
-        @rm -f ./qemu.log
+    @rm -rf ./target
+    @rm -f ./qemu.log
+
+test:
+    cargo test --workspace --exclude "axorigin" -- --nocapture
 
 FORCE:
-        @:
+    @:
 
-.PHONY: all build disasm run justrun debug clippy fmt test test_no_fail_fast clean FORCE
+.PHONY: all build disasm run justrun test clean FORCE
 ```
 
 注：建立axhal组件后，把 linker.lds 挪到该组件目录之下，`LD_SCRIPT := $(CURDIR)/axhal/linker.lds`。

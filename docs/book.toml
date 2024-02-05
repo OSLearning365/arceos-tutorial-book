@@ -6,13 +6,17 @@ src = "src"
 title = "ArceOS Tutorial Book"
 [rust]
 edition = "2021"
-[output.html.playpen]
+[output.html.playground]
 editable = true
+copyable = true
+copy-js = true
+runnable = false
+line-numbers = true
 [output.html]
 git-repository-url = "https://github.com/rcore-os/arceos-tutorial-book"
 additional-js = ["mermaid.min.js", "mermaid-init.js"]
-# mathjax-support = true
-# [preprocessor.mathjax]
+mathjax-support = true
+[preprocessor.mathjax]
 # renderers = ["html"]
 [output.html.search]
 enable = true
